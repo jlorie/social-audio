@@ -1,0 +1,41 @@
+{
+  "name": "security-register",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: sls-bbluue",
+  "customName": false,
+  "customRole": false,
+  "handler": "security-register/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [{
+    "path": "security/register",
+    "method": "POST",
+    "type": "AWS",
+    "authorizationType": "none",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${registerRequestTemplate}",
+    "responses": "$${responsesForPost}"
+  }],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "IDENTITY_POOL_ID": "${identityPoolId}",
+    "IDENTITY_ROLE_ARN": "${identityRoleArn}",
+    "TOPIC_REGISTERED_USER_ARN": "${registeredUserTopicArn}",
+    "URL_EMAIL_UNSUBSCRIBE": "${unsubscribeEmailApiUrl}",
+    "EMAIL_SUPPORT": "${supportEmail}",
+    "URL_USERS_API": "${usersTableName}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
