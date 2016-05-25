@@ -7,14 +7,14 @@ import EmailService from '../commons/remote/email-service';
 
 const TOPIC_REGISTERED_USER = process.env.TOPIC_REGISTERED_USER_ARN;
 const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT +
-  '/register-user' : __dirname);
+  '/security-register' : __dirname);
 
 const emailService = new EmailService();
 const notification = new Notification(TOPIC_REGISTERED_USER);
 
 export function notify(user) {
   let userString = JSON.stringify(user, null, 2);
-  console.warn('Notifying user registered: ' + userString);
+  console.info('Notifying user registered: ' + userString);
 
   return notification.notify(userString)
     .catch(err => {
@@ -24,7 +24,7 @@ export function notify(user) {
 }
 
 export function sendWellcomeMail(email) {
-  console.warn('Sending welcome mail to ' + email);
+  console.info('Sending welcome mail to ' + email);
 
   let params = {
     unsubscribeLink: config.URL_EMAIL_UNSUBSCRIBE + '?email=' + email + '&token=' + getToken(email)

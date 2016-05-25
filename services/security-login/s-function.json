@@ -4,7 +4,7 @@
   "description": "Serverless Lambda function for project: sls-bbluue",
   "customName": false,
   "customRole": false,
-  "handler": "login/handler.default",
+  "handler": "security-login/handler.default",
   "timeout": 6,
   "memorySize": 1024,
   "authorizer": {},

@@ -22,7 +22,7 @@ export default (event, context) => {
       return Promise.all(tasks)
         .then(() => {
           let result = {
-            user_id: user._id
+            user_id: user.id
           };
 
           return result;
