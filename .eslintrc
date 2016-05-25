@@ -1,0 +1,17 @@
+{
+  "extends": "airbnb/base",
+  "rules": {
+    "no-console": [1, { allow: ["info", "warn", "error"] }],
+    "prefer-template": 0,
+    "no-unused-vars" : 1,
+    "guard-for-in" : 0,
+    "comma-dangle": 0,
+    "no-param-reassign": [1, { "props": false }],
+    "consistent-return": 0,
+    "no-use-before-define" : 0,
+    "radix" : 0,
+    "new-cap" : 1,
+    "prefer-const" : 0,
+    "no-shadow": 0
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "requestTemplate": {
+    "application/json": "{ \"username\": $input.json('$.username'), \"password\": $input.json('$.password') }"
+  }
+}
