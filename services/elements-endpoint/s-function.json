@@ -1,0 +1,36 @@
+{
+  "name": "elements-endpoint",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: bbluue-audios",
+  "customName": false,
+  "customRole": false,
+  "handler": "elements-endpoint/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [{
+    "path": "elements",
+    "method": "GET",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${listRequest}",
+    "responses": "$${responsesForGet}"
+  }],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "URI_ELEMENTS_RESOURCE": "${elementsTableName}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
