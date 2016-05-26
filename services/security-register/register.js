@@ -1,5 +1,5 @@
 import CredentialProvider from '../commons/remote/credentials-provider';
-import RemoteModel from '../commons/resources/resource-model';
+import UserModel from '../commons/resources/user-model';
 
 import { getEncryptedPassword } from '../commons/helpers/password-helper';
 
@@ -12,7 +12,7 @@ const provider = new CredentialProvider({
   identityRoleArn: IDENTITY_ROLE_ARN
 });
 
-const userModel = new RemoteModel(URL_USERS_API);
+const userModel = new UserModel(URL_USERS_API);
 
 export default function register({ username, password, fullname, genre, birthdate }) {
   console.info('Getting user identity');

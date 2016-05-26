@@ -5,6 +5,11 @@ class UserModel extends ResourceModel {
     super(uri, region);
   }
 
+  create(data) {
+    data.id = data.identity_id.split(':').pop();
+    return super.create(data);
+  }
+
   getByUsername(username) {
     let params = {
       TableName: this.tableName,
