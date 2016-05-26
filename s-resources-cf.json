@@ -107,22 +107,98 @@
         "AttributeDefinitions": [{
           "AttributeName": "id",
           "AttributeType": "S"
+        }, {
+          "AttributeName": "username",
+          "AttributeType": "S"
         }],
         "KeySchema": [{
-          "AttributeName": "id",
+          "AttributeName": "username",
           "KeyType": "HASH"
         }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
-        "TableName": "${stage}-users"
+        "TableName": "${stage}-users",
+        "GlobalSecondaryIndexes": [{
+          "IndexName": "index-id",
+          "KeySchema": [{
+            "AttributeName": "id",
+            "KeyType": "HASH"
+          }],
+          "Projection": {
+            "ProjectionType": "ALL"
+          },
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "${db-rcu}",
+            "WriteCapacityUnits": "${db-wcu}"
+          }
+        }]
+      }
+    },
+    "ElementsDynamoTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [{
+          "AttributeName": "id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "user_id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "created_at",
+          "AttributeType": "S"
+        }],
+        "KeySchema": [{
+          "AttributeName": "user_id",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "created_at",
+          "KeyType": "RANGE"
+        }],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "${db-rcu}",
+          "WriteCapacityUnits": "${db-wcu}"
+        },
+        "TableName": "${stage}-elements",
+        "GlobalSecondaryIndexes": [{
+          "IndexName": "index-id",
+          "KeySchema": [{
+            "AttributeName": "id",
+            "KeyType": "HASH"
+          }],
+          "Projection": {
+            "ProjectionType": "ALL"
+          },
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "${db-rcu}",
+            "WriteCapacityUnits": "${db-wcu}"
+          }
+        }]
+      }
+    },
+    "ElementsBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": "${stage}-bbluue-files"
+      }
+    },
+    "UploadBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": "${stage}-bbluue-upload"
       }
     },
     "RegisteredUserTopic": {
       "Type": "AWS::SNS::Topic",
       "Properties": {
         "TopicName": "${stage}-registered-user"
+      }
+    },
+    "AttachmentUploadedTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "${stage}-attachment-uploaded"
       }
     }
   },
@@ -141,9 +217,29 @@
         "Ref": "UsersDynamoTable"
       }
     },
+    "ElementsTableName": {
+      "Value": {
+        "Ref": "ElementsDynamoTable"
+      }
+    },
+    "ElementsBucketName": {
+      "Value": {
+        "Ref": "ElementsBucket"
+      }
+    },
+    "UploadBucketName": {
+      "Value": {
+        "Ref": "UploadBucket"
+      }
+    },
     "RegisteredUserTopicArn": {
       "Value": {
         "Ref": "RegisteredUserTopic"
+      }
+    },
+    "AttachmentUploadedTopicArn": {
+      "Value": {
+        "Ref": "AttachmentUploadedTopic"
       }
     }
   }

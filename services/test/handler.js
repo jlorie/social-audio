@@ -1,25 +1,17 @@
-// import ResourceModel from '../commons/resources/resource-model';
-// const users = new ResourceModel('test-table-2');
-import uuid from 'node-uuid';
+import UserModel from '../commons/resources/user-model';
+const users = new UserModel('dev-users');
 
 export default (event, context) => {
-  console.log('uuid: ' + uuid.v1());
-  context.succeed('done!');
-  // let params = {
-  //   start: '777888999',
-  //   limit: 1,
-  //   query: {
-  //     age: 28
-  //   }
-  // };
-  //
-  // return users.get(params)
-  //   .then(result => {
-  //     console.warn('==> Result: ', JSON.stringify(result, null, 2));
-  //     return result;
-  //   })
-  //   .catch(err => {
-  //     console.error('==> Error: ', err);
-  //     throw err;
-  //   });
+  let id = '480dad60-235f-11e6-ac06-ed503785c7b5';
+  let username = 'calvarez@bbluue.com';
+
+  return users.getByUsername(username)
+    .then(result => {
+      console.warn('==> Result: ', JSON.stringify(result, null, 2));
+      return result;
+    })
+    .catch(err => {
+      console.error('==> Error: ', err);
+      throw err;
+    });
 };

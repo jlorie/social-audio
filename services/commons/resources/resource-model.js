@@ -3,13 +3,14 @@ import uuid from 'node-uuid';
 import _ from 'lodash';
 
 const DEFAULT_PAGE_LIMIT = 20;
+const INDEX_ID_NAME = 'index-id';
 
 class ResourceModel {
-  constructor(apiUrl, region = 'us-east-1') {
+  constructor(tableName, region = 'us-east-1') {
     AWS.config.update({ region });
 
     this.dynamo = new AWS.DynamoDB.DocumentClient();
-    this.tableName = apiUrl;
+    this.tableName = tableName;
   }
 
   get({ query, limit, start }) {
@@ -60,16 +61,20 @@ class ResourceModel {
   getById(id) {
     let params = {
       TableName: this.tableName,
-      Key: { id }
+      IndexName: INDEX_ID_NAME,
+      KeyConditionExpression: 'id = :id',
+      ExpressionAttributeValues: {
+        ':id': id,
+      }
     };
 
     const func = (resolve, reject) => {
-      this.dynamo.get(params, (err, result) => {
+      this.dynamo.query(params, (err, result) => {
         if (err) {
           return reject(err);
         }
 
-        resolve(result);
+        resolve(result.Items[0]);
       });
     };
 
@@ -77,7 +82,9 @@ class ResourceModel {
   }
 
   create(data) {
-    data.id = uuid.v1();
+    if (!data.id) {
+      data.id = uuid.v1();
+    }
 
     const func = (resolve, reject) => {
       let params = {

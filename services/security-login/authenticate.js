@@ -1,4 +1,4 @@
-import RemoteModel from '../commons/resources/resource-model';
+import UserModel from '../commons/resources/user-model';
 import { getEncryptedPassword } from '../commons/helpers/password-helper';
 import CredentialProvider from '../commons/remote/credentials-provider';
 
@@ -6,17 +6,17 @@ const URL_USERS_API = process.env.URL_USERS_API;
 const IDENTITY_POOL_ID = process.env.IDENTITY_POOL_ID;
 const IDENTITY_ROLE_ARN = process.env.IDENTITY_ROLE_ARN;
 
-const userModel = new RemoteModel(URL_USERS_API);
+const userModel = new UserModel(URL_USERS_API);
 const provider = new CredentialProvider({
   identityPoolId: IDENTITY_POOL_ID,
   identityRoleArn: IDENTITY_ROLE_ARN
 });
 
 export function authenticate({ username, password }) {
-  console.info('Authenticating user ' + username);
+  console.warn('Authenticating user ' + username);
 
-  return userModel.get({ username })
-    .then(users => verify(users[0], password))
+  return userModel.getByUsername(username)
+    .then(user => verify(user, password))
     .then(getCredentials)
     .catch(err => {
       console.error('An error occurred authenticating user ' + username + '. ' + err);

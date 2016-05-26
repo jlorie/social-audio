@@ -1,0 +1,34 @@
+{
+  "name": "elements-register",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: bbluue-audios",
+  "customName": false,
+  "customRole": false,
+  "handler": "elements-register/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [{
+    "name": "s3",
+    "type": "s3",
+    "config": {
+      "bucket": "${uploadBucketName}",
+      "bucketEvents": ["s3:ObjectCreated:*"]
+    }
+  }],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "TOPIC_UPLOADED_ATTACHMENT": "${attachmentUploadedTopicArn}",
+    "URI_ELEMENTS_RESOURCE": "${elementsTableName}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}

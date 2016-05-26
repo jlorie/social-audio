@@ -8,6 +8,8 @@ export default (event, context) => {
     genre: event.genre,
     birthdate: event.birthdate,
     password: event.password,
+    created_at: new Date().toISOString(),
+    modified_at: new Date().toISOString()
   };
 
   console.info('Input: ' + JSON.stringify(input, null, 2));

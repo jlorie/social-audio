@@ -1,0 +1,35 @@
+{
+  "Records": [{
+    "eventVersion": "2.0",
+    "eventSource": "aws:s3",
+    "awsRegion": "us-east-1",
+    "eventTime": "2016-05-25T21:48:17.999Z",
+    "eventName": "ObjectCreated:Copy",
+    "userIdentity": {
+      "principalId": "AWS:AIDAJILS4H3KYIDHJYTJ4"
+    },
+    "requestParameters": {
+      "sourceIPAddress": "181.39.138.19"
+    },
+    "responseElements": {
+      "x-amz-request-id": "E84DB9E7D046B11E",
+      "x-amz-id-2": "oTTamtXJfQClYj9r7bjDuxgSlaUB1+MVXJany5VQESK/O1uxrRoQTU6Vqdtd9Izz"
+    },
+    "s3": {
+      "s3SchemaVersion": "1.0",
+      "configurationId": "ZWM1ZGNhMmItZThkMi00MThhLTlhZTctZjQ4OTBlYTYyYjY2",
+      "bucket": {
+        "name": "dev-bbluue-upload",
+        "ownerIdentity": {
+          "principalId": "A1ASAS77MCDN3P"
+        },
+        "arn": "arn:aws:s3:::dev-bbluue-upload"
+      },
+      "object": {
+        "key": "test-image.jpg",
+        "size": 43350,
+        "sequencer": "0057461DA1E1A98945"
+      }
+    }
+  }]
+}
