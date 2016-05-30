@@ -4,7 +4,7 @@
   "description": "Serverless Lambda function for project: bbluue-audios",
   "customName": false,
   "customRole": false,
-  "handler": "handler.default",
+  "handler": "elements-bind-users/handler.default",
   "timeout": 6,
   "memorySize": 1024,
   "authorizer": {},
