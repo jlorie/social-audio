@@ -22,6 +22,7 @@
         "Path": "/"
       }
     },
+
     "IamPolicyLambda": {
       "Type": "AWS::IAM::Policy",
       "Properties": {
@@ -44,7 +45,11 @@
               "dynamodb:PutItem",
               "dynamodb:Query",
               "dynamodb:Scan",
-              "dynamodb:UpdateItem"
+              "dynamodb:UpdateItem",
+              "dynamodb:GetRecords",
+              "dynamodb:GetShardIterator",
+              "dynamodb:DescribeStream",
+              "dynamodb:ListStreams"
             ],
             "Resource": [
               "*"
@@ -101,6 +106,7 @@
         }]
       }
     },
+
     "UsersDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
@@ -136,6 +142,7 @@
         }]
       }
     },
+
     "ElementsDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
@@ -157,6 +164,7 @@
         }
       }
     },
+
     "ElementsByUsersDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
@@ -181,6 +189,7 @@
         "TableName": "${stage}-elements-by-users"
       }
     },
+
     "ElementsBucket": {
       "Type": "AWS::S3::Bucket",
       "Properties": {
@@ -193,12 +202,21 @@
         "BucketName": "${stage}-bbluue-upload"
       }
     },
+
     "RegisteredUserTopic": {
       "Type": "AWS::SNS::Topic",
       "Properties": {
         "TopicName": "${stage}-registered-user"
       }
     },
+
+    "RegisteredElementTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "${stage}-registered-element"
+      }
+    },
+
     "AttachmentUploadedTopic": {
       "Type": "AWS::SNS::Topic",
       "Properties": {
@@ -252,6 +270,11 @@
     "RegisteredUserTopicArn": {
       "Value": {
         "Ref": "RegisteredUserTopic"
+      }
+    },
+    "RegisteredElementTopicArn": {
+      "Value": {
+        "Ref": "RegisteredElementTopic"
       }
     },
     "AttachmentUploadedTopicArn": {

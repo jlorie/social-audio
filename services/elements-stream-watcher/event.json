@@ -1,0 +1,45 @@
+{
+  "Records": [{
+    "eventName": "INSERT",
+    "dynamodb": {
+      "ApproximateCreationDateTime": 1464627180,
+      "Keys": {
+        "id": {
+          "S": "fcb25e80-2686-11e6-8545-8d39344d67d4"
+        }
+      },
+      "NewImage": {
+        "original_md5": {
+          "S": "690d733bb7e8c7f3829a951384ce9ae6"
+        },
+        "user_id": {
+          "S": "d9d77ea5-4d11-4610-a359-14dfd5e4b7f7"
+        },
+        "latitude": {
+          "S": "-0.19734654575604698712"
+        },
+        "created_at": {
+          "S": "2016-05-30T16:53:03Z"
+        },
+        "id": {
+          "S": "fcb25e80-2686-11e6-8545-8d39344d67d4"
+        },
+        "modified_at": {
+          "S": "2016-05-30T16:53:08.839Z"
+        },
+        "type": {
+          "S": "image"
+        },
+        "source_url": {
+          "S": "https://s3.amazonaws.com/dev-bbluue-upload/ED61460B-C598-4031-8FF4-D4F92D2840C1-3730-000004273641548B.png"
+        },
+        "longitude": {
+          "S": "-78.44428374439333140344"
+        }
+      },
+      "SequenceNumber": "100000000005302696215",
+      "SizeBytes": 416,
+      "StreamViewType": "NEW_AND_OLD_IMAGES"
+    }
+  }]
+}

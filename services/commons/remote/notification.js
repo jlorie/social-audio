@@ -1,12 +1,11 @@
 const AWS = require('aws-sdk');
 
-// Setting up AWS
-const sns = new AWS.SNS();
-
 class Notification {
   constructor(topic, region = 'us-east-1') {
     AWS.config.update({ region });
+
     this.topic = topic;
+    this.sns = new AWS.SNS();
   }
 
   notify(message) {
@@ -16,7 +15,7 @@ class Notification {
     };
 
     let result = (resolve, reject) => {
-      sns.publish(notificationInfo, (err, data) => {
+      this.sns.publish(notificationInfo, (err, data) => {
         if (err) {
           return reject(err);
         }
@@ -35,7 +34,7 @@ class Notification {
     };
 
     let result = (resolve, reject) => {
-      sns.publish(notificationInfo, (err, data) => {
+      this.sns.publish(notificationInfo, (err, data) => {
         if (err) {
           return reject(err);
         }

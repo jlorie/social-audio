@@ -1,11 +1,13 @@
-import UserModel from '../commons/resources/user-model';
-const users = new UserModel('dev-users');
+import ElementModel from '../commons/resources/element-model';
+const elements = new ElementModel('dev-elements');
 
 export default (event, context) => {
-  let id = '480dad60-235f-11e6-ac06-ed503785c7b5';
-  let username = 'calvarez@bbluue.com';
+  let userId = '0a73b017-e66c-4a41-bc58-ff4eb3e81db3';
+  let query = {
+    original_md5: 'f938cb14436898972b08f8ca88f9738e'
+  };
 
-  return users.getByUsername(username)
+  return elements.get({ userId, query })
     .then(result => {
       console.warn('==> Result: ', JSON.stringify(result, null, 2));
       return result;
