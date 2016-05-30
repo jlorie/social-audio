@@ -47,9 +47,11 @@ function getCredentials(user) {
   return provider.getUserCredentials(params)
     .then(credentials => {
       // setting userId to credentials
-      credentials.userId = user._id;
+      credentials.userId = user.id;
       credentials.userStatus = user.status;
 
+      console.warn('=> User: ', JSON.stringify(user, null, 2));
+      console.warn('=> Credentials: ', JSON.stringify(credentials, null, 2));
       return credentials;
     });
 }
