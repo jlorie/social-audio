@@ -21,7 +21,7 @@ class ResourceModel {
     };
 
     // resolving expressions for query
-    const { expressions, attrValues } = resolveExpression(query);
+    const { expressions, attrValues } = this._resolveExpression(query);
     if (expressions.length) {
       params.FilterExpression = expressions.join(',');
       params.ExpressionAttributeValues = attrValues;
@@ -104,12 +104,12 @@ class ResourceModel {
     return new Promise(func);
   }
 
-  update(id, data) {
-    const { expressions, attrValues } = resolveExpression(data);
+  update(key, data) {
+    const { expressions, attrValues } = this._resolveExpression(data);
 
     let params = {
       TableName: this.tableName,
-      Key: { id },
+      Key: key,
       UpdateExpression: `set ${expressions.join(',')}`,
       ExpressionAttributeValues: attrValues,
       ReturnValues: 'ALL_NEW'
@@ -146,30 +146,30 @@ class ResourceModel {
 
     return new Promise(func);
   }
-}
 
-function resolveExpression(data, parent) {
-  // calculating prefix for expressions
-  let prefix = '';
-  if (parent) {
-    prefix = `${parent}.`;
-  }
-
-  let expressions = [];
-  let attrValues = {};
-  for (let field in data) {
-    if (_.isObject(data[field])) {
-      // Getting expressions for inner object
-      const innerExpressions = resolveExpression(data[field], field);
-      expressions = _.concat(expressions, innerExpressions.expressions);
-      attrValues = _.merge(attrValues, innerExpressions.attrValues);
-    } else {
-      expressions.push(`${prefix}${field} = :${prefix}${field}`);
-      attrValues[`:${prefix}${field}`] = data[field];
+  _resolveExpression(data, parent) {
+    // calculating prefix for expressions
+    let prefix = '';
+    if (parent) {
+      prefix = `${parent}.`;
     }
-  }
 
-  return { expressions, attrValues };
+    let expressions = [];
+    let attrValues = {};
+    for (let field in data) {
+      if (_.isObject(data[field])) {
+        // Getting expressions for inner object
+        const innerExpressions = this._resolveExpression(data[field], field);
+        expressions = _.concat(expressions, innerExpressions.expressions);
+        attrValues = _.merge(attrValues, innerExpressions.attrValues);
+      } else {
+        expressions.push(`${prefix}${field} = :${prefix}${field}`);
+        attrValues[`:${prefix}${field}`] = data[field];
+      }
+    }
+
+    return { expressions, attrValues };
+  }
 }
 
 export default ResourceModel;

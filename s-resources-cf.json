@@ -142,7 +142,25 @@
         "AttributeDefinitions": [{
           "AttributeName": "id",
           "AttributeType": "S"
-        }, {
+        }],
+        "KeySchema": [{
+          "AttributeName": "id",
+          "KeyType": "HASH"
+        }],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "${db-rcu}",
+          "WriteCapacityUnits": "${db-wcu}"
+        },
+        "TableName": "${stage}-elements",
+        "StreamSpecification": {
+          "StreamViewType": "NEW_AND_OLD_IMAGES"
+        }
+      }
+    },
+    "ElementsByUsersDynamoTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [{
           "AttributeName": "user_id",
           "AttributeType": "S"
         }, {
@@ -160,21 +178,7 @@
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
-        "TableName": "${stage}-elements",
-        "GlobalSecondaryIndexes": [{
-          "IndexName": "index-id",
-          "KeySchema": [{
-            "AttributeName": "id",
-            "KeyType": "HASH"
-          }],
-          "Projection": {
-            "ProjectionType": "ALL"
-          },
-          "ProvisionedThroughput": {
-            "ReadCapacityUnits": "${db-rcu}",
-            "WriteCapacityUnits": "${db-wcu}"
-          }
-        }]
+        "TableName": "${stage}-elements-by-users"
       }
     },
     "ElementsBucket": {
@@ -220,6 +224,19 @@
     "ElementsTableName": {
       "Value": {
         "Ref": "ElementsDynamoTable"
+      }
+    },
+    "ElementsStreamArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ElementsDynamoTable",
+          "StreamArn"
+        ]
+      }
+    },
+    "ElementsByUsersTableName": {
+      "Value": {
+        "Ref": "ElementsByUsersDynamoTable"
       }
     },
     "ElementsBucketName": {

@@ -28,9 +28,10 @@ function extractMetadata(fileInfo) {
 
   const metadata = {
     original_md5: fileInfo.ETag.replace(/"/g, ''), // remove extra "
-    user_id: fileInfo.Metadata.user_id,
-    longitude: fileInfo.Metadata.longitude,
-    latitude: fileInfo.Metadata.latitude,
+    owner_id: fileInfo.Metadata.user_id,
+    location_info: {
+      coordinates: [fileInfo.Metadata.latitude, fileInfo.Metadata.longitude]
+    },
     created_at: fileInfo.Metadata.created_at,
     type: fileInfo.ContentType.split('/')[0],
     attached_to: fileInfo.Metadata.attached_to,
@@ -43,7 +44,6 @@ function extractMetadata(fileInfo) {
 
 function createElement(elementInfo) {
   if (elementInfo.attached_to) {
-    console.info('Adding attachment to element with md5 ' + elementInfo.original_md5);
     return attach(elementInfo);
   }
 

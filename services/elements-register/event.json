@@ -19,6 +19,7 @@
       "s3SchemaVersion": "1.0",
       "configurationId": "ZWM1ZGNhMmItZThkMi00MThhLTlhZTctZjQ4OTBlYTYyYjY2",
       "bucket": {
+        "_name": "dev-bbluue-upload",
         "name": "dev-bbluue-upload",
         "ownerIdentity": {
           "principalId": "A1ASAS77MCDN3P"
@@ -26,7 +27,7 @@
         "arn": "arn:aws:s3:::dev-bbluue-upload"
       },
       "object": {
-        "key": "test-image.jpg",
+        "key": "test-image-2.jpg",
         "size": 43350,
         "sequencer": "0057461DA1E1A98945"
       }

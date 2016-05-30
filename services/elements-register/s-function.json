@@ -25,7 +25,8 @@
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
     "TOPIC_UPLOADED_ATTACHMENT": "${attachmentUploadedTopicArn}",
-    "URI_ELEMENTS_RESOURCE": "${elementsTableName}"
+    "URI_ELEMENTS_RESOURCE": "${elementsTableName}",
+    "BUCKET_ELEMENT_FILES": "${elementsBucketName}"
   },
   "vpc": {
     "securityGroupIds": [],
