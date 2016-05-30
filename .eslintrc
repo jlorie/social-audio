@@ -12,6 +12,8 @@
     "radix" : 0,
     "new-cap" : 1,
     "prefer-const" : 0,
-    "no-shadow": 0
+    "no-shadow": 0,
+    "camelcase": 1,
+    "indent": 1
   }
 }

@@ -1,0 +1,33 @@
+{
+  "name": "images-resize",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: bbluue-audios",
+  "customName": false,
+  "customRole": false,
+  "handler": "images-resize/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [{
+    "name": "new-image-event",
+    "type": "sns",
+    "config": {
+      "topicName": "${registeredElementTopicArn}"
+    }
+  }],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "BUCKET_ELEMENTS_FILES": "${elementsBucketName}",
+    "URI_ELEMENTS": "${elementsTableName}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}

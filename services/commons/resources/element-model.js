@@ -6,6 +6,10 @@ class ElementModel extends ResourceModel {
     super(uri, region);
   }
 
+  update(id, updateData) {
+    return super.update({ id }, updateData);
+  }
+
   get({ userId, filters, attributes }) {
     let params = {
       TableName: this.tableName,

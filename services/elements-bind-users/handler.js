@@ -1,5 +1,6 @@
 import { bindElement } from './bind-elements';
 import { extractObjectFromSNSMessage } from '../commons/helpers/utils';
+
 export default (event, context) => {
   let input = extractObjectFromSNSMessage(event);
   console.info('=> Input: ', JSON.stringify(input, null, 2));

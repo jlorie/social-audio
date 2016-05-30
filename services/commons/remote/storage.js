@@ -1,5 +1,3 @@
-'use strict';
-
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 const fs = require('fs');
@@ -7,47 +5,50 @@ const { extractArgsFromUrl, generateUrlFromArgs } = require('../helpers/utils');
 
 class Storage {
 
-  static uploadFile(filePath, dest, callback) {
+  static uploadFile({ buffer, filePath, dest }) {
     // NOTE dest format: bucket/key
     const bucket = dest.split('/').slice(0, 1)[0];
     const key = dest.split('/').slice(1).join('/');
 
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        return callback(err);
-      }
+    return getData({ buffer, filePath })
+      .then(data => {
+        let func = (resolve, reject) => {
+          s3.putObject({
+            Bucket: bucket,
+            Key: key,
+            Body: data
+          }, err => {
+            if (err) {
+              reject(err);
+            }
 
-      s3.putObject({
-        Bucket: bucket,
-        Key: key,
-        Body: data
+            resolve(generateUrlFromArgs(bucket, key));
+          });
+        };
 
-      }, (error) => {
-        if (error) {
-          return callback(error);
-        }
-
-        return callback(null, generateUrlFromArgs(bucket, key));
+        return new Promise(func);
       });
-    });
   }
 
-  static getFileData(sourceUrl, callback) {
+  static getFileData(sourceUrl) {
     // Splitting url to get bucket and key
     let arr = sourceUrl.split('/');
 
-    s3.getObject({
-      Bucket: arr[3],
-      Key: arr[4]
+    let func = (resolve, reject) => {
+      s3.getObject({
+        Bucket: arr[3],
+        Key: arr[4]
 
-    }, (err, data) => {
-      if (err) {
-        console.error('An error ocurred while getting file from ', sourceUrl);
-        return callback(err);
-      }
+      }, (err, data) => {
+        if (err) {
+          return reject(err);
+        }
 
-      callback(null, data);
-    });
+        resolve(data);
+      });
+    };
+
+    return new Promise(func);
   }
 
   static downloadFile(sourceUrl, destination, callback) {
@@ -126,5 +127,24 @@ class Storage {
   }
 
 }
+
+function getData({ buffer, filePath }) {
+  let func = (resolve, reject) => {
+    if (buffer) {
+      return resolve(buffer);
+    }
+
+    fs.readFile(filePath, (err, data) => {
+      if (err) {
+        return reject(err);
+      }
+
+      resolve(data);
+    });
+  }
+
+  return new Promise(func);
+}
+
 
 module.exports = Storage;
