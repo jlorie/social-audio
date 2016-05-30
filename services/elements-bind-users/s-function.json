@@ -1,10 +1,10 @@
 {
-  "name": "elements-stream-watcher",
+  "name": "elements-bind-users",
   "runtime": "babel",
   "description": "Serverless Lambda function for project: bbluue-audios",
   "customName": false,
   "customRole": false,
-  "handler": "elements-stream-watcher/handler.default",
+  "handler": "handler.default",
   "timeout": 6,
   "memorySize": 1024,
   "authorizer": {},
@@ -13,18 +13,17 @@
   },
   "endpoints": [],
   "events": [{
-    "name": "elements-stream-event",
-    "type": "dynamodbstream",
+    "name": "registered-element-event",
+    "type": "sns",
     "config": {
-      "streamArn": "${elementsStreamArn}",
-      "enabled": true
+      "topicName": "${registeredElementTopicArn}"
     }
   }],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-    "TOPIC_REGISTERED_ELEMENT": "${registeredElementTopicArn}"
+    "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}"
   },
   "vpc": {
     "securityGroupIds": [],
