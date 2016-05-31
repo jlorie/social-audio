@@ -30,9 +30,10 @@ function extractMetadata(fileInfo) {
     original_md5: fileInfo.ETag.replace(/"/g, ''), // remove extra "
     owner_id: fileInfo.Metadata.user_id,
     location_info: {
-      coordinates: [fileInfo.Metadata.latitude, fileInfo.Metadata.longitude]
+      coordinates: [fileInfo.Metadata.latitude, fileInfo.Metadata.longitude],
+      address: fileInfo.Metadata.address
     },
-    created_at: fileInfo.Metadata.created_at,
+    created_at: formatDate(fileInfo.Metadata.created_at),
     type: fileInfo.ContentType.split('/')[0],
     attached_to: fileInfo.Metadata.attached_to,
     source_url: fileInfo.url,
@@ -49,4 +50,9 @@ function createElement(elementInfo) {
 
   console.info('Registering new element ...');
   return elementModel.create(elementInfo);
+}
+
+function formatDate(date) {
+  let newDate = new Date(date);
+  return newDate.toISOString();
 }
