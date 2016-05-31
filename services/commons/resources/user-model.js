@@ -1,4 +1,5 @@
 import ResourceModel from './resource-model';
+import _ from 'lodash';
 
 class UserModel extends ResourceModel {
   constructor(uri, region = 'us-east-1') {
@@ -23,6 +24,38 @@ class UserModel extends ResourceModel {
         }
 
         resolve(result.Item);
+      });
+    };
+
+    return new Promise(func);
+  }
+
+  getByUsernames(usernames) {
+    // TODO support for more than 25 items
+    let params = {
+      RequestItems: {}
+    };
+
+    let getRequests = [];
+    for (let username of usernames) {
+      getRequests.push({ username });
+    }
+
+    params.RequestItems[this.tableName] = {};
+    params.RequestItems[this.tableName].Keys = getRequests;
+
+    const func = (resolve, reject) => {
+      this.dynamo.batchGet(params, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+
+        let failedSomeReads = _.values(result.UnprocessedItems).length > 0;
+        if (failedSomeReads) {
+          return reject(new Error('BatchReadFailed'));
+        }
+
+        resolve(result.Responses[this.tableName]);
       });
     };
 

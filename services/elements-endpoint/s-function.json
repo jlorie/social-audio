@@ -31,6 +31,16 @@
     "requestParameters": {},
     "requestTemplates": "$${detailRequest}",
     "responses": "$${responsesForGet}"
+  }, {
+    "path": "elements/share/{id}",
+    "method": "POST",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${shareRequest}",
+    "responses": "$${responsesForGet}"
   }],
   "events": [],
   "environment": {
@@ -38,7 +48,8 @@
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
     "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
-    "URI_ELEMENTS": "${elementsTableName}"
+    "URI_ELEMENTS": "${elementsTableName}",
+    "URI_USERS": "${usersTableName}"
   },
   "vpc": {
     "securityGroupIds": [],

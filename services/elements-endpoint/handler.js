@@ -1,16 +1,17 @@
 import { listElements } from './list-elements';
 import { detailElement } from './detail-element';
+import { shareElement } from './share-element';
 
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
 
   return handleRequest(event)
     .then(result => {
-      console.error('==> Success: ', JSON.stringify(result, null, 2));
+      console.info('==> Success: ', JSON.stringify(result, null, 2));
       context.succeed(result);
     })
     .catch(err => {
-      console.error('==> An error occurred. ', err.stack);
+      console.info('==> An error occurred. ', err.stack);
 
       let error = {
         status: 'ERROR',
@@ -33,6 +34,11 @@ function handleRequest(input) {
     case 'detail':
       {
         result = detailElement(input.element_id, userId);
+        break;
+      }
+    case 'share':
+      {
+        result = shareElement(input.element_id, userId, input.usernames);
         break;
       }
     default:
