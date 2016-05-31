@@ -1,4 +1,5 @@
 {
-  "action": "list",
-  "identity_id": "us-east-1:d9d77ea5-4d11-4610-a359-14dfd5e4b7f7"
+  "action": "detail",
+  "element_id": "9cce1fc0-2750-11e6-85a8-77f37449838c",
+  "identity_id": "us-east-1:0a73b017-e66c-4a41-bc58-ff4eb3e81db3"
 }

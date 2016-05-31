@@ -21,13 +21,24 @@
     "requestParameters": {},
     "requestTemplates": "$${listRequest}",
     "responses": "$${responsesForGet}"
+  }, {
+    "path": "elements/{id}",
+    "method": "GET",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${detailRequest}",
+    "responses": "$${responsesForGet}"
   }],
   "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-    "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}"
+    "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
+    "URI_ELEMENTS": "${elementsTableName}"
   },
   "vpc": {
     "securityGroupIds": [],

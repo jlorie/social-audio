@@ -26,16 +26,18 @@ export function register({ bucket, key }) {
 function extractMetadata(fileInfo) {
   console.info('Extracting metadata from file ...');
 
+  const meta = fileInfo.Metadata;
   const metadata = {
     original_md5: fileInfo.ETag.replace(/"/g, ''), // remove extra "
-    owner_id: fileInfo.Metadata.user_id,
+    owner_id: meta.user_id,
     location_info: {
-      coordinates: [fileInfo.Metadata.latitude, fileInfo.Metadata.longitude],
-      address: fileInfo.Metadata.address
+      coordinates: [meta.latitude, meta.longitude],
+      address: meta.address
     },
-    created_at: formatDate(fileInfo.Metadata.created_at),
+    created_at: formatDate(meta.created_at),
     type: fileInfo.ContentType.split('/')[0],
-    attached_to: fileInfo.Metadata.attached_to,
+    attached_to: meta.attached_to,
+    public: meta.public,
     source_url: fileInfo.url,
     modified_at: new Date().toISOString()
   };

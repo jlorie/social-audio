@@ -17,7 +17,9 @@ export function attach(attachment) {
           let attachmentData = {
             type: attachment.type,
             source_url: attachmentUrl,
-            md5: attachment.original_md5
+            md5: attachment.original_md5,
+            public: attachment.public,
+            user_id: attachment.user_id
           };
 
           console.warn('Adding an attachment to element with id ' + source.id);

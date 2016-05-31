@@ -1,4 +1,6 @@
 import { listElements } from './list-elements';
+import { detailElement } from './detail-element';
+
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
 
@@ -20,11 +22,17 @@ export default (event, context) => {
 
 function handleRequest(input) {
   let result;
+  let userId = input.identity_id.split(':').pop();
+
   switch (input.action) {
     case 'list':
       {
-        let userId = input.identity_id.split(':').pop();
         result = listElements(userId);
+        break;
+      }
+    case 'detail':
+      {
+        result = detailElement(input.element_id, userId);
         break;
       }
     default:

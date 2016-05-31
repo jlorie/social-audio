@@ -1,5 +1,4 @@
 import ResourceModel from './resource-model';
-import _ from 'lodash';
 
 class ElementModel extends ResourceModel {
   constructor(uri, region = 'us-east-1') {
@@ -10,39 +9,22 @@ class ElementModel extends ResourceModel {
     return super.update({ id }, updateData);
   }
 
-  get({ userId, filters, attributes }) {
+  getById(id) {
     let params = {
       TableName: this.tableName,
-      KeyConditionExpression: 'user_id = :user_id',
+      KeyConditionExpression: 'id = :id',
       ExpressionAttributeValues: {
-        ':user_id': userId,
-      },
-      ScanIndexForward: false
+        ':id': id,
+      }
     };
 
-    // getting only attributes requested
-    if (attributes) {
-      params.ProjectionExpression = attributes;
-    }
-
-    // resolving expressions for query
-    const { expressions, attrValues } = this._resolveExpression(filters);
-    if (expressions.length) {
-      params.FilterExpression = expressions.join(',');
-      params.ExpressionAttributeValues = _.merge(attrValues, params.ExpressionAttributeValues);
-    }
-
     const func = (resolve, reject) => {
-      this.dynamo.query(params, (err, data) => {
+      this.dynamo.query(params, (err, result) => {
         if (err) {
           return reject(err);
         }
 
-        let result = {
-          items: data.Items,
-          next: data.LastEvaluatedKey
-        };
-        resolve(result);
+        resolve(result.Items[0]);
       });
     };
 

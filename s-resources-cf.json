@@ -195,6 +195,9 @@
           "KeySchema": [{
             "AttributeName": "id",
             "KeyType": "HASH"
+          }, {
+            "AttributeName": "user_id",
+            "KeyType": "RANGE"
           }],
           "Projection": {
             "ProjectionType": "ALL"

@@ -1,5 +1,8 @@
 {
   "listRequest": {
     "application/json": "{ \"action\": \"list\", \"identity_id\": \"$context.identity.cognitoIdentityId\" }"
+  },
+  "detailRequest": {
+    "application/json": "{ \"action\": \"detail\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\" }"
   }
 }

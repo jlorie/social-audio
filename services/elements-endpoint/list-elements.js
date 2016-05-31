@@ -1,12 +1,12 @@
-import ElementModel from '../commons/resources/element-model';
+import ElementUserModel from '../commons/resources/element-user-model';
 
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
 
-const elementModel = new ElementModel(URI_ELEMENTS_BY_USERS);
+const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 export function listElements(userId) {
   console.info('Querying elements for user with id ' + userId);
 
-  return elementModel.get({ userId })
+  return elementsByUserModel.get({ userId })
     .then(formatResults);
 }
 
