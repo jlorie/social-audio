@@ -1,24 +1,39 @@
-import ElementModel from '../commons/resources/element-model';
-const elements = new ElementModel('dev-elements');
+import _ from 'lodash';
+
+function _resolveExpression(data, parent) {
+  // calculating prefix for expressions
+  let prefix = '';
+  if (parent) {
+    prefix = `${parent}.`;
+  }
+
+  let expressions = [];
+  let attrValues = {};
+  for (let field in data) {
+    if (_.isPlainObject(data[field])) {
+      // Getting expressions for inner object
+      const innerExpressions = _resolveExpression(data[field], field);
+      expressions = _.concat(expressions, innerExpressions.expressions);
+      attrValues = _.merge(attrValues, innerExpressions.attrValues);
+    } else {
+      expressions.push(`${prefix}${field} = :${prefix}${field}`);
+      attrValues[`:${prefix}${field}`] = data[field];
+    }
+  }
+
+  return { expressions, attrValues };
+}
 
 export default (event, context) => {
-  let arr = [1, 2];
-  let [one, two] = arr;
+  let data = {
+    audios: [{
+      id: '6d9b40cdd0d22f49c9093cfe960178c6',
+      source_url: 'https://s3.amazonaws.com/dev-bbluue-files/audio/attachment-6d9b40cdd0d22f49c9093cfe960178c6.caf'
+    }]
+  };
 
-  console.log(`one: ${one}, two: ${two}`);
+  const { expressions, attrValues } = _resolveExpression(data);
+  console.log('==> expression: ', `set ${expressions.join(',')}`);
+
   return 'End!';
-  // let userId = '0a73b017-e66c-4a41-bc58-ff4eb3e81db3';
-  // let query = {
-  //   original_md5: 'f938cb14436898972b08f8ca88f9738e'
-  // };
-  //
-  // return elements.get({ userId, query })
-  //   .then(result => {
-  //     console.warn('==> Result: ', JSON.stringify(result, null, 2));
-  //     return result;
-  //   })
-  //   .catch(err => {
-  //     console.error('==> Error: ', err);
-  //     throw err;
-  //   });
 };

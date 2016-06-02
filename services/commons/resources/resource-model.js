@@ -128,10 +128,10 @@ class ResourceModel {
     return new Promise(func);
   }
 
-  remove(id) {
+  remove(key) {
     let params = {
       TableName: this.tableName,
-      Key: { id }
+      Key: key
     };
 
     const func = (resolve, reject) => {
@@ -147,6 +147,33 @@ class ResourceModel {
     return new Promise(func);
   }
 
+  _batchWrite(requests) {
+    // batch write
+    // TODO support for more than 25 items
+
+    let params = {
+      RequestItems: {}
+    };
+    params.RequestItems[this.tableName] = requests;
+
+    let promise = (resolve, reject) => {
+      this.dynamo.batchWrite(params, (err, data) => {
+        if (err) {
+          return reject(err);
+        }
+
+        let failedSomeWrites = _.values(data.UnprocessedItems).length > 0;
+        if (failedSomeWrites) {
+          return reject(new Error('BatchWriteFailed'));
+        }
+
+        resolve('success');
+      });
+    };
+
+    return new Promise(promise);
+  }
+
   _resolveExpression(data, parent) {
     // calculating prefix for expressions
     let prefix = '';
@@ -157,7 +184,7 @@ class ResourceModel {
     let expressions = [];
     let attrValues = {};
     for (let field in data) {
-      if (_.isObject(data[field])) {
+      if (_.isPlainObject(data[field])) {
         // Getting expressions for inner object
         const innerExpressions = this._resolveExpression(data[field], field);
         expressions = _.concat(expressions, innerExpressions.expressions);
@@ -169,6 +196,36 @@ class ResourceModel {
     }
 
     return { expressions, attrValues };
+  }
+
+  _resolveDeleteRequests(keys) {
+    let deleteRequests = [];
+    for (let key of keys) {
+      let request = {
+        DeleteRequest: {
+          Key: key
+        }
+      };
+
+      deleteRequests.push(request);
+    }
+
+    return deleteRequests;
+  }
+
+  _resolvePutRequests(items) {
+    let putRequests = [];
+    for (let item of items) {
+      let request = {
+        PutRequest: {
+          Item: item
+        }
+      };
+
+      putRequests.push(request);
+    }
+
+    return putRequests;
   }
 }
 

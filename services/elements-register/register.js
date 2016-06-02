@@ -5,6 +5,7 @@ import { generateUrlFromArgs } from '../commons/helpers/utils';
 import { attach } from './attach';
 import { shareElement } from './share-element';
 
+const YES = 'yes';
 const URI_ELEMENTS_RESOURCE = process.env.URI_ELEMENTS_RESOURCE;
 
 const elementModel = new ElementModel(URI_ELEMENTS_RESOURCE);
@@ -38,7 +39,7 @@ function extractMetadata(fileInfo) {
     created_at: formatDate(meta.created_at),
     type: fileInfo.ContentType.split('/')[0],
     attached_to: meta.attached_to,
-    public: meta.public,
+    public: meta.public === YES,
     source_url: fileInfo.url,
     modified_at: new Date().toISOString(),
     share_with: meta.share_with

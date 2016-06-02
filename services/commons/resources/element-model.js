@@ -1,4 +1,5 @@
 import ResourceModel from './resource-model';
+import _ from 'lodash';
 
 class ElementModel extends ResourceModel {
   constructor(uri, region = 'us-east-1') {
@@ -31,19 +32,25 @@ class ElementModel extends ResourceModel {
     return new Promise(func);
   }
 
-  attachFile(elementId, attachmentData) {
-    return this.getById(elementId)
+  remove(ids) {
+    if (_.isArray(ids)) {
+      let requests = this._resolveDeleteRequests(ids.map(id => ({ id })));
+      return this._batchWrite(requests);
+    }
+
+    return super.remove({ ids });
+  }
+
+  attachFile(id, attachmentData) {
+    return this.getById(id)
       .then(element => {
         let audios = element.audios || [];
         audios.push(attachmentData);
-        let key = {
-          user_id: element.user_id,
-          created_at: element.created_at
-        };
 
-        return this.update(key, { audios });
+        return this.update(id, { audios });
       });
   }
+
 }
 
 export default ElementModel;

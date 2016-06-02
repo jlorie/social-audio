@@ -10,29 +10,8 @@ class ElementUserModel extends ResourceModel {
 
   create(items) {
     if (_.isArray(items)) {
-      // batch write
-      // TODO support for more than 25 items
-      let params = {
-        RequestItems: {}
-      };
-      params.RequestItems[this.tableName] = this._resolvePutRequests(items);
-
-      let promise = (resolve, reject) => {
-        this.dynamo.batchWrite(params, (err, data) => {
-          if (err) {
-            return reject(err);
-          }
-
-          let failedSomeWrites = _.values(data.UnprocessedItems).length > 0;
-          if (failedSomeWrites) {
-            return reject(new Error('BatchWriteFailed'));
-          }
-
-          resolve('success');
-        });
-      };
-
-      return new Promise(promise);
+      let requests = this._resolvePutRequests(items);
+      return this._batchWrite(requests);
     }
 
     return super.create(items);
@@ -123,20 +102,6 @@ class ElementUserModel extends ResourceModel {
     return new Promise(func);
   }
 
-  _resolvePutRequests(items) {
-    let putRequests = [];
-    for (let item of items) {
-      let request = {
-        PutRequest: {
-          Item: item
-        }
-      };
-
-      putRequests.push(request);
-    }
-
-    return putRequests;
-  }
 }
 
 
