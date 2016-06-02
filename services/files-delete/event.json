@@ -1,0 +1,18 @@
+{
+  "Records": [{
+    "EventSource": "aws:sns",
+    "EventVersion": "1.0",
+    "EventSubscriptionArn": "arn:aws:sns:us-east-1:141310850160:registered-image:3a40c166-9982-439b-b8df-81bed83d0a84",
+    "Sns": {
+      "Type": "Notification",
+      "MessageId": "6ad543a1-e0a9-5e2f-8531-0c6b5494bbda",
+      "TopicArn": "arn:aws:sns:us-east-1:141310850160:dev-deleted-element",
+      "Message": "{\"owner_id\":\"d9d77ea5-4d11-4610-a359-14dfd5e4b7f7\",\"created_at\":\"2016-05-30T19:29:45.000Z\",\"id\":\"831ee19453e4bd16355080153ef1c9c6\",\"modified_at\":\"2016-06-02T16:37:21.556Z\",\"thumbnail_url\":\"https://s3.amazonaws.com/dev-bbluue-files/images/200p-c5f84d087c426aba57e45341dea55e37.jpg\",\"type\":\"image\",\"location_info\":{\"coordinates\":[\"-0.19739071838576102702\",\"-78.44431249432120978327\"]},\"source_url\":\"https://s3.amazonaws.com/dev-bbluue-files/images/720p-c5f84d087c426aba57e45341dea55e37.jpg\"}",
+      "Timestamp": "2016-06-02T22:23:57.115Z",
+      "SignatureVersion": "1",
+      "Signature": "IwajeBZtSXAL+ZaMN7o6s1LQGsEYsfd91gpRukF7qAedRlFUvGYHDgqpseXpLF/UqBdUFY3MMR2/wrk3bFVZMtrqY83HIkWqOvKFF4gylbPOBixtwyD+Fe42M/czfX3a+sjf2r27FR2FHC5NoAmrd9IrTyqnemJcxQE8I+k8DnWo4gG9NAfC6+EY0K2ClbuhgA0v0phDNL8lzgF3pH4IONeDldlCOMat7j2QCYA6oyQRR9unSzdsivG4SQsCukPaut7/zfT09iuk+4gNQniu1C1OFZNE6JJHIuOyT9ta/zF7P9S/C06FckKPDMG2+KxJaZ5HBK0Ghxlt/iunBxOWdA==",
+      "SigningCertURL": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-bb750dd426d95ee9390147a5624348ee.pem",
+      "UnsubscribeURL": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:141310850160:dev-deleted-element:f52475d1-3f7c-4aff-907c-7aad9e84e116"
+    }
+  }]
+}

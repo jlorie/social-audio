@@ -53,6 +53,11 @@ export function remove(elementId) {
 
   return elementsByUserModel.getById(elementId)
     .then(elements => {
+      let noRelationships = elements.length === 0;
+      if (noRelationships) {
+        return 'NoRelationships';
+      }
+
       console.info('Deleting ' + elements.length + ' relationships for ' + elementId);
 
       let keys = elements.map(item => {

@@ -126,6 +126,27 @@ class Storage {
     });
   }
 
+  static batchRemoveFiles(uris) {
+    let params = {
+      Bucket: extractArgsFromUrl(uris[0]).bucket,
+      Delete: {
+        Objects: uris.map(uri => ({ Key: extractArgsFromUrl(uri).key }))
+      }
+    };
+
+    let promise = (resolve, reject) => {
+      s3.deleteObjects(params, err => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve('success');
+      });
+    };
+
+    return new Promise(promise);
+  }
+
 }
 
 function getData({ buffer, filePath }) {
@@ -141,10 +162,9 @@ function getData({ buffer, filePath }) {
 
       resolve(data);
     });
-  }
+  };
 
   return new Promise(func);
 }
-
 
 module.exports = Storage;
