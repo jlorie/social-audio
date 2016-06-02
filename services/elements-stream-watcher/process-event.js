@@ -6,9 +6,12 @@ import { bind, update, remove } from './elements-users-binding';
 const INSERT = 'INSERT';
 const MODIFY = 'MODIFY';
 const REMOVE = 'REMOVE';
+
+const TOPIC_DELETED_ELEMENT = process.env.TOPIC_DELETED_ELEMENT;
 const TOPIC_REGISTERED_ELEMENT = process.env.TOPIC_REGISTERED_ELEMENT;
 
 const newElementNotify = new Notification(TOPIC_REGISTERED_ELEMENT);
+const deletedElementNotify = new Notification(TOPIC_DELETED_ELEMENT);
 
 export function processEvent(record) {
   let result;
@@ -33,7 +36,11 @@ export function processEvent(record) {
     case REMOVE:
       {
         let oldImage = dynamoDoc.dynamoToJs(record.dynamodb.OldImage);
-        result = remove(oldImage.id);
+        let tasks = [remove(oldImage.id), // remove relationships
+          deletedElementNotify.notify(JSON.stringify(oldImage)) // notify deleted element
+        ];
+
+        result = Promise.all(tasks);
         break;
       }
     default:

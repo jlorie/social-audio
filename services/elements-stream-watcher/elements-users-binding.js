@@ -2,6 +2,7 @@ import _ from 'lodash';
 import ElementUserModel from '../commons/resources/element-user-model';
 
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
+
 const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
 export function bind(element) {
@@ -48,6 +49,8 @@ export function update(oldData, newData) {
 }
 
 export function remove(elementId) {
+  // notify element deleted
+
   return elementsByUserModel.getById(elementId)
     .then(elements => {
       console.info('Deleting ' + elements.length + ' relationships for ' + elementId);

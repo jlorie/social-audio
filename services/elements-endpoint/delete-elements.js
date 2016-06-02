@@ -15,3 +15,7 @@ export function deleteElement(id, userId) {
       return elementModel.remove(id);
     });
 }
+
+export function deleteMultipleElements(ids, userId) {
+
+}

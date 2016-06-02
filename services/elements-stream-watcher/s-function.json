@@ -26,6 +26,7 @@
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
     "TOPIC_REGISTERED_ELEMENT": "${registeredElementTopicArn}",
+    "TOPIC_DELETED_ELEMENT": "${deletedElementTopicArn}",
     "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}"
   },
   "vpc": {
