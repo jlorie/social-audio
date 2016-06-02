@@ -3,6 +3,7 @@ import ElementModel from '../commons/resources/element-model';
 
 import { generateUrlFromArgs } from '../commons/helpers/utils';
 import { attach } from './attach';
+import { shareElement } from './share-element';
 
 const URI_ELEMENTS_RESOURCE = process.env.URI_ELEMENTS_RESOURCE;
 
@@ -28,7 +29,7 @@ function extractMetadata(fileInfo) {
 
   const meta = fileInfo.Metadata;
   const metadata = {
-    original_md5: fileInfo.ETag.replace(/"/g, ''), // remove extra "
+    id: fileInfo.ETag.replace(/"/g, ''), // remove extra "
     owner_id: meta.user_id,
     location_info: {
       coordinates: [meta.latitude, meta.longitude],
@@ -39,8 +40,13 @@ function extractMetadata(fileInfo) {
     attached_to: meta.attached_to,
     public: meta.public,
     source_url: fileInfo.url,
-    modified_at: new Date().toISOString()
+    modified_at: new Date().toISOString(),
+    share_with: meta.share_with
   };
+
+  if (!metadata.owner_id) {
+    throw new Error('Invalid parameters');
+  }
 
   return metadata;
 }
@@ -51,10 +57,20 @@ function createElement(elementInfo) {
   }
 
   console.info('Registering new element ...');
-  return elementModel.create(elementInfo);
+  return elementModel.create(elementInfo)
+    .then(newElement => {
+      console.info('==> New Element: ', JSON.stringify(newElement, null, 2));
+
+      // share
+      if (elementInfo.share_with) {
+        let shareWith = elementInfo.share_with.replace(/\s/g, '');
+        let usernames = shareWith.split(',');
+        return shareElement(newElement.owner_id, newElement.id, usernames);
+      }
+    });
 }
 
 function formatDate(date) {
-  let newDate = new Date(date);
+  let newDate = (date ? new Date(date) : new Date());
   return newDate.toISOString();
 }

@@ -21,7 +21,7 @@ export function update(oldData, newData) {
   let updateData = {};
 
   // check thumbnail
-  if (oldData.thumbnail_url !== newData.thumbnail_url) {
+  if (newData.thumbnail_url && oldData.thumbnail_url !== newData.thumbnail_url) {
     updateData.thumbnail_url = newData.thumbnail_url;
   }
 

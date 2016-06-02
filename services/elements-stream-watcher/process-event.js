@@ -31,7 +31,8 @@ export function processEvent(record) {
       }
     default:
       {
-        return 'Undefined action';
+        console.info('Unfined Action');
+        return new Promise(resolve => resolve('UndefinedAction'));
       }
   }
 

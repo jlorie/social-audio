@@ -22,12 +22,17 @@ export function detailElement(id, userId) {
       return elementModel.getById(id);
     })
     .then(element => {
-      // filter audios
       let isElementOwner = element.owner_id === userId;
+
+      // formating output
+      element.owner = isElementOwner;
+      delete element.owner_id;
+
       if (isElementOwner) {
         return element;
       }
 
+      // filter audios
       // show only public audios
       let restrictedAudios = [];
       for (let audio of element.audios) {

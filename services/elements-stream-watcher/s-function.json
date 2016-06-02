@@ -13,10 +13,11 @@
   },
   "endpoints": [],
   "events": [{
-    "name": "elements-stream-event",
+    "name": "elements-stream-events",
     "type": "dynamodbstream",
     "config": {
       "streamArn": "${elementsStreamArn}",
+      "startingPosition": "LATEST",
       "enabled": true
     }
   }],

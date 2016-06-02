@@ -48,6 +48,7 @@
               "dynamodb:Query",
               "dynamodb:Scan",
               "dynamodb:UpdateItem",
+              "dynamodb:GetRecords",
               "dynamodb:GetShardIterator",
               "dynamodb:DescribeStream",
               "dynamodb:ListStreams"
@@ -190,8 +191,24 @@
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
-        "TableName": "${stage}-elements-by-users"
-
+        "TableName": "${stage}-elements-by-users",
+        "GlobalSecondaryIndexes": [{
+          "IndexName": "index-id",
+          "KeySchema": [{
+            "AttributeName": "id",
+            "KeyType": "HASH"
+          }, {
+            "AttributeName": "user_id",
+            "KeyType": "RANGE"
+          }],
+          "Projection": {
+            "ProjectionType": "ALL"
+          },
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "${db-rcu}",
+            "WriteCapacityUnits": "${db-wcu}"
+          }
+        }]
       }
     },
 

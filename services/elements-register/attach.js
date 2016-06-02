@@ -15,9 +15,8 @@ export function attach(attachment) {
       return saveAttachment({ attachment, source })
         .then(attachmentUrl => {
           let attachmentData = {
-            type: attachment.type,
+            id: attachment.original_md5,
             source_url: attachmentUrl,
-            md5: attachment.original_md5,
             public: attachment.public,
             user_id: attachment.user_id
           };
