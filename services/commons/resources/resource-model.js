@@ -147,6 +147,11 @@ class ResourceModel {
     return new Promise(func);
   }
 
+  batchRemove(keys) {
+    let deleteRequests = this._resolveDeleteRequests(keys);
+    return this._batchWrite(deleteRequests);
+  }
+
   _batchWrite(requests) {
     // batch write
     // TODO support for more than 25 items

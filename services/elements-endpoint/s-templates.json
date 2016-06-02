@@ -5,6 +5,9 @@
   "detailRequest": {
     "application/json": "{ \"action\": \"detail\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\" }"
   },
+  "deleteRequest": {
+    "application/json": "{ \"action\": \"delete\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\" }"
+  },
   "shareRequest": {
     "application/json": "{ \"action\": \"share\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\", \"usernames\": $input.json('$.usernames') }"
   }

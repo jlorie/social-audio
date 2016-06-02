@@ -1,52 +1,15 @@
 {
   "Records": [{
-    "eventID": "7fc534faf87b110c6e72b08c23454999",
-    "eventName": "MODIFY",
+    "eventID": "b15881dd2ec3e53edc3dfb47450071c0",
+    "eventName": "REMOVE",
     "eventVersion": "1.1",
     "eventSource": "aws:dynamodb",
     "awsRegion": "us-east-1",
     "dynamodb": {
-      "ApproximateCreationDateTime": 1464885480,
+      "ApproximateCreationDateTime": 1464902880,
       "Keys": {
         "id": {
-          "S": "690d733bb7e8c7f3829a951384ce9ae6"
-        }
-      },
-      "NewImage": {
-        "owner_id": {
-          "S": "d9d77ea5-4d11-4610-a359-14dfd5e4b7f7"
-        },
-        "created_at": {
-          "S": "2016-05-30T16:53:03.000Z"
-        },
-        "share_with": {
-          "S": "jlorie@bbluue.com"
-        },
-        "id": {
-          "S": "690d733bb7e8c7f3829a951384ce9ae6"
-        },
-        "modified_at": {
-          "S": "2016-06-02T16:38:15.403Z"
-        },
-        "type": {
-          "S": "image"
-        },
-        "location_info": {
-          "M": {
-            "address": {
-              "S": "Havana, Cuba"
-            },
-            "coordinates": {
-              "L": [{
-                "S": "-0.19734654575604698712"
-              }, {
-                "S": "-78.44428374439333140344"
-              }]
-            }
-          }
-        },
-        "source_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-upload/ED61460B-C598-4031-8FF4-D4F92D2840C1-3730-000004273641548B.png"
+          "S": "c5f84d087c426aba57e45341dea55e37"
         }
       },
       "OldImage": {
@@ -54,43 +17,37 @@
           "S": "d9d77ea5-4d11-4610-a359-14dfd5e4b7f7"
         },
         "created_at": {
-          "S": "2016-05-30T16:53:03.000Z"
-        },
-        "share_with": {
-          "S": "jlorie@bbluue.com"
+          "S": "2016-05-30T19:29:45.000Z"
         },
         "id": {
-          "S": "690d733bb7e8c7f3829a951384ce9ae6"
+          "S": "c5f84d087c426aba57e45341dea55e37"
         },
         "modified_at": {
-          "S": "2016-06-02T16:37:22.161Z"
+          "S": "2016-06-02T16:37:21.556Z"
         },
         "thumbnail_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/200p-690d733bb7e8c7f3829a951384ce9ae6.jpg"
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/200p-c5f84d087c426aba57e45341dea55e37.jpg"
         },
         "type": {
           "S": "image"
         },
         "location_info": {
           "M": {
-            "address": {
-              "S": "Havana, Cuba"
-            },
             "coordinates": {
               "L": [{
-                "S": "-0.19734654575604698712"
+                "S": "-0.19739071838576102702"
               }, {
-                "S": "-78.44428374439333140344"
+                "S": "-78.44431249432120978327"
               }]
             }
           }
         },
         "source_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/720p-690d733bb7e8c7f3829a951384ce9ae6.jpg"
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/720p-c5f84d087c426aba57e45341dea55e37.jpg"
         }
       },
-      "SequenceNumber": "3700000000006967751485",
-      "SizeBytes": 918,
+      "SequenceNumber": "757700000000006177649844",
+      "SizeBytes": 473,
       "StreamViewType": "NEW_AND_OLD_IMAGES"
     },
     "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-elements/stream/2016-06-02T15:35:26.339"

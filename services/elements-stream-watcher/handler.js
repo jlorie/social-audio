@@ -5,11 +5,11 @@ export default (event, context) => {
 
   Promise.all(event.Records.map(processEvent))
     .then(result => {
-      console.error('==> Success: ', JSON.stringify(result, null, 2));
+      console.info('==> Success: ', JSON.stringify(result, null, 2));
       context.succeed(result);
     })
     .catch(err => {
-      console.error('==> An error occurred. ', err.stack);
+      console.info('==> An error occurred. ', err.stack);
 
       let error = {
         status: 'ERROR',

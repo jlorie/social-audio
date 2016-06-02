@@ -32,6 +32,16 @@
     "requestTemplates": "$${detailRequest}",
     "responses": "$${responsesForGet}"
   }, {
+    "path": "elements/{id}",
+    "method": "DELETE",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${deleteRequest}",
+    "responses": "$${responsesForGet}"
+  }, {
     "path": "elements/share/{id}",
     "method": "POST",
     "type": "AWS",
@@ -40,7 +50,7 @@
     "apiKeyRequired": false,
     "requestParameters": {},
     "requestTemplates": "$${shareRequest}",
-    "responses": "$${responsesForGet}"
+    "responses": "$${responsesForPost}"
   }],
   "events": [],
   "environment": {

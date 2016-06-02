@@ -18,6 +18,8 @@ export function bind(element) {
 }
 
 export function update(oldData, newData) {
+  console.info('Updating index for element ' + newData.id);
+
   let updateData = {};
 
   // check thumbnail
@@ -43,4 +45,21 @@ export function update(oldData, newData) {
   }
 
   return 'NoUpdate';
+}
+
+export function remove(elementId) {
+  return elementsByUserModel.getById(elementId)
+    .then(elements => {
+      console.info('Deleting ' + elements.length + ' relationships for ' + elementId);
+
+      let keys = elements.map(item => {
+        let key = {
+          user_id: item.user_id,
+          created_at: item.created_at
+        };
+
+        return key;
+      });
+      return elementsByUserModel.batchRemove(keys);
+    });
 }

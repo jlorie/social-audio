@@ -1,6 +1,7 @@
 import { listElements } from './list-elements';
 import { detailElement } from './detail-element';
 import { shareElement } from './share-element';
+import { deleteElement } from './delete-elements';
 
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
@@ -34,6 +35,11 @@ function handleRequest(input) {
     case 'detail':
       {
         result = detailElement(input.element_id, userId);
+        break;
+      }
+    case 'delete':
+      {
+        result = deleteElement(input.element_id, userId);
         break;
       }
     case 'share':

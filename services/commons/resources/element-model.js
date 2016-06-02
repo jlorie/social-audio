@@ -32,13 +32,9 @@ class ElementModel extends ResourceModel {
     return new Promise(func);
   }
 
-  remove(ids) {
-    if (_.isArray(ids)) {
-      let requests = this._resolveDeleteRequests(ids.map(id => ({ id })));
-      return this._batchWrite(requests);
-    }
-
-    return super.remove({ ids });
+  remove(id) {
+    // ids.map(id => ({ id }))
+    return super.remove({ id });
   }
 
   attachFile(id, attachmentData) {
