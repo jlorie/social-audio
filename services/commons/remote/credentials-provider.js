@@ -49,7 +49,7 @@ class CredentialProvider {
           RoleArn: this.identityRoleArn,
           RoleSessionName: username,
           WebIdentityToken: dataToken.Token,
-          DurationSeconds: 900
+          DurationSeconds: (60 * 60) // 1 hour
         };
 
         const sts = new AWS.STS();

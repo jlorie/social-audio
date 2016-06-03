@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import { listElements } from './list-elements';
 import { detailElement } from './detail-element';
 import { shareElement, shareMultipleElements } from './share-elements';
@@ -7,20 +9,23 @@ import { detachAudio } from './detach-audio';
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
 
-  return handleRequest(event)
-    .then(result => {
-      console.info('==> Success: ', JSON.stringify(result, null, 2));
-      context.succeed(result);
-    })
-    .catch(err => {
-      console.info('==> An error occurred. ', err.stack);
-
-      let error = {
-        status: 'ERROR',
-        message: err.message
-      };
-      context.fail(JSON.stringify(error));
-    });
+  try {
+    return handleRequest(event)
+      .then(result => {
+        console.info('==> Success: ', JSON.stringify(result, null, 2));
+        context.succeed(result);
+      })
+      .catch(err => {
+        console.info('==> An error occurred. ', err.stack);
+        throw err;
+      });
+  } catch (err) {
+    let error = {
+      status: 'ERROR',
+      message: err.message
+    };
+    context.fail(JSON.stringify(error));
+  }
 };
 
 function handleRequest(input) {
@@ -45,6 +50,10 @@ function handleRequest(input) {
       }
     case 'batch_delete':
       {
+        if (!_.isArray(input.element_ids) || input.element_ids.length === 0) {
+          throw new Error('InvalidParameters');
+        }
+
         result = deleteMultipleElements(input.element_ids, userId);
         break;
       }
@@ -65,7 +74,7 @@ function handleRequest(input) {
       }
     default:
       {
-        throw new Error('action not supported');
+        throw new Error('ActionNotSupported');
       }
   }
 
