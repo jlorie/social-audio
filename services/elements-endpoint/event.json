@@ -1,5 +1,6 @@
 {
-  "action": "batch_delete",
-  "element_ids": ["c2f163c69cf568213a2f31a7870af45a", "9d20fdbd816f8b0e94c43f7bb37fd84f"],
+  "action": "batch_share",
+  "element_ids": ["ab49cd6e04b396baeab0af0099bb425e", "3c0356258da794eeff9b7f2240633268"],
+  "usernames": ["jlorie@bbluue.com"],
   "identity_id": "us-east-1:d9d77ea5-4d11-4610-a359-14dfd5e4b7f7"
 }

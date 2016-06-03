@@ -1,6 +1,6 @@
 import { listElements } from './list-elements';
 import { detailElement } from './detail-element';
-import { shareElement } from './share-element';
+import { shareElement, shareMultipleElements } from './share-elements';
 import { deleteElement, deleteMultipleElements } from './delete-elements';
 
 export default (event, context) => {
@@ -49,7 +49,12 @@ function handleRequest(input) {
       }
     case 'share':
       {
-        result = shareElement(input.element_id, userId, input.usernames);
+        result = shareElement(input.element_id, input.usernames, userId);
+        break;
+      }
+    case 'batch_share':
+      {
+        result = shareMultipleElements(input.element_ids, input.usernames, userId);
         break;
       }
     default:
