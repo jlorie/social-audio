@@ -1,0 +1,8 @@
+{
+  "detailRequest": {
+    "application/json": "{ \"action\": \"detail\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"user_id\": \"$input.params('id')\" }"
+  },
+  "batchDetailRequest": {
+    "application/json": "{ \"action\": \"batch_detail\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"user_ids\": [#foreach($id in $input.params('ids').split(\"[,]\")) \"$id\"#if($foreach.hasNext),#end #end] }"
+  }
+}
