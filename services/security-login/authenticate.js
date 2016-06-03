@@ -12,7 +12,7 @@ const provider = new CredentialProvider({
   identityRoleArn: IDENTITY_ROLE_ARN
 });
 
-export function authenticate({ username, password }) {
+export function authenticate(username, password) {
   console.warn('Authenticating user ' + username);
 
   return userModel.getByUsername(username)

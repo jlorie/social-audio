@@ -1,0 +1,5 @@
+{
+  "registerRequest": {
+    "application/json": "{ \"identity_id\": \"$context.identity.cognitoIdentityId\", \"device_token\": $input.json('$.device_token'), \"platform\": $input.json('$.platform') }"
+  }
+}

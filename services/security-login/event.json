@@ -1,4 +1,6 @@
 {
   "username": "jlorie@bbluue.com",
-  "password": "password"
+  "password": "password",
+  "device_token": "123333",
+  "platform": "ios"
 }

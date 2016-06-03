@@ -6,13 +6,10 @@ export default (event, context) => {
     return context.succeed('keepalive');
   }
 
-  let input = {
-    username: event.username,
-    password: event.password
-  };
+  let input = event;
   console.info('Input: ', JSON.stringify(input, null, 2));
 
-  return authenticate(input)
+  return authenticate(input.username, input.password)
     .then(result => {
       console.error('==> Success: ', JSON.stringify(result, null, 2));
       context.succeed(result);

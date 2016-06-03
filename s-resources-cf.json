@@ -212,6 +212,31 @@
       }
     },
 
+    "DevicesByUsersDynamoTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [{
+          "AttributeName": "user_id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "device_token",
+          "AttributeType": "S"
+        }],
+        "KeySchema": [{
+          "AttributeName": "user_id",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "device_token",
+          "KeyType": "RANGE"
+        }],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "${db-rcu}",
+          "WriteCapacityUnits": "${db-wcu}"
+        },
+        "TableName": "${stage}-devices-by-users"
+      }
+    },
+
     "ElementsBucket": {
       "Type": "AWS::S3::Bucket",
       "Properties": {
@@ -284,6 +309,11 @@
     "ElementsByUsersTableName": {
       "Value": {
         "Ref": "ElementsByUsersDynamoTable"
+      }
+    },
+    "DevicesByUsersTableName": {
+      "Value": {
+        "Ref": "DevicesByUsersDynamoTable"
       }
     },
     "ElementsBucketName": {
