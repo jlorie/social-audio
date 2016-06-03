@@ -16,5 +16,8 @@
   },
   "batchShareRequest": {
     "application/json": "{ \"action\": \"batch_share\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_ids\": $input.json('$.element_ids'), \"usernames\": $input.json('$.usernames') }"
+  },
+  "detachRequest": {
+    "application/json": "{ \"action\": \"detach_audio\", \"identity_id\": \"$context.identity.cognitoIdentityId\",  \"element_id\": \"$input.params('id')\", \"attachment_id\": $input.json('$.attachment_id') }"
   }
 }

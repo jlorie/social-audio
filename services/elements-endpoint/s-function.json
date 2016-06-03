@@ -71,6 +71,16 @@
     "requestParameters": {},
     "requestTemplates": "$${batchShareRequest}",
     "responses": "$${responsesForPost}"
+  }, {
+    "path": "elements/detach/{id}",
+    "method": "DELETE",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${detachRequest}",
+    "responses": "$${responsesForGet}"
   }],
   "events": [],
   "environment": {

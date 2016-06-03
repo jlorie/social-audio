@@ -2,6 +2,7 @@ import { listElements } from './list-elements';
 import { detailElement } from './detail-element';
 import { shareElement, shareMultipleElements } from './share-elements';
 import { deleteElement, deleteMultipleElements } from './delete-elements';
+import { detachAudio } from './detach-audio';
 
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
@@ -55,6 +56,11 @@ function handleRequest(input) {
     case 'batch_share':
       {
         result = shareMultipleElements(input.element_ids, input.usernames, userId);
+        break;
+      }
+    case 'detach_audio':
+      {
+        result = detachAudio(input.element_id, input.attachment_id, userId);
         break;
       }
     default:
