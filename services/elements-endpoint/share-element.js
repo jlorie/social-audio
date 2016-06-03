@@ -50,7 +50,8 @@ export function shareElement(elementId, userId, recipients) {
 
           // TODO notify
 
-          return elementsByUserModel.create(items);
+          return elementsByUserModel.create(items)
+            .then(() => ({ message: 'OK' }));
         });
     });
 }

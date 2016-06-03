@@ -152,14 +152,18 @@ class ResourceModel {
     return this._batchWrite(deleteRequests);
   }
 
+  batchGet(keys) {
+    return this._batchGet(keys);
+  }
+
   _batchWrite(requests) {
     // batch write
     // TODO support for more than 25 items
-
     let params = {
-      RequestItems: {}
+      RequestItems: {
+        [this.tableName]: requests
+      }
     };
-    params.RequestItems[this.tableName] = requests;
 
     let promise = (resolve, reject) => {
       this.dynamo.batchWrite(params, (err, data) => {
@@ -173,6 +177,35 @@ class ResourceModel {
         }
 
         resolve('success');
+      });
+    };
+
+    return new Promise(promise);
+  }
+
+  _batchGet(requests) {
+    // batch write
+    // TODO support for more than 25 items
+    let params = {
+      RequestItems: {
+        [this.tableName]: {
+          Keys: requests
+        }
+      }
+    };
+
+    let promise = (resolve, reject) => {
+      this.dynamo.batchGet(params, (err, data) => {
+        if (err) {
+          return reject(err);
+        }
+
+        let failedSomeWrites = _.values(data.UnprocessedItems).length > 0;
+        if (failedSomeWrites) {
+          return reject(new Error('BatchWriteFailed'));
+        }
+
+        resolve(data.Responses[this.tableName]);
       });
     };
 

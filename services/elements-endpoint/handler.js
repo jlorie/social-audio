@@ -1,7 +1,7 @@
 import { listElements } from './list-elements';
 import { detailElement } from './detail-element';
 import { shareElement } from './share-element';
-import { deleteElement } from './delete-elements';
+import { deleteElement, deleteMultipleElements } from './delete-elements';
 
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
@@ -40,6 +40,11 @@ function handleRequest(input) {
     case 'delete':
       {
         result = deleteElement(input.element_id, userId);
+        break;
+      }
+    case 'batch_delete':
+      {
+        result = deleteMultipleElements(input.element_ids, userId);
         break;
       }
     case 'share':

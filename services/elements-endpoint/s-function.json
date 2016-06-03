@@ -22,6 +22,16 @@
     "requestTemplates": "$${listRequest}",
     "responses": "$${responsesForGet}"
   }, {
+    "path": "elements",
+    "method": "DELETE",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${bacthDeleteRequest}",
+    "responses": "$${responsesForGet}"
+  }, {
     "path": "elements/{id}",
     "method": "GET",
     "type": "AWS",

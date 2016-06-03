@@ -8,6 +8,9 @@
   "deleteRequest": {
     "application/json": "{ \"action\": \"delete\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\" }"
   },
+  "bacthDeleteRequest": {
+    "application/json": "{ \"action\": \"batch_delete\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_ids\": $input.json('$.element_ids') }"
+  },
   "shareRequest": {
     "application/json": "{ \"action\": \"share\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\", \"usernames\": $input.json('$.usernames') }"
   }

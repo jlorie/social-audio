@@ -1,5 +1,4 @@
 import ResourceModel from './resource-model';
-import _ from 'lodash';
 
 class ElementModel extends ResourceModel {
   constructor(uri, region = 'us-east-1') {
@@ -33,8 +32,15 @@ class ElementModel extends ResourceModel {
   }
 
   remove(id) {
-    // ids.map(id => ({ id }))
     return super.remove({ id });
+  }
+
+  batchGet(ids) {
+    return super.batchGet(ids.map(id => ({ id })));
+  }
+
+  batchRemove(ids) {
+    return super.batchRemove(ids.map(id => ({ id })));
   }
 
   attachFile(id, attachmentData) {
