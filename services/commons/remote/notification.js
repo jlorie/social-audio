@@ -46,6 +46,33 @@ class Notification {
     return new Promise(result);
   }
 
+  static createDeviceEndpoint(userId, deviceToken, platformId, region = 'us-east-1') {
+    AWS.config.update({ region });
+    this.sns = new AWS.SNS();
+
+    let promise = (resolve, reject) => {
+      if (!platformId) {
+        return reject(new Error('PlatformInvalid'));
+      }
+
+      let params = {
+        PlatformApplicationArn: platformId,
+        Token: deviceToken,
+        CustomUserData: userId
+      };
+
+      this.sns.createPlatformEndpoint(params, (err, data) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(data.EndpointArn);
+      });
+    };
+
+    return new Promise(promise);
+  }
+
 }
 
 module.exports = Notification;

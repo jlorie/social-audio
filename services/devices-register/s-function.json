@@ -27,7 +27,8 @@
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-    "URI_DEVICES_BY_USERS": "${devicesByUsersTableName}"
+    "URI_DEVICES_BY_USERS": "${devicesByUsersTableName}",
+    "PLATFORM_ARN_IOS": "${iosPlatformARN}"
   },
   "vpc": {
     "securityGroupIds": [],

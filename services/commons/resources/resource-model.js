@@ -147,6 +147,11 @@ class ResourceModel {
     return new Promise(func);
   }
 
+  batchCreate(items) {
+    let putRequests = this._resolvePutRequests(items);
+    return this._batchWrite(putRequests);
+  }
+
   batchRemove(keys) {
     let deleteRequests = this._resolveDeleteRequests(keys);
     return this._batchWrite(deleteRequests);
