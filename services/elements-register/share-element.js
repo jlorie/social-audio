@@ -1,7 +1,7 @@
 import FunctionInvoker from '../commons/remote/function-invoker';
 
-const URI_ELEMENT_ENDPOINT = process.env.URI_ELEMENT_ENDPOINT;
-const functionInvoker = new FunctionInvoker(URI_ELEMENT_ENDPOINT);
+const URI_SHARE_ENDPOINT = process.env.URI_SHARE_ENDPOINT;
+const functionInvoker = new FunctionInvoker(URI_SHARE_ENDPOINT);
 
 export function shareElement(userId, elementId, usernames) {
   console.info('Sharing element ' + elementId + ' with usernames ' + usernames);

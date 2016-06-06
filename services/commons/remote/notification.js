@@ -27,11 +27,15 @@ class Notification {
     return new Promise(result);
   }
 
-  push(message) {
+  push(message, json = false) {
     const notificationInfo = {
       Message: message,
       TargetArn: this.topic
     };
+
+    if (json) {
+      notificationInfo.MessageStructure = 'json';
+    }
 
     let result = (resolve, reject) => {
       this.sns.publish(notificationInfo, (err, data) => {
