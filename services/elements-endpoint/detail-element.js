@@ -35,7 +35,7 @@ export function detailElement(id, userId) {
       // filter audios
       // show only public audios
       let restrictedAudios = [];
-      for (let audio of element.audios) {
+      for (let audio of element.audios || []) {
         if (audio.public === true || audio.user_id === userId) {
           restrictedAudios.push(audio);
         }

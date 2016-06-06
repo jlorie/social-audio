@@ -2,7 +2,6 @@ import _ from 'lodash';
 
 import { listElements } from './list-elements';
 import { detailElement } from './detail-element';
-import { shareElement, shareMultipleElements } from './share-elements';
 import { deleteElement, deleteMultipleElements } from './delete-elements';
 import { detachAudio } from './detach-audio';
 
@@ -12,7 +11,12 @@ export default (event, context) => {
   try {
     return handleRequest(event)
       .then(result => {
-        console.info('==> Success: ', JSON.stringify(result, null, 2));
+        if (event.action === 'list') {
+          console.info('==> Success: ' + result.items.length + ' items listed');
+        } else {
+          console.info('==> Success: ', JSON.stringify(result, null, 2));
+        }
+
         context.succeed(result);
       })
       .catch(err => {
@@ -55,16 +59,6 @@ function handleRequest(input) {
         }
 
         result = deleteMultipleElements(input.element_ids, userId);
-        break;
-      }
-    case 'share':
-      {
-        result = shareElement(input.element_id, input.usernames, userId);
-        break;
-      }
-    case 'batch_share':
-      {
-        result = shareMultipleElements(input.element_ids, input.usernames, userId);
         break;
       }
     case 'detach_audio':

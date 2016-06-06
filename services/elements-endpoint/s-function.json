@@ -52,26 +52,6 @@
     "requestTemplates": "$${deleteRequest}",
     "responses": "$${responsesForGet}"
   }, {
-    "path": "elements/share/{id}",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${shareRequest}",
-    "responses": "$${responsesForPost}"
-  }, {
-    "path": "elements/share",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${batchShareRequest}",
-    "responses": "$${responsesForPost}"
-  }, {
     "path": "elements/detach/{id}",
     "method": "DELETE",
     "type": "AWS",
@@ -89,7 +69,8 @@
     "SERVERLESS_REGION": "${region}",
     "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
     "URI_ELEMENTS": "${elementsTableName}",
-    "URI_USERS": "${usersTableName}"
+    "URI_USERS": "${usersTableName}",
+    "URI_DEVICES_BY_USERS": "${devicesByUsersTableName}"
   },
   "vpc": {
     "securityGroupIds": [],

@@ -1,6 +1,9 @@
+import UserModel from '../commons/resources/user-model';
 import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
-import UserModel from '../commons/resources/user-model';
+
+import { notifySharedElement } from './notify';
+import { logSharedElement } from './log-notification';
 
 const URI_USERS = process.env.URI_USERS;
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
@@ -11,12 +14,11 @@ const userModel = new UserModel(URI_USERS);
 const elementModel = new ElementModel(URI_ELEMENTS);
 const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
-export function shareElement(elementId, recipients, userId) {
-  if (recipients.length > MAX_RECIPIENTS) {
+export function shareElement(elementId, usernames, userId) {
+  if (usernames.length > MAX_RECIPIENTS) {
     throw new Error('ShareLimitsExceeded');
   }
-
-  console.info('Sharing element ' + elementId + ' with users ' + recipients.join(', '));
+  console.info('Sharing element ' + elementId + ' with users ' + usernames.join(', '));
 
   // get element
   return elementModel.getById(elementId)
@@ -31,18 +33,19 @@ export function shareElement(elementId, recipients, userId) {
       }
 
       // get recipients ids
-      return userModel.getByUsernames(recipients)
-        .then(users => {
+      return getRecipientIds(usernames)
+        .then(recipientIds => {
           // bind users with elements
-          let bindings = getBindings(users, [element]);
-
-          // check users no registered
-          let usersToInvite = getNoRegisteredUsers(recipients, users);
-          console.info('Users to invite: ', usersToInvite);
-
-          // TODO notify
+          let bindings = getBindings(recipientIds, [element]);
 
           return elementsByUserModel.create(bindings)
+            .then(() => {
+              // notifying and logging
+              let tasks = [notifySharedElement(element, userId, recipientIds), // notify
+                logSharedElement(element, userId, recipientIds) // log
+              ];
+              return Promise.all(tasks);
+            })
             .then(() => ({ message: 'OK' }));
         });
     });
@@ -60,15 +63,15 @@ export function shareMultipleElements(elementIds, recipients, userId) {
     .then(() => ({ message: 'OK' }));
 }
 
-function getBindings(users, elements) {
+function getBindings(recipientIds, elements) {
   let bindings = [];
 
   for (let element of elements) {
     element.audios = element.audios || [];
-    for (let recipient of users) {
+    for (let id of recipientIds) {
       let binding = {
         id: element.id,
-        user_id: recipient.id,
+        user_id: id,
         created_at: element.created_at + '|visitor',
         thumbnail_url: element.thumbnail_url,
         audios: element.audios.filter(a => a.public).length,
@@ -82,14 +85,7 @@ function getBindings(users, elements) {
   return bindings;
 }
 
-function getNoRegisteredUsers(recipients, users) {
-  let results = [];
-
-  for (let username of recipients) {
-    if (!users.find(user => user.username === username)) {
-      results.push(username);
-    }
-  }
-
-  return results;
+function getRecipientIds(recipients) {
+  return userModel.getByUsernames(recipients)
+    .then(users => users.map(user => user.id));
 }
