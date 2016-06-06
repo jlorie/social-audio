@@ -1,11 +1,17 @@
-import { shareElement } from './share';
+import { shareElement, shareMultipleElements } from './share';
 
 export default (event, context) => {
-  let { element_id, usernames, identity_id } = event;
+  let { element_id, element_ids, usernames, identity_id } = event;
   console.info('=> Input: ', JSON.stringify(event, null, 2));
 
   let ownerId = identity_id.split(':').pop();
-  return shareElement(element_id, usernames, ownerId)
+  let sharePromise = shareElement(element_id, usernames, ownerId);
+
+  if (element_ids) {
+    sharePromise = shareMultipleElements(element_ids, usernames, ownerId);
+  }
+
+  return sharePromise
     .then(result => {
       console.info('==> Success: ', JSON.stringify(result, null, 2));
       context.succeed(result);

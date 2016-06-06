@@ -21,6 +21,16 @@
     "requestParameters": {},
     "requestTemplates": "$${shareRequest}",
     "responses": "$${responsesForPost}"
+  }, {
+    "path": "elements/share",
+    "method": "POST",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${batchShareRequest}",
+    "responses": "$${responsesForPost}"
   }],
   "events": [],
   "environment": {
