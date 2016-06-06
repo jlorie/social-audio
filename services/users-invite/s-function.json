@@ -4,7 +4,7 @@
   "description": "Serverless Lambda function for project: bbluue-audios",
   "customName": false,
   "customRole": false,
-  "handler": "handler.default",
+  "handler": "users-invite/handler.default",
   "timeout": 6,
   "memorySize": 1024,
   "authorizer": {},
@@ -16,7 +16,9 @@
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
-    "SERVERLESS_REGION": "${region}"
+    "SERVERLESS_REGION": "${region}",
+    "URI_USERS": "${usersTableName}",
+    "EMAIL_SUPPORT": "${supportEmail}"
   },
   "vpc": {
     "securityGroupIds": [],
