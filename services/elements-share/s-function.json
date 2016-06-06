@@ -1,0 +1,40 @@
+{
+  "name": "elements-share",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: bbluue-audios",
+  "customName": false,
+  "customRole": false,
+  "handler": "elements-share/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [{
+    "path": "elements/share/{id}",
+    "method": "POST",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${shareRequest}",
+    "responses": "$${responsesForPost}"
+  }],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
+    "URI_ELEMENTS": "${elementsTableName}",
+    "URI_USERS": "${usersTableName}",
+    "URI_DEVICES_BY_USERS": "${devicesByUsersTableName}",
+    "URI_NOTIFICATIONS": "${notificationsTableName}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
