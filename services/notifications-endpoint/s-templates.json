@@ -1,0 +1,5 @@
+{
+  "listRequest": {
+    "application/json": "{ \"identity_id\": \"$context.identity.cognitoIdentityId\" }"
+  }
+}

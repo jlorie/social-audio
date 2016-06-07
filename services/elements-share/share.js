@@ -4,6 +4,7 @@ import ElementUserModel from '../commons/resources/element-user-model';
 
 import { notifySharedElement } from './notify';
 import { logSharedElement } from './log-notification';
+import { inviteUsers } from './invite.js';
 
 const URI_USERS = process.env.URI_USERS;
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
@@ -33,8 +34,11 @@ export function shareElement(elementId, usernames, userId) {
       }
 
       // get recipients ids
-      return getRecipientIds(usernames)
-        .then(recipientIds => {
+      return userModel.getByUsernames(usernames)
+        .then(users => {
+          let recipientIds = users.map(user => user.id);
+          let pendingUsers = usernames.filter(email => !users.find(u => u.username === email));
+
           // bind users with elements
           let bindings = getBindings(recipientIds, [element]);
 
@@ -42,7 +46,8 @@ export function shareElement(elementId, usernames, userId) {
             .then(() => {
               // notifying and logging
               let tasks = [notifySharedElement(element, userId, recipientIds), // notify
-                logSharedElement(element, userId, recipientIds) // log
+                logSharedElement(element, userId, recipientIds), // log
+                inviteUsers(userId, pendingUsers) // inviting pending users
               ];
               return Promise.all(tasks);
             })
@@ -83,9 +88,4 @@ function getBindings(recipientIds, elements) {
   }
 
   return bindings;
-}
-
-function getRecipientIds(recipients) {
-  return userModel.getByUsernames(recipients)
-    .then(users => users.map(user => user.id));
 }

@@ -5,7 +5,7 @@ import UserModel from '../commons/resources/user-model';
 const URI_USERS = process.env.URI_USERS;
 const EMAIL_SUPPORT = process.env.EMAIL_SUPPORT;
 const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT +
-  '/security-register' : __dirname);
+  '/users-invite' : __dirname);
 
 const emailService = new EmailService();
 const userModel = new UserModel(URI_USERS);

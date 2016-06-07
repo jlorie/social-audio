@@ -11,7 +11,7 @@ class FunctionInvoker {
   invoke({ body, type }) {
     let params = {
       FunctionName: this.functionName,
-      InvocationType: type || 'RequestResponse',
+      InvocationType: type || INVOKE_TYPE.RequestResponse,
       Payload: body
     };
 
@@ -31,3 +31,8 @@ class FunctionInvoker {
 }
 
 export default FunctionInvoker;
+
+export const INVOKE_TYPE = {
+  RequestResponse: 'RequestResponse',
+  Event: 'Event'
+};

@@ -36,6 +36,7 @@ function generateMessage(ownerName) {
       aps: {
         alert: `${ownerName} is asking you to add an audiography`,
         sound: 'default',
+        badge: 1
       }
     })
   };
