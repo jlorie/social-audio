@@ -1,0 +1,5 @@
+{
+  "inviteRequest": {
+    "application/json": "{ \"identity_id\": \"$context.identity.cognitoIdentityId\",  \"emails\": $input.json('$.emails') }"
+  }
+}

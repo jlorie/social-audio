@@ -20,7 +20,7 @@ export function register({ bucket, key }) {
     })
     .then(createElement)
     .catch(err => {
-      console.error('An error occurred registering element. ' + err);
+      console.info('An error occurred registering element. ' + err);
       throw err;
     });
 }
@@ -41,7 +41,6 @@ function extractMetadata(fileInfo) {
     attached_to: meta.attached_to,
     public: meta.public === YES,
     source_url: fileInfo.url,
-    modified_at: new Date().toISOString(),
     share_with: meta.share_with
   };
 
@@ -58,15 +57,16 @@ function createElement(elementInfo) {
   }
 
   console.info('Registering new element ...');
-  return elementModel.create(elementInfo)
-    .then(newElement => {
-      console.info('==> New Element: ', JSON.stringify(newElement, null, 2));
+
+  return elementModel.create(formatElement(elementInfo))
+    .then(resultElement => {
+      console.info('==> New Element: ', JSON.stringify(resultElement, null, 2));
 
       // share
       if (elementInfo.share_with) {
         let shareWith = elementInfo.share_with.replace(/\s/g, '');
         let usernames = shareWith.split(',');
-        return shareElement(newElement.owner_id, newElement.id, usernames);
+        return shareElement(resultElement.owner_id, resultElement.id, usernames);
       }
     });
 }
@@ -74,4 +74,22 @@ function createElement(elementInfo) {
 function formatDate(date) {
   let newDate = (date ? new Date(date) : new Date());
   return newDate.toISOString();
+}
+
+function formatElement(info) {
+  let element = {
+    created_at: info.created_at,
+    id: info.id,
+    location_info: info.location_info,
+    modified_at: new Date().toISOString(),
+    owner_id: info.owner_id,
+    source_url: info.source_url,
+    type: info.type
+  };
+
+  if (info.thumbnail_url) {
+    element.thumbnail_url = info.thumbnail_url;
+  }
+
+  return element;
 }

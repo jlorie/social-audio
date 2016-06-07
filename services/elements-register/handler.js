@@ -11,7 +11,7 @@ export default (event, context) => {
       return context.succeed(result);
     })
     .catch(err => {
-      console.error('==> An error occurred. ', err.stack);
+      console.info('==> An error occurred. ', err.stack);
       return context.fail(err);
     });
 };

@@ -17,17 +17,17 @@ export function attach(attachment) {
         user_id: attachment.owner_id
       };
 
-      console.warn('Adding an attachment to element with id ' + attachment.attached_to);
+      console.info('Adding an attachment to element with id ' + attachment.attached_to);
       return elementModel.attachFile(attachment.attached_to, attachmentData);
     })
     .catch(err => {
-      console.error(`An error occurred attaching. ${err}`);
+      console.info(`An error occurred attaching. ${err}`);
       throw err;
     });
 }
 
 function saveAttachment(attachment) {
-  console.warn('Saving attachment ...');
+  console.info('Saving attachment ...');
 
   let prefix = `https://s3.amazonaws.com/${BUCKET_ELEMENT_FILES}`;
   let ext = attachment.source_url.split('.').pop();
