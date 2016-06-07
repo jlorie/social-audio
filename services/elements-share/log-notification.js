@@ -1,3 +1,4 @@
+import uuid from 'node-uuid';
 import NotificationModel from '../commons/resources/notification-model';
 
 const URI_NOTIFICATIONS = process.env.URI_NOTIFICATIONS;
@@ -10,6 +11,7 @@ export function logSharedElement(element, userId, recipientIds) {
   let logs = [];
   for (let recipientId of recipientIds) {
     let log = {
+      id: uuid.v1(),
       user_id: recipientId,
       created_at: new Date().toISOString(),
       type: AUDIO_REQUEST_TYPE,

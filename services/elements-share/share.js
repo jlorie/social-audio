@@ -43,10 +43,10 @@ export function shareElement(elementId, usernames, userId) {
           let bindings = getBindings(recipientIds, [element]);
 
           return elementsByUserModel.create(bindings)
+            .then(() => notifySharedElement(element, userId, recipientIds))
             .then(() => {
               // notifying and logging
-              let tasks = [notifySharedElement(element, userId, recipientIds), // notify
-                logSharedElement(element, userId, recipientIds), // log
+              let tasks = [logSharedElement(element, userId, recipientIds), // log
                 inviteUsers(userId, pendingUsers) // inviting pending users
               ];
               return Promise.all(tasks);
