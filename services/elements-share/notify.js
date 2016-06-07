@@ -58,7 +58,7 @@ function getPendingNotificationsByUsers(recipientIds) {
 
   let pending = new Map();
   return Promise.all(recipientIds.map(userId => {
-      return notificationModel.getPendingNotifications(userId, MAX_NOTIFICATIONS)
+      return notificationModel.getPendingNotifications({ userId, limit: MAX_NOTIFICATIONS })
         .then(notifications => {
           pending.set(userId, notifications.length);
           return 'OK';

@@ -29,7 +29,7 @@ class NotificationModel extends ResourceModel {
     return new Promise(func);
   }
 
-  getPendingNotifications(userId, limit) {
+  getPendingNotifications({ userId, elementId, limit }) {
     let params = {
       TableName: this.tableName,
       KeyConditionExpression: 'user_id = :user_id',
@@ -41,6 +41,11 @@ class NotificationModel extends ResourceModel {
       ScanIndexForward: false,
       Limit: limit || 0
     };
+
+    if (elementId) {
+      params.FilterExpression += ' AND element_id = :element_id';
+      params.ExpressionAttributeValues[':element_id'] = elementId;
+    }
 
     const func = (resolve, reject) => {
       this.dynamo.query(params, (err, result) => {

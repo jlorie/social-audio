@@ -115,6 +115,7 @@ class ResourceModel {
       ReturnValues: 'ALL_NEW'
     };
 
+    console.log('==> params: ', JSON.stringify(params, null, 2));
     const func = (resolve, reject) => {
       this.dynamo.update(params, (err, data) => {
         if (err) {

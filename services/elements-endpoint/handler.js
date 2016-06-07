@@ -4,6 +4,7 @@ import { listElements } from './list-elements';
 import { detailElement } from './detail-element';
 import { deleteElement, deleteMultipleElements } from './delete-elements';
 import { detachAudio } from './detach-audio';
+import { markElementAsViewed } from './mark-notification';
 
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
@@ -44,7 +45,12 @@ function handleRequest(input) {
       }
     case 'detail':
       {
-        result = detailElement(input.element_id, userId);
+        let tasks = [
+          detailElement(input.element_id, userId),
+          markElementAsViewed(input.element_id, userId)
+        ];
+
+        result = Promise.all(tasks).then(results => results[0]);
         break;
       }
     case 'delete':
