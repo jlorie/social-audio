@@ -1,10 +1,7 @@
-import NotificationModel from '../commons/resources/notification-model';
+import UserModel from '../commons/resources/user-model';
 
-const notificationModel = new NotificationModel('dev-notifications');
+const userModel = new UserModel('dev-users');
 export default (event, context) => {
-  return notificationModel.getPendingNotifications('d9d77ea5-4d11-4610-a359-14dfd5e4b7f7')
-    .then(notifications => {
-      console.log(`${notifications.length} pending notifications`);
-      return 'End!';
-    });
+  let emitterId = '0a73b017-e66c-4a41-bc58-ff4eb3e81db3';
+  return userModel.getById(emitterId);
 };

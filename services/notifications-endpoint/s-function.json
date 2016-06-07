@@ -27,7 +27,9 @@
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-    "URI_NOTIFICATION": "${notificationsTableName}"
+    "URI_NOTIFICATION": "${notificationsTableName}",
+    "URI_ELEMENTS": "${elementsTableName}",
+    "URI_USERS": "${usersTableName}"
   },
   "vpc": {
     "securityGroupIds": [],
