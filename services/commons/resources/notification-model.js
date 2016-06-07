@@ -5,7 +5,7 @@ class NotificationModel extends ResourceModel {
     super(uri, region);
   }
 
-  getByUserId(userId, limit) {
+  getByUserId({ userId, id, limit }) {
     let params = {
       TableName: this.tableName,
       KeyConditionExpression: 'user_id = :user_id',
@@ -15,6 +15,11 @@ class NotificationModel extends ResourceModel {
       ScanIndexForward: false,
       Limit: limit || 0
     };
+
+    if (id) {
+      params.FilterExpression = 'id = :id';
+      params.ExpressionAttributeValues[':id'] = id;
+    }
 
     const func = (resolve, reject) => {
       this.dynamo.query(params, (err, result) => {

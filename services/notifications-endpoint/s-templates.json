@@ -1,5 +1,8 @@
 {
   "listRequest": {
-    "application/json": "{ \"identity_id\": \"$context.identity.cognitoIdentityId\" }"
+    "application/json": "{ \"action\": \"list\" ,\"identity_id\": \"$context.identity.cognitoIdentityId\" }"
+  },
+  "deleteRequest": {
+    "application/json": "{ \"action\": \"delete\" ,\"identity_id\": \"$context.identity.cognitoIdentityId\", \"notification_id\": \"$input.params('id')\"}"
   }
 }
