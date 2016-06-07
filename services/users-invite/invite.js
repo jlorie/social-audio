@@ -17,7 +17,8 @@ export function invite(hostId, emails) {
         hostname: host.fullname
       };
 
-      return Promise.all(emails.map(email => sendMail(email, params)));
+      return Promise.all(emails.map(email => sendMail(email, params)))
+        .then(() => ({ message: 'OK' }));
     });
 }
 

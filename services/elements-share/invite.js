@@ -12,6 +12,6 @@ export function inviteUsers(hostId, emails) {
 
   console.info('Inviting new ' + emails.length + ' users');
 
-  let body = JSON.stringify({ hostId, emails });
+  let body = JSON.stringify({ identity_id: hostId, emails });
   return invoker.invoke({ body, type: INVOKE_TYPE.Event });
 }

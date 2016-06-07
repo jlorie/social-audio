@@ -1,8 +1,9 @@
 import { invite } from './invite';
 export default (event, context) => {
-  let { hostId, emails } = event;
+  let { identity_id, emails } = event;
   console.info('==> Input: ', JSON.stringify(event, null, 2));
 
+  let hostId = identity_id.split(':').pop();
   return invite(hostId, emails)
     .then(result => {
       console.info('==> Success: ', JSON.stringify(result, null, 2));
