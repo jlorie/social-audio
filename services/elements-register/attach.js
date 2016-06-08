@@ -1,5 +1,6 @@
 import ElementModel from '../commons/resources/element-model';
 import Storage from '../commons/remote/storage';
+import { notifyNewAudio } from './notify-new-audio';
 
 const URI_ELEMENTS_RESOURCE = process.env.URI_ELEMENTS_RESOURCE;
 const BUCKET_ELEMENT_FILES = process.env.BUCKET_ELEMENT_FILES;
@@ -8,6 +9,7 @@ const elementModel = new ElementModel(URI_ELEMENTS_RESOURCE);
 
 export function attach(attachment) {
   console.info('Persisting attachment with id ' + attachment.id);
+
   return saveAttachment(attachment)
     .then(attachmentUrl => {
       let attachmentData = {
@@ -21,6 +23,7 @@ export function attach(attachment) {
       console.info('Adding an attachment to element with id ' + attachment.attached_to);
       return elementModel.attachFile(attachment.attached_to, attachmentData);
     })
+    .then(() => notifyNewAudio(attachment.owner_id, attachment.attached_to))
     .catch(err => {
       console.info(`An error occurred attaching. ${err}`);
       throw err;
