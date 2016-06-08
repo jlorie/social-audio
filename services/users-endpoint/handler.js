@@ -1,4 +1,5 @@
 import { detailUser, detailMultipleUsers } from './detail-users';
+import { detailProfile } from './detail-profile';
 
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
@@ -25,6 +26,7 @@ export default (event, context) => {
 
 function handleRequest(input) {
   let result;
+  let userId = input.identity_id.split(':').pop();
 
   switch (input.action) {
     case 'detail':
@@ -35,6 +37,11 @@ function handleRequest(input) {
     case 'batch_detail':
       {
         result = detailMultipleUsers(input.user_ids);
+        break;
+      }
+    case 'profile':
+      {
+        result = detailProfile(userId);
         break;
       }
     default:
