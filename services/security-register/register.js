@@ -22,7 +22,7 @@ export default function register({ username, password, fullname, genre, birthdat
         username,
         fullname,
         genre,
-        birthdate: new Date(birthdate),
+        birthdate: new Date(birthdate).toISOString(),
         password: getEncryptedPassword(password),
         identity_id: identityId
       };
