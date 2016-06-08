@@ -10,7 +10,8 @@ export function detailUser(id) {
       let output = {
         id: user.id,
         email: user.username,
-        fullname: user.fullname
+        fullname: user.fullname,
+        genre: user.genre
       };
 
       return output;

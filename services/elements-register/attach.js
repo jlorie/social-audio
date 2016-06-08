@@ -14,7 +14,8 @@ export function attach(attachment) {
         id: attachment.id,
         source_url: attachmentUrl,
         public: attachment.public,
-        user_id: attachment.owner_id
+        user_id: attachment.owner_id,
+        created_at: new Date().toISOString()
       };
 
       console.info('Adding an attachment to element with id ' + attachment.attached_to);
