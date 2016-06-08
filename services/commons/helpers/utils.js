@@ -41,6 +41,7 @@ export function extractObjectFromS3Message(s3Message) {
   }
 
   return {
+    username: object.Records[0].userIdentity.principalId.split(':').pop(),
     bucket: object.Records[0].s3.bucket.name,
     key: object.Records[0].s3.object.key
   };

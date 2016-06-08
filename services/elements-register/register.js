@@ -10,12 +10,13 @@ const URI_ELEMENTS_RESOURCE = process.env.URI_ELEMENTS_RESOURCE;
 
 const elementModel = new ElementModel(URI_ELEMENTS_RESOURCE);
 
-export function register({ bucket, key }) {
+export function register({ userId, bucket, key }) {
   console.info('Getting file info for ' + key);
 
   return Storage.fileInfo(bucket, key)
     .then(fileInfo => {
       fileInfo.url = generateUrlFromArgs(bucket, key);
+      fileInfo.user_id = userId;
       return extractMetadata(fileInfo);
     })
     .then(createElement)
@@ -31,7 +32,7 @@ function extractMetadata(fileInfo) {
   const meta = fileInfo.Metadata;
   const metadata = {
     id: fileInfo.ETag.replace(/"/g, ''), // remove extra "
-    owner_id: meta.user_id,
+    owner_id: fileInfo.user_id,
     location_info: {
       coordinates: [meta.latitude, meta.longitude],
       address: meta.address

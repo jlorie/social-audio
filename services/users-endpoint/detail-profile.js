@@ -9,11 +9,14 @@ export function detailProfile(id) {
   return userModel.getById(id)
     .then(user => {
       let output = {
-        id: user.id,
-        email: user.username,
-        fullname: user.fullname,
-        genre: user.genre,
-        birthdate: user.birthdate
+        profile: {
+          id: user.id,
+          email: user.username,
+          fullname: user.fullname,
+          genre: user.genre,
+          birthdate: user.birthdate,
+          photo_url: user.photo_url
+        }
       };
 
       return output;
