@@ -3,6 +3,7 @@ import Notification from '../commons/remote/notification';
 
 import DeviceUserModel from '../commons/resources/device-user-model';
 const URI_DEVICES_BY_USERS = process.env.URI_DEVICES_BY_USERS;
+const ERR_ENDPOINT_DISABLED = 'EndpointDisabled';
 
 const deviceByUserModel = new DeviceUserModel(URI_DEVICES_BY_USERS);
 
@@ -28,7 +29,13 @@ export function notify({ recipientIds, message, pendingMap }) {
           })
         });
 
-        return notification.push(apns, true);
+        return notification.push(apns, true)
+          .catch(err => {
+            if (err.code !== ERR_ENDPOINT_DISABLED) {
+              throw err;
+            }
+            console.info(`Endpoint ${device.endpoint} for user ${device.user_id} is disabled`);
+          });
       }));
     });
 }
