@@ -3,7 +3,6 @@ import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
 
 import { notifySharedElement } from './notify';
-import { logSharedElement } from './log-notification';
 import { inviteUsers } from './invite.js';
 
 const URI_USERS = process.env.URI_USERS;
@@ -43,10 +42,9 @@ export function shareElement(elementId, usernames, userId) {
           let bindings = getBindings(recipientIds, [element]);
 
           return elementsByUserModel.create(bindings)
-            .then(() => notifySharedElement(element, userId, recipientIds))
             .then(() => {
-              // notifying and logging
-              let tasks = [logSharedElement(element, userId, recipientIds), // log
+              // notifying and inviting
+              let tasks = [notifySharedElement(element, userId, recipientIds), // log
                 inviteUsers(userId, pendingUsers) // inviting pending users
               ];
               return Promise.all(tasks);

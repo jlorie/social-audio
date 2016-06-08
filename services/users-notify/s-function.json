@@ -1,0 +1,29 @@
+{
+  "name": "users-notify",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: bbluue-audios",
+  "customName": false,
+  "customRole": false,
+  "handler": "users-notify/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "URI_NOTIFICATIONS": "${notificationsTableName}",
+    "URI_USERS": "${usersTableName}",
+    "URI_DEVICES_BY_USERS": "${devicesByUsersTableName}",
+    "MAX_NOTIFICATIONS": 20
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}

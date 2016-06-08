@@ -27,7 +27,9 @@
     "TOPIC_UPLOADED_ATTACHMENT": "${attachmentUploadedTopicArn}",
     "URI_ELEMENTS_RESOURCE": "${elementsTableName}",
     "BUCKET_ELEMENT_FILES": "${elementsBucketName}",
-    "URI_SHARE_ENDPOINT": "${shareEnpointFunctionName}"
+    "URI_SHARE_ENDPOINT": "${shareEnpointFunctionName}",
+    "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
+    "URI_DEVICES_BY_USERS": "${devicesByUsersTableName}"
   },
   "vpc": {
     "securityGroupIds": [],
