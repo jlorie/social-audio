@@ -1,18 +1,14 @@
 import im from 'imagemagick';
 import Storage from '../commons/remote/storage';
 
-const BUCKET_ELEMENTS_FILES = process.env.BUCKET_ELEMENTS_FILES;
+export function resizeImage({ sourceUrl, destUrl, resolution }) {
+  console.info('Resizing image from ' + sourceUrl + ' with height: ' + resolution);
 
-export function resizeImage({ elementId, uri, resolution }) {
-  console.info('Resizing image from ' + uri + 'with height: ' + resolution);
-
-  return Storage.getFileData(uri)
+  return Storage.getFileData(sourceUrl)
     .then(fileData => resize(fileData.Body, resolution))
-    .then(buffer => {
-      let dest = `${BUCKET_ELEMENTS_FILES}/images/${resolution}p-${elementId}.jpg`;
-      return Storage.uploadFile({ buffer, dest });
-    });
+    .then(buffer => Storage.uploadFile({ buffer, destUrl }));
 }
+
 
 function resize(imageBuffer, height) {
   let resizeOptions = {

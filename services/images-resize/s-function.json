@@ -6,7 +6,7 @@
   "customRole": false,
   "handler": "images-resize/handler.default",
   "timeout": 6,
-  "memorySize": 1024,
+  "memorySize": 1408,
   "authorizer": {},
   "custom": {
     "excludePatterns": []
@@ -22,9 +22,7 @@
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
-    "SERVERLESS_REGION": "${region}",
-    "BUCKET_ELEMENTS_FILES": "${elementsBucketName}",
-    "URI_ELEMENTS": "${elementsTableName}"
+    "SERVERLESS_REGION": "${region}"
   },
   "vpc": {
     "securityGroupIds": [],

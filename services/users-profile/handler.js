@@ -1,19 +1,17 @@
-import { resizeImage } from './resize-image';
+import { detailProfile } from './detail-profile';
 
 export default (event, context) => {
-  console.info('=> Input: ', JSON.stringify(event, null, 2));
+  let input = event;
+  console.info('=> Input: ', JSON.stringify(input, null, 2));
 
-  let { sourceUrl, destUrl, resolution } = event;
+  let userId = input.identity_id.split(':').pop();
 
-  return resizeImage({ sourceUrl, destUrl, resolution })
-    .then(() => ({ destUrl }))
+  return detailProfile(userId)
     .then(result => {
       console.info('==> Success: ', JSON.stringify(result, null, 2));
       context.succeed(result);
     })
     .catch(err => {
-      console.info('==> An error occurred. ', err.stack);
-
       let error = {
         status: 'ERROR',
         message: err.message

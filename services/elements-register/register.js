@@ -4,6 +4,7 @@ import ElementModel from '../commons/resources/element-model';
 import { generateUrlFromArgs } from '../commons/helpers/utils';
 import { attach } from './attach';
 import { shareElement } from './share-element';
+import { optimizeImage } from './optimize-image';
 
 const YES = 'yes';
 const URI_ELEMENTS_RESOURCE = process.env.URI_ELEMENTS_RESOURCE;
@@ -58,8 +59,14 @@ function createElement(elementInfo) {
   }
 
   console.info('Registering new element ...');
+  let element = formatElement(elementInfo);
+  return optimizeImage(element.source_url, element.id)
+    .then(images => {
+      element.source_url = images.sourceUrl;
+      element.thumbnail_url = images.thumbnailUrl;
 
-  return elementModel.create(formatElement(elementInfo))
+      return elementModel.create(element);
+    })
     .then(resultElement => {
       console.info('==> New Element: ', JSON.stringify(resultElement, null, 2));
 

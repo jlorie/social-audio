@@ -1,28 +1,26 @@
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 const fs = require('fs');
-const { extractArgsFromUrl, generateUrlFromArgs } = require('../helpers/utils');
+const { extractArgsFromUrl } = require('../helpers/utils');
 
 class Storage {
 
-  static uploadFile({ buffer, filePath, dest }) {
-    // NOTE dest format: bucket/key
-    const bucket = dest.split('/').slice(0, 1)[0];
-    const key = dest.split('/').slice(1).join('/');
+  static uploadFile({ buffer, filePath, destUrl }) {
+    const args = extractArgsFromUrl(destUrl);
 
     return getData({ buffer, filePath })
       .then(data => {
         let func = (resolve, reject) => {
           s3.putObject({
-            Bucket: bucket,
-            Key: key,
+            Bucket: args.bucket,
+            Key: args.key,
             Body: data
           }, err => {
             if (err) {
               reject(err);
             }
 
-            resolve(generateUrlFromArgs(bucket, key));
+            resolve(destUrl);
           });
         };
 
@@ -32,12 +30,12 @@ class Storage {
 
   static getFileData(sourceUrl) {
     // Splitting url to get bucket and key
-    let arr = sourceUrl.split('/');
+    let args = extractArgsFromUrl(sourceUrl);
 
     let func = (resolve, reject) => {
       s3.getObject({
-        Bucket: arr[3],
-        Key: arr[4]
+        Bucket: args.bucket,
+        Key: args.key
 
       }, (err, data) => {
         if (err) {

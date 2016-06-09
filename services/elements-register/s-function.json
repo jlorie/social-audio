@@ -35,7 +35,8 @@
     "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
     "URI_USERS": "${usersTableName}",
     "URI_DEVICES_BY_USERS": "${devicesByUsersTableName}",
-    "URI_NOTIFY_ENDPOINT": "${notifyEnpointFunctionName}"
+    "URI_NOTIFY_ENDPOINT": "${notifyEnpointFunctionName}",
+    "URI_IMAGES_RESIZE": "${imagesResizeEndpointFunctionName}"
   },
   "vpc": {
     "securityGroupIds": [],
