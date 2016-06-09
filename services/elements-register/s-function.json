@@ -17,7 +17,11 @@
     "type": "s3",
     "config": {
       "bucket": "${uploadBucketName}",
-      "bucketEvents": ["s3:ObjectCreated:*"]
+      "bucketEvents": ["s3:ObjectCreated:*"],
+      "filterRules": [{
+        "name": "prefix",
+        "value": "elements/"
+      }]
     }
   }],
   "environment": {
