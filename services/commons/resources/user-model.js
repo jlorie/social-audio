@@ -1,6 +1,8 @@
 import ResourceModel from './resource-model';
 import _ from 'lodash';
 
+const ERR_CONDITION_FAILED = 'ConditionalCheckFailedException';
+
 class UserModel extends ResourceModel {
   constructor(uri, region = 'us-east-1') {
     super(uri, region);
@@ -66,6 +68,50 @@ class UserModel extends ResourceModel {
     return new Promise(func);
   }
 
+  addSpaceUsed(username, sizeInBytes) {
+    let params = {
+      TableName: this.tableName,
+      Key: { username },
+      ConditionExpression: 'space_used > :ZERO',
+      UpdateExpression: 'set space_used = space_used + :space_used',
+      ExpressionAttributeValues: {
+        ':space_used': sizeInBytes,
+        ':ZERO': 0
+      },
+      ReturnValues: 'ALL_NEW'
+    };
+
+    const func = (resolve, reject) => {
+      this.dynamo.update(params, (err, data) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(data);
+      });
+    };
+
+    return new Promise(func)
+      .catch(err => {
+        if (err.code !== ERR_CONDITION_FAILED) {
+          throw err;
+        }
+
+        console.info('Invalid space value. Setting up to zero');
+
+        // setting value to zero
+        params = {
+          TableName: this.tableName,
+          Key: { username },
+          UpdateExpression: 'set space_used = :ZERO',
+          ExpressionAttributeValues: {
+            ':ZERO': 0
+          },
+          ReturnValues: 'ALL_NEW'
+        };
+        return new Promise(func);
+      });
+  }
 }
 
 export default UserModel;

@@ -27,7 +27,8 @@
     "SERVERLESS_REGION": "${region}",
     "TOPIC_REGISTERED_ELEMENT": "${registeredElementTopicArn}",
     "TOPIC_DELETED_ELEMENT": "${deletedElementTopicArn}",
-    "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}"
+    "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
+    "URI_USERS": "${usersTableName}"
   },
   "vpc": {
     "securityGroupIds": [],
