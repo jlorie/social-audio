@@ -1,0 +1,39 @@
+{
+  "name": "profile-photo-register",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: bbluue-audios",
+  "customName": false,
+  "customRole": false,
+  "handler": "profile-photo-register/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [{
+    "name": "s3",
+    "type": "s3",
+    "config": {
+      "bucket": "${uploadBucketName}",
+      "bucketEvents": ["s3:ObjectCreated:*"],
+      "filterRules": [{
+        "name": "prefix",
+        "value": "profile/"
+      }]
+    }
+  }],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "URI_USERS": "${usersTableName}",
+    "URI_IMAGES_RESIZE": "${imagesResizeEndpointFunctionName}",
+    "BUCKET_ELEMENT_FILES": "${elementsBucketName}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}

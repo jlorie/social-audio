@@ -11,6 +11,10 @@ class UserModel extends ResourceModel {
     return super.create(data);
   }
 
+  update(username, data) {
+    return super.update({ username }, data);
+  }
+
   getByUsername(username) {
     let params = {
       TableName: this.tableName,
