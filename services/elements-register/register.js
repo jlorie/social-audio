@@ -55,7 +55,15 @@ function extractMetadata(fileInfo) {
 
 function createElement(elementInfo) {
   if (elementInfo.attached_to) {
+    if (elementInfo.type !== 'audio') {
+      return Promise.resolve('InvalidAttachmentFormat');
+    }
+
     return attach(elementInfo);
+  }
+
+  if (elementInfo.type !== 'image') {
+    return Promise.resolve('InvalidElementFormat');
   }
 
   console.info('Registering new element ...');
