@@ -1,7 +1,7 @@
-import UserModel from '../commons/resources/user-model';
+import GeneralConfig from '../commons/resources/general-config';
 
-const userModel = new UserModel('dev-users');
+const config = new GeneralConfig();
 export default (event, context) => {
-  let emitterId = '0a73b017-e66c-4a41-bc58-ff4eb3e81db3';
-  return userModel.getById(emitterId);
+  return config.get('basic_account_space')
+    .then(spaces => spaces['basic']);
 };
