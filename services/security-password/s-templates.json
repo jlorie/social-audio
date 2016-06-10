@@ -1,0 +1,5 @@
+{
+  "changeRequest": {
+    "application/json": "{ \"identity_id\": \"$context.identity.cognitoIdentityId\", \"oldPassword\": $input.json('$.old_password'), \"newPassword\": $input.json('$.new_password') }"
+  }
+}
