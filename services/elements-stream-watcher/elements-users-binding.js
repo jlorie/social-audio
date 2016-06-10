@@ -11,6 +11,7 @@ export function bind(element) {
     id: element.id,
     user_id: element.owner_id,
     created_at: element.created_at + '|owner',
+    thumbnail_url: element.thumbnail_url,
     audios: 0,
     favorite: false
   };
