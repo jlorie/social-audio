@@ -72,7 +72,7 @@ class UserModel extends ResourceModel {
     let params = {
       TableName: this.tableName,
       Key: { username },
-      ConditionExpression: 'space_used > :ZERO',
+      ConditionExpression: 'space_used >= :ZERO',
       UpdateExpression: 'set space_used = space_used + :space_used',
       ExpressionAttributeValues: {
         ':space_used': sizeInBytes,

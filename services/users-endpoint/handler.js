@@ -1,5 +1,5 @@
 import { detailUser, detailMultipleUsers } from './detail-users';
-import { detailProfile } from './detail-profile';
+import { detailProfile, updateProfile } from './detail-profile';
 
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
@@ -42,6 +42,11 @@ function handleRequest(input) {
     case 'profile':
       {
         result = detailProfile(userId);
+        break;
+      }
+    case 'update_profile':
+      {
+        result = updateProfile(userId, input.data);
         break;
       }
     default:

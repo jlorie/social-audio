@@ -7,5 +7,8 @@
   },
   "profileRequest": {
     "application/json": "{ \"action\": \"profile\", \"identity_id\": \"$context.identity.cognitoIdentityId\" }"
+  },
+  "updateProfileRequest": {
+    "application/json": "{ \"action\": \"update_profile\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"data\": $input.json('$') }"
   }
 }

@@ -41,6 +41,16 @@
     "requestParameters": {},
     "requestTemplates": "$${profileRequest}",
     "responses": "$${responsesForGet}"
+  }, {
+    "path": "users/profile",
+    "method": "POST",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${updateProfileRequest}",
+    "responses": "$${responsesForPost}"
   }],
   "events": [],
   "environment": {

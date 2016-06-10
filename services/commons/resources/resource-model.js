@@ -121,7 +121,7 @@ class ResourceModel {
           return reject(err);
         }
 
-        resolve(data);
+        resolve(data.Attributes);
       });
     };
 
