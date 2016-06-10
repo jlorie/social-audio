@@ -75,10 +75,9 @@ function calculateElementSpace(element) {
 
     let args = extractArgsFromUrl(uri);
     return Storage.fileInfo(args.bucket, args.key)
-      .then(info => info.ContentLength);
+      .then(info => parseInt(info.ContentLength));
   });
 
   return Promise.all(filesSizePromise)
-    .then(sizes => sizes.reduce((a, b) => a + b))
-    .then(totalSize => parseInt(totalSize));
+    .then(sizes => sizes.reduce((a, b) => a + b));
 }
