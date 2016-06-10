@@ -282,6 +282,31 @@
       }
     },
 
+    "UsersLogDynamoTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [{
+          "AttributeName": "user_id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "created_at",
+          "AttributeType": "S"
+        }],
+        "KeySchema": [{
+          "AttributeName": "user_id",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "created_at",
+          "KeyType": "RANGE"
+        }],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "${db-rcu}",
+          "WriteCapacityUnits": "${db-wcu}"
+        },
+        "TableName": "${stage}-users-log"
+      }
+    },
+
     "ElementsBucket": {
       "Type": "AWS::S3::Bucket",
       "Properties": {
@@ -369,6 +394,11 @@
     "GeneralConfigTableName": {
       "Value": {
         "Ref": "GeneralConfigDynamoTable"
+      }
+    },
+    "UsersLogTableName": {
+      "Value": {
+        "Ref": "UsersLogDynamoTable"
       }
     },
     "ElementsBucketName": {

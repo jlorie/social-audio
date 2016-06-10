@@ -39,7 +39,8 @@
     "SERVERLESS_REGION": "${region}",
     "URI_NOTIFICATION": "${notificationsTableName}",
     "URI_ELEMENTS": "${elementsTableName}",
-    "URI_USERS": "${usersTableName}"
+    "URI_USERS": "${usersTableName}",
+    "URI_USERS_LOG_ENDPOINT": "${usersLogTableName}"
   },
   "vpc": {
     "securityGroupIds": [],

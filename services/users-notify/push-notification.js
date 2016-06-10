@@ -29,6 +29,8 @@ export function notify({ recipientIds, message, pendingMap }) {
           })
         });
 
+        console.log('==> message: ', apns);
+
         return notification.push(apns, true)
           .catch(err => {
             if (err.code !== ERR_ENDPOINT_DISABLED) {

@@ -36,7 +36,7 @@ function handleRequest(input) {
       }
     default:
       {
-        result = Promise.resolve('ActionNotSupported');
+        result = Promise.resolve({ message: 'ActionNotSupported' });
       }
   }
 
