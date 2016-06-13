@@ -10,5 +10,8 @@
   },
   "updateProfileRequest": {
     "application/json": "{ \"action\": \"update_profile\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"data\": $input.json('$') }"
+  },
+  "checkEmailsRequest": {
+    "application/json": "{ \"action\": \"check_emails\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"emails\": $input.json('$.emails') }"
   }
 }

@@ -1,5 +1,6 @@
 import { detailUser, detailMultipleUsers } from './detail-users';
 import { detailProfile, updateProfile } from './detail-profile';
+import { checkEmails } from './check-emails';
 
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
@@ -47,6 +48,11 @@ function handleRequest(input) {
     case 'update_profile':
       {
         result = updateProfile(userId, input.data);
+        break;
+      }
+    case 'check_emails':
+      {
+        result = checkEmails(input.emails);
         break;
       }
     default:

@@ -51,6 +51,16 @@
     "requestParameters": {},
     "requestTemplates": "$${updateProfileRequest}",
     "responses": "$${responsesForPost}"
+  }, {
+    "path": "users/check",
+    "method": "POST",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${checkEmailsRequest}",
+    "responses": "$${responsesForPost}"
   }],
   "events": [],
   "environment": {

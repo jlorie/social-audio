@@ -42,35 +42,7 @@ class UserModel extends ResourceModel {
   }
 
   getByUsernames(usernames) {
-    // TODO support for more than 25 items
-    let params = {
-      RequestItems: {}
-    };
-
-    let getRequests = [];
-    for (let username of usernames) {
-      getRequests.push({ username });
-    }
-
-    params.RequestItems[this.tableName] = {};
-    params.RequestItems[this.tableName].Keys = getRequests;
-
-    const func = (resolve, reject) => {
-      this.dynamo.batchGet(params, (err, result) => {
-        if (err) {
-          return reject(err);
-        }
-
-        let failedSomeReads = _.values(result.UnprocessedItems).length > 0;
-        if (failedSomeReads) {
-          return reject(new Error('BatchReadFailed'));
-        }
-
-        resolve(result.Responses[this.tableName]);
-      });
-    };
-
-    return new Promise(func);
+    return this.batchGet(usernames.map(username => ({ username })));
   }
 
   addSpaceUsed(username, sizeInBytes) {
