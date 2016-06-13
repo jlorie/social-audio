@@ -1,17 +1,27 @@
 import _ from 'lodash';
 import Notification from '../commons/remote/notification';
 
+import UserModel from '../commons/resources/user-model';
 import DeviceUserModel from '../commons/resources/device-user-model';
+
+const URI_USERS = process.env.URI_USERS;
 const URI_DEVICES_BY_USERS = process.env.URI_DEVICES_BY_USERS;
 const ERR_ENDPOINT_DISABLED = 'EndpointDisabled';
 
+const userModel = new UserModel(URI_USERS);
 const deviceByUserModel = new DeviceUserModel(URI_DEVICES_BY_USERS);
 
 export function notify({ recipientIds, message, pendingMap }) {
-  console.info(`Notifying via push to ${recipientIds}`);
-
-  // Getting endpoint for user's devices
-  return Promise.all(recipientIds.map(id => deviceByUserModel.getByUserId(id)))
+  // Discarding users with notification disabled
+  return getNotificationActiveUsers(recipientIds)
+    .then(userIds => {
+      let isEmpty = userIds.length === 0;
+      if (!isEmpty) {
+        console.info(`Notifying via push to ${userIds}`);
+      }
+      // Getting endpoint for user's devices
+      return Promise.all(userIds.map(id => deviceByUserModel.getByUserId(id)));
+    })
     .then(results => {
       let devices = _.flattenDeep(results);
 
@@ -29,8 +39,6 @@ export function notify({ recipientIds, message, pendingMap }) {
           })
         });
 
-        console.log('==> message: ', apns);
-
         return notification.push(apns, true)
           .catch(err => {
             if (err.code !== ERR_ENDPOINT_DISABLED) {
@@ -40,4 +48,10 @@ export function notify({ recipientIds, message, pendingMap }) {
           });
       }));
     });
+}
+
+function getNotificationActiveUsers(userIds) {
+  return Promise.all(userIds.map(id => userModel.getById(id)))
+    .then(users => users.filter(u => u.notifications_enabled))
+    .then(filtered => filtered.map(u => u.id));
 }
