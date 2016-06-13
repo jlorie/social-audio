@@ -161,6 +161,32 @@ class ResourceModel {
     return this._batchGet(keys);
   }
 
+  _scan(params) {
+    const func = (resolve, reject) => {
+      let results = [];
+      let dynamo = this.dynamo;
+      dynamo.scan(params, onScan);
+
+      function onScan(err, data) {
+        if (err) {
+          return reject(err);
+        }
+
+        results = _.concat(results, data.Items);
+
+        // continue scanning if we have more items to find
+        if (data.LastEvaluatedKey) {
+          params.ExclusiveStartKey = data.LastEvaluatedKey;
+          dynamo.scan(params, onScan);
+        } else {
+          resolve(results);
+        }
+      }
+    };
+
+    return new Promise(func);
+  }
+
   _batchWrite(requests) {
     // batch write
     // TODO support for more than 25 items

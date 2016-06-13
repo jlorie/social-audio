@@ -1,0 +1,35 @@
+{
+  "name": "users-garbage-collector",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: sls-bbluue",
+  "customName": false,
+  "customRole": false,
+  "handler": "users-garbage-collector/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [{
+    "name": "daily-collect",
+    "type": "schedule",
+    "config": {
+      "schedule": "rate(1 day)",
+      "enabled": true
+    }
+  }],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "URI_USERS": "${usersTableName}",
+    "URL_CONFIRM_EMAIL": "${confirmEmailUrl}",
+    "EMAIL_SUPPORT": "${supportEmail}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}

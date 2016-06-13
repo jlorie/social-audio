@@ -1,5 +1,6 @@
-import ResourceModel from './resource-model';
 import _ from 'lodash';
+import moment from 'moment';
+import ResourceModel from './resource-model';
 
 const ERR_CONDITION_FAILED = 'ConditionalCheckFailedException';
 
@@ -15,6 +16,10 @@ class UserModel extends ResourceModel {
 
   update(username, data) {
     return super.update({ username }, data);
+  }
+
+  remove(username) {
+    return super.remove({ username });
   }
 
   getByUsername(username) {
@@ -112,6 +117,37 @@ class UserModel extends ResourceModel {
         return new Promise(func);
       });
   }
+
+  expiredUsers(days) {
+    let expirationDate = moment().subtract(days, 'days').utc().format('YYYY-MM-DD');
+
+    let params = {
+      TableName: this.tableName,
+      FilterExpression: 'user_status = :user_status and created_at <= :expiration_date',
+      ExpressionAttributeValues: {
+        ':user_status': 'disabled',
+        ':expiration_date': expirationDate
+      }
+    };
+
+    return this._scan(params);
+  }
+
+  inactiveUsers(days) {
+    let inactiveDate = moment().subtract(days, 'days').utc().format('YYYY-MM-DD');
+
+    let params = {
+      TableName: this.tableName,
+      FilterExpression: 'user_status = :user_status and created_at <= :inactive_date',
+      ExpressionAttributeValues: {
+        ':user_status': 'idle',
+        ':inactive_date': inactiveDate
+      }
+    };
+
+    return this._scan(params);
+  }
+
 }
 
 export default UserModel;
