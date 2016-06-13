@@ -1,5 +1,6 @@
 {
-  "identity_id": "us-east-1:0a73b017-e66c-4a41-bc58-ff4eb3e81db3",
-  "oldPassword": "password",
-  "newPassword": "password00"
+  "action": "reset",
+  "email": "jlorie@bbluue.com",
+  "password": "password00",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impsb3JpZUBiYmx1dWUuY29tIiwiaWF0IjoxNDY1ODQyNDA2LCJleHAiOjE0NjU5Mjg4MDZ9.tIdxkFUpmgtKbn4i67Iuk_1ZB2QmU6-x_XO7IUqCKHc"
 }

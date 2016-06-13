@@ -12,7 +12,7 @@
     "excludePatterns": []
   },
   "endpoints": [{
-    "path": "security/password",
+    "path": "security/change-password",
     "method": "POST",
     "type": "AWS",
     "authorizationType": "AWS_IAM",
@@ -21,13 +21,36 @@
     "requestParameters": {},
     "requestTemplates": "$${changeRequest}",
     "responses": "$${responsesForPost}"
+  }, {
+    "path": "security/reset-password",
+    "method": "POST",
+    "type": "AWS",
+    "authorizationType": "none",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${requestResetTemplate}",
+    "responses": "$${responsesForPost}"
+  }, {
+    "path": "security/reset-password",
+    "method": "PUT",
+    "type": "AWS",
+    "authorizationType": "none",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${resetTemplate}",
+    "responses": "$${responsesForPost}"
   }],
   "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-    "URI_USERS": "${usersTableName}"
+    "URI_USERS": "${usersTableName}",
+    "URL_RESET_PASSWORD": "${resetPasswordUrl}",
+    "EMAIL_SUPPORT": "${supportEmail}",
+    "URL_EMAIL_UNSUBSCRIBE": "${unsubscribeEmailApiUrl}"
   },
   "vpc": {
     "securityGroupIds": [],
