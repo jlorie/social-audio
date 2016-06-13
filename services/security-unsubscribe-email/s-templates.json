@@ -1,0 +1,5 @@
+{
+  "requestTemplate": {
+    "application/json": "{\"email\": \"$input.params('email')\",  \"token\": \"$input.params('token')\"}"
+  }
+}

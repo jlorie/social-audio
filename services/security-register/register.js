@@ -26,6 +26,8 @@ export default function register({ username, password, fullname, genre, birthdat
         birthdate: new Date(birthdate).toISOString(),
         password: getEncryptedPassword(password),
         identity_id: identityId,
+        user_status: 'idle',
+        email_status: 'subscribed',
 
         // profile data
         space_used: 0,

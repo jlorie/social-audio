@@ -11,7 +11,7 @@ const URI_USERS = process.env.URI_USERS;
 const emailService = new EmailService();
 const userModel = new UserModel(URI_USERS);
 const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT +
-  '/activate-account' : __dirname);
+  '/security-activate-account' : __dirname);
 
 export function requestActivation({ email }) {
   console.info('Sending activation mail to ' + email);

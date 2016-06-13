@@ -1,0 +1,38 @@
+{
+  "name": "security-unsubscribe-email",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: sls-bbluue",
+  "customName": false,
+  "customRole": false,
+  "handler": "security-unsubscribe-email/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [{
+    "path": "security/unsubscribe-email",
+    "method": "GET",
+    "type": "AWS",
+    "authorizationType": "none",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${requestTemplate}",
+    "responses": "$${responsesForRedirect}"
+  }],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "URI_USERS": "${usersTableName}",
+    "URL_EMAIL_UNSUBSCRIBE_FAIL": "${unsubscribeEmailFailUrl}",
+    "URL_EMAIL_UNSUBSCRIBE_SUCCESS": "${unsubscribeEmailSuccessUrl}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
