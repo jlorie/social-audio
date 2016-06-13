@@ -1,0 +1,9 @@
+{
+  "postRequestTemplate": {
+    "application/json": "{\"action\": \"request\",\"email\": $input.json('$.email')}"
+  },
+
+  "getRequestTemplate": {
+    "application/json": "{\n    \"action\": \"validate\",\n    \"email\": \"$input.params('email')\",\n    \"token\": \"$input.params('token')\"\n}"
+  }
+}
