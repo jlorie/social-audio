@@ -1,10 +1,21 @@
 import GeneralConfig from '../commons/resources/general-config';
+import ElementModel from '../commons/resources/element-model';
 import Storage from '../commons/remote/storage';
 
 const config = new GeneralConfig();
+const elementModel = new ElementModel('dev-elements');
 export default (event, context) => {
-  // https://s3.amazonaws.com/dev-bbluue-files/images/720p-8b423c118f2c800eeeb4b0676759f613.jpg
-  let bucket = 'dev-bbluue-files';
-  let key = 'images/720p-8b423c118f2c800eeeb4b0676759f613.jpg';
-  return Storage.fileInfo(bucket, key);
+  let ids = ['f8542965c3e42011a48188e1bb4d3882', 'ab49cd6e04b396baeab0af0099bb425e',
+    // '3c0356258da794eeff9b7f2240633268', 'c12f95c8147118dafbd3a8ff25472b17',
+    '3014e74816a701066cb44be74a6cf7a2'
+  ];
+  return getElements(ids);
 };
+
+function getElements(ids) {
+  return elementModel.batchRemove(ids)
+    .then(elements => {
+      console.log('==> results: ', JSON.stringify(elements, null, 2));
+      return elements;
+    });
+}

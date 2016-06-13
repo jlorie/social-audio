@@ -2,6 +2,7 @@ import AWS from 'aws-sdk';
 import uuid from 'node-uuid';
 import _ from 'lodash';
 
+const MAX_ITEMS_BATCH = 25;
 const DEFAULT_PAGE_LIMIT = 20;
 const INDEX_ID_NAME = 'index-id';
 
@@ -148,17 +149,27 @@ class ResourceModel {
   }
 
   batchCreate(items) {
-    let putRequests = this._resolvePutRequests(items);
-    return this._batchWrite(putRequests);
+    // Execute batch requests in chunks of 25 items
+    let chunks = _.chunk(items, MAX_ITEMS_BATCH);
+    let putRequests = chunks.map(this._resolvePutRequests);
+
+    return Promise.all(putRequests.map(this._batchWrite, this))
+      .then(results => _.flattenDeep(results));
   }
 
-  batchRemove(keys) {
-    let deleteRequests = this._resolveDeleteRequests(keys);
-    return this._batchWrite(deleteRequests);
+  batchRemove(items) {
+    // Execute batch requests in chunks of 25 items
+    let chunks = _.chunk(items, MAX_ITEMS_BATCH);
+    let deleteRequests = chunks.map(this._resolveDeleteRequests);
+
+    return Promise.all(deleteRequests.map(this._batchWrite, this));
   }
 
-  batchGet(keys) {
-    return this._batchGet(keys);
+  batchGet(items) {
+    // Execute batch requests in chunks of 25 items
+    let chunks = _.chunk(items, MAX_ITEMS_BATCH);
+    return Promise.all(chunks.map(this._batchGet, this))
+      .then(results => _.flattenDeep(results));
   }
 
   _scan(params) {
@@ -216,7 +227,6 @@ class ResourceModel {
 
   _batchGet(requests) {
     // batch write
-    // TODO support for more than 25 items
     let params = {
       RequestItems: {
         [this.tableName]: {

@@ -8,16 +8,12 @@ import { inviteUsers } from './invite.js';
 const URI_USERS = process.env.URI_USERS;
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
-const MAX_RECIPIENTS = 25;
 
 const userModel = new UserModel(URI_USERS);
 const elementModel = new ElementModel(URI_ELEMENTS);
 const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
 export function shareElement(elementId, usernames, userId) {
-  if (usernames.length > MAX_RECIPIENTS) {
-    throw new Error('ShareLimitsExceeded');
-  }
   console.info('Sharing element ' + elementId + ' with users ' + usernames.join(', '));
 
   // get element

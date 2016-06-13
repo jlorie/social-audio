@@ -1,7 +1,6 @@
 import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
 
-const MAX_BATCH_ITEMS = 25;
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
 
@@ -23,10 +22,6 @@ export function deleteElement(id, userId) {
 }
 
 export function deleteMultipleElements(ids, userId) {
-  if (ids.length > MAX_BATCH_ITEMS) {
-    throw new Error('DeleteLimitsExceeded');
-  }
-
   console.info('Deleting ' + ids.length + ' elements for user ' + userId);
   return elementModel.batchGet(ids)
     .then(elements => {
