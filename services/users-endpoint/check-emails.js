@@ -8,6 +8,7 @@ export function checkEmails(emails) {
     .then(users => users.map(user => ({
       id: user.id,
       username: user.username,
-      fullname: user.fullname
+      fullname: user.fullname,
+      photo_url: user.photo_url
     })));
 }
