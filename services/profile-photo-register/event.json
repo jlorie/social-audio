@@ -26,7 +26,7 @@
         "arn": "arn:aws:s3:::dev-bbluue-upload"
       },
       "object": {
-        "key": "elements/97FC9271-09DB-45D3-9B26-842A6750F1E1-2883-0000026668104589.png",
+        "key": "profile/F17EFDA5-642C-40D1-BAF1-AE81A0571AEA-4666-0000105F540A80D2.jpg",
         "size": 1290571,
         "eTag": "d7525da08320b8496e9fe04e216bece3",
         "sequencer": "00575895793091E9BC"

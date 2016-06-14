@@ -3,10 +3,10 @@ import Notification from '../commons/remote/notification';
 
 import DeviceUserModel from '../commons/resources/device-user-model';
 import { resolveNotificationBadge } from './push-notification-badge';
+import { NOTIFICATION_TYPE } from '../commons/constants';
 
 const URI_DEVICES_BY_USERS = process.env.URI_DEVICES_BY_USERS;
 const ERR_ENDPOINT_DISABLED = 'EndpointDisabled';
-import { NOTIFICATION_TYPE } from './config';
 
 const deviceByUserModel = new DeviceUserModel(URI_DEVICES_BY_USERS);
 

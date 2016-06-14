@@ -12,7 +12,7 @@ export function optimizeImage(sourceUrl, userId) {
   let body = JSON.stringify({
     sourceUrl,
     destUrl: dest,
-    PROFILE_RESOLUTION
+    resolution: PROFILE_RESOLUTION
   });
 
   return invoker.invoke({ body })
