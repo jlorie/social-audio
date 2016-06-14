@@ -1,3 +1,4 @@
+import uuid from 'node-uuid';
 import FunctionInvoker from '../commons/remote/function-invoker';
 
 const S3_URL_PREFIX = 'https://s3.amazonaws.com';
@@ -7,8 +8,8 @@ const BUCKET_ELEMENT_FILES = process.env.BUCKET_ELEMENT_FILES;
 
 const invoker = new FunctionInvoker(URI_IMAGES_RESIZE);
 
-export function optimizeImage(sourceUrl, userId) {
-  const dest = `${S3_URL_PREFIX}/${BUCKET_ELEMENT_FILES}/images/profile-${userId}.jpg`;
+export function optimizeImage(sourceUrl) {
+  const dest = `${S3_URL_PREFIX}/${BUCKET_ELEMENT_FILES}/images/profile-${uuid.v1()}.jpg`;
   let body = JSON.stringify({
     sourceUrl,
     destUrl: dest,
