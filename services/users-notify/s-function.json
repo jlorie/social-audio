@@ -21,6 +21,7 @@
     "URI_USERS": "${usersTableName}",
     "URI_DEVICES_BY_USERS": "${devicesByUsersTableName}",
     "URI_USERS_LOG_ENDPOINT": "${usersLogTableName}",
+    "EMAIL_SUPPORT": "${supportEmail}",
     "MAX_NOTIFICATIONS": 20
   },
   "vpc": {

@@ -7,7 +7,7 @@ const URI_USERS_LOG_ENDPOINT = process.env.URI_USERS_LOG_ENDPOINT;
 const userLogModel = new UserLogModel(URI_USERS_LOG_ENDPOINT);
 const notificationModel = new NotificationModel(URI_NOTIFICATIONS);
 
-export function resolvePendingNotifications(recipientIds) {
+export function resolveNotificationBadge(recipientIds) {
   console.info('Resolving pending notifications for ' + recipientIds);
 
   let pending = new Map();

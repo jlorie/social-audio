@@ -22,6 +22,10 @@ class UserModel extends ResourceModel {
     return super.remove({ username });
   }
 
+  batchGetByIds(ids) {
+    return Promise.all(ids.map(id => this.getById(id)));
+  }
+
   getByUsername(username) {
     let params = {
       TableName: this.tableName,

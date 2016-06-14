@@ -200,7 +200,6 @@ class ResourceModel {
 
   _batchWrite(requests) {
     // batch write
-    // TODO support for more than 25 items
     let params = {
       RequestItems: {
         [this.tableName]: requests

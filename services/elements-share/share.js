@@ -1,9 +1,10 @@
+import _ from 'lodash';
 import UserModel from '../commons/resources/user-model';
 import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
 
 import { notifySharedElement } from './notify';
-import { inviteUsers } from './invite.js';
+import { registerPendingUsers } from './pending-users';
 
 const URI_USERS = process.env.URI_USERS;
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
@@ -34,17 +35,16 @@ export function shareElement(elementId, usernames, userId) {
           let recipientIds = users.map(user => user.id);
           let pendingUsers = usernames.filter(email => !users.find(u => u.username === email));
 
+          return registerPendingUsers(pendingUsers)
+            .then(pendingIds => _.concat(pendingIds, recipientIds));
+        })
+        .then(recipientIds => {
+          console.log('===> recipientIds: ', JSON.stringify(recipientIds, null, 2));
           // bind users with elements
           let bindings = getBindings(recipientIds, [element]);
 
-          return elementsByUserModel.create(bindings)
-            .then(() => {
-              // notifying and inviting
-              let tasks = [notifySharedElement(element, userId, recipientIds), // log
-                inviteUsers(userId, pendingUsers) // inviting pending users
-              ];
-              return Promise.all(tasks);
-            })
+          return elementsByUserModel.batchCreate(bindings)
+            .then(() => notifySharedElement(element, userId, recipientIds))
             .then(() => ({ message: 'OK' }));
         });
     });

@@ -9,11 +9,6 @@ class ElementUserModel extends ResourceModel {
   }
 
   create(items) {
-    if (_.isArray(items)) {
-      let requests = this._resolvePutRequests(items);
-      return this._batchWrite(requests);
-    }
-
     return super.create(items);
   }
 
