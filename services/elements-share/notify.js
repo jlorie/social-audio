@@ -18,7 +18,7 @@ export function notifySharedElement(element, ownerId, recipientIds) {
         recipientIds,
         type: AUDIO_REQUEST_TYPE,
         emitterId: emitter.id,
-        element_id: element.id,
+        elementId: element.id,
         details: {
           thumbnail_url: element.thumbnail_url,
           emitter_name: emitter.fullname

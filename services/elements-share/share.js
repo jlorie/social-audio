@@ -39,7 +39,6 @@ export function shareElement(elementId, usernames, userId) {
             .then(pendingIds => _.concat(pendingIds, recipientIds));
         })
         .then(recipientIds => {
-          console.log('===> recipientIds: ', JSON.stringify(recipientIds, null, 2));
           // bind users with elements
           let bindings = getBindings(recipientIds, [element]);
 

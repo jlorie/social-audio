@@ -4,11 +4,13 @@ export default (event, context) => {
   let { element_id, element_ids, usernames, identity_id } = event;
   console.info('=> Input: ', JSON.stringify(event, null, 2));
 
+  let sharePromise;
   let ownerId = identity_id.split(':').pop();
-  let sharePromise = shareElement(element_id, usernames, ownerId);
 
   if (element_ids) {
     sharePromise = shareMultipleElements(element_ids, usernames, ownerId);
+  } else {
+    sharePromise = shareElement(element_id, usernames, ownerId);
   }
 
   return sharePromise
