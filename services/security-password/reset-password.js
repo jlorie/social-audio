@@ -1,11 +1,9 @@
 import jwt from 'jsonwebtoken';
 import UserModel from '../commons/resources/user-model';
 import { getEncryptedPassword } from '../commons/helpers/password-helper';
+import { ERR_SECURITY, USER_STATUS, SUCCESS, PREFIX_SECRET } from '../commons/constants';
 
 const URI_USERS = process.env.URI_USERS;
-const PREFIX_SECRET = 'bbluue-';
-const RESPONSE_SUCCESS = { status: 'OK' };
-const STATUS_DISABLED = 'disabled';
 
 const userModel = new UserModel(URI_USERS);
 
@@ -51,16 +49,16 @@ function changePassword(email, password) {
   return userModel.getByUsername(email)
     .then(user => {
       if (!user) {
-        throw new Error('InvalidUser');
+        throw new Error(ERR_SECURITY.INVALID_USER);
       }
 
-      if (user.status === STATUS_DISABLED) {
-        throw new Error('AccountDisabled');
+      if (user.status === USER_STATUS.DISABLED) {
+        throw new Error(ERR_SECURITY.ACCOUNT_DISABLED);
       }
 
       console.info('Updating password user ' + user.id);
       let encriptedPassword = getEncryptedPassword(password);
       return userModel.update(email, { password: encriptedPassword })
-        .then(() => RESPONSE_SUCCESS);
+        .then(() => SUCCESS);
     });
 }

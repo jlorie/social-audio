@@ -2,7 +2,7 @@ import uuid from 'node-uuid';
 import FunctionInvoker from '../commons/remote/function-invoker';
 
 const S3_URL_PREFIX = 'https://s3.amazonaws.com';
-const PROFILE_RESOLUTION = 300;
+const PROFILE_RESOLUTION = 480;
 const URI_IMAGES_RESIZE = process.env.URI_IMAGES_RESIZE;
 const BUCKET_ELEMENT_FILES = process.env.BUCKET_ELEMENT_FILES;
 

@@ -3,8 +3,9 @@ import jwt from 'jsonwebtoken';
 
 import config from './config';
 import EmailService from '../commons/remote/email-service';
+import { SUCCESS } from '../commons/constants';
 
-const OK = { status: 'OK' };
+
 const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT +
   '/security-password' : __dirname);
 
@@ -14,7 +15,7 @@ export function requestReset({ email }) {
   console.info('Sending reset password mail to ' + email);
 
   return sendmail(email)
-    .then(() => OK)
+    .then(() => SUCCESS)
     .catch(err => {
       console.info('An error occurred sending reset password mail to ' + email);
       return {
