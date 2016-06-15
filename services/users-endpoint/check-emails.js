@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import UserModel from '../commons/resources/user-model';
 import { USER_STATUS } from '../commons/constants';
 
@@ -5,7 +6,8 @@ const URI_USERS = process.env.URI_USERS;
 const userModel = new UserModel(URI_USERS);
 
 export function checkEmails(emails) {
-  return userModel.getByUsernames(emails)
+  let unique = _.uniq(emails);
+  return userModel.getByUsernames(unique)
     .then(users => users.map(user => ({
       id: user.id,
       username: user.username,
