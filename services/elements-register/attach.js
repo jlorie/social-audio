@@ -1,11 +1,15 @@
-import ElementModel from '../commons/resources/element-model';
 import Storage from '../commons/remote/storage';
+import ElementModel from '../commons/resources/element-model';
+import ElementUserModel from '../commons/resources/element-user-model';
+
 import { notifyNewAudio } from './notify-new-audio';
 
 const URI_ELEMENTS_RESOURCE = process.env.URI_ELEMENTS_RESOURCE;
 const BUCKET_ELEMENT_FILES = process.env.BUCKET_ELEMENT_FILES;
+const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
 
 const elementModel = new ElementModel(URI_ELEMENTS_RESOURCE);
+const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
 export function attach(attachment) {
   console.info('Persisting attachment with id ' + attachment.id);
@@ -23,7 +27,14 @@ export function attach(attachment) {
       console.info('Adding an attachment to element with id ' + attachment.attached_to);
       return elementModel.attachFile(attachment.attached_to, attachmentData);
     })
-    .then(() => notifyNewAudio(attachment.owner_id, attachment.attached_to))
+    .then(() => {
+      let tasks = [
+        bindElement(attachment.owner_id, attachment.attached_to),
+        notifyNewAudio(attachment.owner_id, attachment.attached_to)
+      ];
+
+      return Promise.all(tasks);
+    })
     .catch(err => {
       console.info(`An error occurred attaching. ${err}`);
       throw err;
@@ -39,4 +50,24 @@ function saveAttachment(attachment) {
 
   return Storage.copyFile(attachment.source_url, destUrl)
     .then(() => destUrl);
+}
+
+function bindElement(userId, elementId) {
+  console.info('Binding element ' + elementId + ' with user ' + userId);
+
+  // bind user with element
+  return elementModel.getById(elementId)
+    .then(element => {
+      let binding = {
+        id: element.id,
+        user_id: userId,
+        created_at: element.created_at + '|visitor',
+        thumbnail_url: element.thumbnail_url,
+        audios: element.audios.filter(a => a.public).length,
+        favorite: false
+      };
+
+      // TODO check if binding already exists
+      return elementsByUserModel.create(binding);
+    });
 }

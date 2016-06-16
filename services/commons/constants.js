@@ -19,6 +19,10 @@ export const ACCOUNT_TYPE = {
   BASIC: 'basic'
 };
 
+export const ERR_ELEMENTS = {
+  INVALID_ELEMENT: 'InvalidElement'
+};
+
 export const ERR_SECURITY = {
   INVALID_OLD_PASSWORD: 'InvalidOldPassword',
   INVALID_USER: 'InvalidUser',

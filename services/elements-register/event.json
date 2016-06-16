@@ -3,21 +3,21 @@
     "eventVersion": "2.0",
     "eventSource": "aws:s3",
     "awsRegion": "us-east-1",
-    "eventTime": "2016-06-08T22:00:33.241Z",
+    "eventTime": "2016-06-16T21:19:38.000Z",
     "eventName": "ObjectCreated:Put",
     "userIdentity": {
-      "principalId": "AWS:AROAJPS4ZNFOHDCH2YESS:calvarez@bbluue.com"
+      "principalId": "AWS:AROAJPS4ZNFOHDCH2YESS:ajimenez@bbluue.com"
     },
     "requestParameters": {
       "sourceIPAddress": "181.39.138.19"
     },
     "responseElements": {
-      "x-amz-request-id": "D9DC96B182C1FFAD",
-      "x-amz-id-2": "8z089Nv6X7ufQKHOQjwLBdDhfXuLk+miVfBr0w+AZUEa13SABMubGy3ymsgkZTckB+c23xk96YI="
+      "x-amz-request-id": "CAEC6EEFAD3BD795",
+      "x-amz-id-2": "5PCFNCTj3yyKKK5WneSRcFMh/QspxAZgpoD+Bg8lpdE76AkzalCnokkuv50MUWz13xkTSDjLMhQ="
     },
     "s3": {
       "s3SchemaVersion": "1.0",
-      "configurationId": "ZWM1ZGNhMmItZThkMi00MThhLTlhZTctZjQ4OTBlYTYyYjY2",
+      "configurationId": "NDI0MDkzZWItNzBlOC00MzI2LTgxZmMtNGVmZTdlZDlmYjRm",
       "bucket": {
         "name": "dev-bbluue-upload",
         "ownerIdentity": {
@@ -26,10 +26,10 @@
         "arn": "arn:aws:s3:::dev-bbluue-upload"
       },
       "object": {
-        "key": "elements/97FC9271-09DB-45D3-9B26-842A6750F1E1-2883-0000026668104589.png",
-        "size": 1290571,
-        "eTag": "d7525da08320b8496e9fe04e216bece3",
-        "sequencer": "00575895793091E9BC"
+        "key": "elements/8B4FA2D1-18EE-487A-A4AC-DC6D95DDF3B3-6763-000014319CAF3FC3.caf",
+        "size": 29609,
+        "eTag": "d1e3b9469701b2815f4747829c45e726",
+        "sequencer": "00576317E98426C094"
       }
     }
   }]

@@ -1,18 +1,15 @@
 import _ from 'lodash';
 import UserModel from '../commons/resources/user-model';
 import ElementModel from '../commons/resources/element-model';
-import ElementUserModel from '../commons/resources/element-user-model';
 
 import { notifySharedElement } from './notify';
 import { registerPendingUsers } from './pending-users';
 
 const URI_USERS = process.env.URI_USERS;
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
-const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
 
 const userModel = new UserModel(URI_USERS);
 const elementModel = new ElementModel(URI_ELEMENTS);
-const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
 export function shareElement(elementId, usernames, userId) {
   console.info('Sharing element ' + elementId + ' with users ' + usernames.join(', '));
@@ -39,10 +36,11 @@ export function shareElement(elementId, usernames, userId) {
             .then(pendingIds => _.concat(pendingIds, recipientIds));
         })
         .then(recipientIds => {
-          // bind users with elements
-          let bindings = getBindings(recipientIds, [element]);
+          let sharedWith = element.shared_with || [];
+          sharedWith = _.concat(sharedWith, recipientIds);
 
-          return elementsByUserModel.batchCreate(bindings)
+          // updating element's shared_with field
+          return elementModel.update(elementId, { shared_with: sharedWith })
             .then(() => notifySharedElement(element, userId, recipientIds))
             .then(() => ({ message: 'OK' }));
         });
@@ -59,26 +57,4 @@ export function shareMultipleElements(elementIds, recipients, userId) {
 
   return Promise.all(promises)
     .then(() => ({ message: 'OK' }));
-}
-
-function getBindings(recipientIds, elements) {
-  let bindings = [];
-
-  for (let element of elements) {
-    element.audios = element.audios || [];
-    for (let id of recipientIds) {
-      let binding = {
-        id: element.id,
-        user_id: id,
-        created_at: element.created_at + '|visitor',
-        thumbnail_url: element.thumbnail_url,
-        audios: element.audios.filter(a => a.public).length,
-        favorite: false
-      };
-
-      bindings.push(binding);
-    }
-  }
-
-  return bindings;
 }
