@@ -11,6 +11,9 @@ export function detailElement(id, userId) {
   // get element
   return elementModel.getById(id)
     .then(element => {
+      if (!element) {
+        throw new Error(ERR_ELEMENTS.INVALID_ELEMENT);
+      }
       // check permissions
       let isElementOwner = element.owner_id === userId;
       let hasPermissions = isElementOwner || element.shared_with.indexOf(userId) > -1;
