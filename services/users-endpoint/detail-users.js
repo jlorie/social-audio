@@ -11,7 +11,8 @@ export function detailUser(id) {
         id: user.id,
         email: user.username,
         fullname: user.fullname,
-        genre: user.genre
+        genre: user.genre,
+        photo_url: user.photo_url
       };
 
       return output;

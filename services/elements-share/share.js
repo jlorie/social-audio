@@ -38,6 +38,7 @@ export function shareElement(elementId, usernames, userId) {
         .then(recipientIds => {
           let sharedWith = element.shared_with || [];
           sharedWith = _.concat(sharedWith, recipientIds);
+          sharedWith = _.uniq(sharedWith);
 
           // updating element's shared_with field
           return elementModel.update(elementId, { shared_with: sharedWith })
