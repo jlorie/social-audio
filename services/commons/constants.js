@@ -33,4 +33,8 @@ export const SUCCESS = {
   status: 'OK'
 };
 
+export const ERR_ACTION = {
+  UNDEFINED: 'UndefinedAction'
+};
+
 export const PREFIX_SECRET = 'bbluue-';

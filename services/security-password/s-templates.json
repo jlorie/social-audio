@@ -3,9 +3,9 @@
     "application/json": "{ \"action\": \"change\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"oldPassword\": $input.json('$.old_password'), \"newPassword\": $input.json('$.new_password') }"
   },
   "requestResetTemplate": {
-    "application/json": "{ \"action\":\"request-reset\" \"email\": $input.json('$.email') }"
+    "application/json": "{ \"action\":\"request-reset\", \"email\": $input.json('$.email') }"
   },
   "resetTemplate": {
-    "application/json": "{\"action\": \"reset\" \"email\": $input.json('$.email'), \"password\": $input.json('$.password'), \"token\": $input.json('$.token')}"
+    "application/json": "{\"action\": \"reset\", \"email\": $input.json('$.email'), \"password\": $input.json('$.password'), \"token\": $input.json('$.token')}"
   }
 }

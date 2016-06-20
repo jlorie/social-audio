@@ -1,0 +1,62 @@
+{
+  "Records": [{
+    "eventID": "cd0de7f628410a1284870a428021cb7b",
+    "eventName": "REMOVE",
+    "eventVersion": "1.1",
+    "eventSource": "aws:dynamodb",
+    "awsRegion": "us-east-1",
+    "dynamodb": {
+      "ApproximateCreationDateTime": 1466457660,
+      "Keys": {
+        "username": {
+          "S": "jlorie@bbluue.com"
+        }
+      },
+      "OldImage": {
+        "user_status": {
+          "S": "idle"
+        },
+        "account_type": {
+          "S": "basic"
+        },
+        "space_used": {
+          "N": "53463"
+        },
+        "birthdate": {
+          "S": "1987-10-19T00:00:00.000Z"
+        },
+        "identity_id": {
+          "S": "us-east-1:1101a5f5-0c55-4f57-b420-0dadfbeb6044"
+        },
+        "created_at": {
+          "S": "2016-06-14T17:07:01.086Z"
+        },
+        "notifications_enabled": {
+          "BOOL": true
+        },
+        "email_status": {
+          "S": "subscribed"
+        },
+        "password": {
+          "S": "4552206109c00297216b0d06874f1bc1"
+        },
+        "genre": {
+          "S": "M"
+        },
+        "fullname": {
+          "S": "Javier Lorie Guerra"
+        },
+        "id": {
+          "S": "1101a5f5-0c55-4f57-b420-0dadfbeb6044"
+        },
+        "username": {
+          "S": "jlorie@bbluue.com"
+        }
+      },
+      "SequenceNumber": "108590800000000005577666149",
+      "SizeBytes": 375,
+      "StreamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-users/stream/2016-06-20T20:01:12.908"
+  }]
+}

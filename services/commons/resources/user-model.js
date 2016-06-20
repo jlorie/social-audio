@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import moment from 'moment';
 import ResourceModel from './resource-model';
 
@@ -20,6 +19,17 @@ class UserModel extends ResourceModel {
 
   remove(username) {
     return super.remove({ username });
+  }
+
+  removeById(id) {
+    return this.getById(id)
+      .then(user => {
+        if (!user) {
+          throw new Error('InvalidId');
+        }
+
+        return super.remove({ username: user.username });
+      });
   }
 
   batchGetByIds(ids) {

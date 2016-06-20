@@ -1,0 +1,35 @@
+{
+  "name": "users-stream-watcher",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: bbluue-audios",
+  "customName": false,
+  "customRole": false,
+  "handler": "users-stream-watcher/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [{
+    "name": "users-stream-events",
+    "type": "dynamodbstream",
+    "config": {
+      "streamArn": "${usersStreamArn}",
+      "startingPosition": "LATEST",
+      "enabled": true
+    }
+  }],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "URI_ELEMENTS": "${elementsTableName}",
+    "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}

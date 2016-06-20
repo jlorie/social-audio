@@ -32,6 +32,16 @@
     "requestTemplates": "$${batchDetailRequest}",
     "responses": "$${responsesForGet}"
   }, {
+    "path": "users",
+    "method": "DELETE",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${deleteRequest}",
+    "responses": "$${responsesForPost}"
+  }, {
     "path": "users/profile",
     "method": "GET",
     "type": "AWS",

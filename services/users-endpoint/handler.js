@@ -1,6 +1,7 @@
 import { detailUser, detailMultipleUsers } from './detail-users';
 import { detailProfile, updateProfile } from './detail-profile';
 import { checkEmails } from './check-emails';
+import { deleteUser } from './delete-user';
 
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
@@ -33,6 +34,11 @@ function handleRequest(input) {
     case 'detail':
       {
         result = detailUser(input.user_id);
+        break;
+      }
+    case 'delete':
+      {
+        result = deleteUser(userId);
         break;
       }
     case 'batch_detail':
