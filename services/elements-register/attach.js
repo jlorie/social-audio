@@ -67,7 +67,13 @@ function bindElement(userId, elementId) {
         favorite: false
       };
 
-      // TODO check if binding already exists
-      return elementsByUserModel.create(binding);
+      return elementsByUserModel.getById(elementId, userId)
+        .then(reference => {
+          if (!reference) {
+            return elementsByUserModel.create(binding);
+          }
+
+          return reference;
+        });
     });
 }
