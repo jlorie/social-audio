@@ -154,7 +154,7 @@ class ResourceModel {
     let putRequests = chunks.map(this._resolvePutRequests);
 
     return Promise.all(putRequests.map(this._batchWrite, this))
-      .then(results => _.flattenDeep(results));
+      .then(() => items);
   }
 
   batchRemove(items) {

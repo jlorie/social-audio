@@ -1,8 +1,7 @@
-import uuid from 'node-uuid';
-import UserModel from '../commons/resources/user-model';
+import FunctionInvoker from '../commons/remote/function-invoker';
 
-const URI_USERS = process.env.URI_USERS;
-const userModel = new UserModel(URI_USERS);
+const URI_REGISTER_ENDPOINT = process.env.URI_REGISTER_ENDPOINT;
+const registerPending = new FunctionInvoker(URI_REGISTER_ENDPOINT);
 
 export function registerPendingUsers(usernames) {
   let isEmpty = usernames.length === 0;
@@ -11,13 +10,14 @@ export function registerPendingUsers(usernames) {
   }
 
   console.info(`Registering ${usernames.length} pending users`);
-  let newUsers = usernames.map(username => ({
-    username,
-    user_status: 'pending',
-    created_at: new Date().toISOString(),
-    id: uuid.v1()
-  }));
+  let body = JSON.stringify({
+    action: 'register-pending',
+    usernames
+  });
 
-  return userModel.batchCreate(newUsers)
-    .then(() => newUsers.map(u => u.id));
+  return registerPending.invoke({ body })
+    .then(result => {
+      let users = JSON.parse(result.Payload);
+      return users.map(u => u.id);
+    });
 }

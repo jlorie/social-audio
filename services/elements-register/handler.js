@@ -26,7 +26,7 @@ export default (event, context) => {
 function resolveUserId(username) {
   console.info('Resolving user id for ' + username);
 
-  return userModel.getByUsernames([username])
+  return userModel.batchGet([username])
     .then(results => {
       let user = results[0];
       if (!user) {

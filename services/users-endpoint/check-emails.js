@@ -7,7 +7,7 @@ const userModel = new UserModel(URI_USERS);
 
 export function checkEmails(emails) {
   let unique = _.uniq(emails);
-  return userModel.getByUsernames(unique)
+  return userModel.batchGet(unique)
     .then(users => users.map(user => ({
       id: user.id,
       username: user.username,

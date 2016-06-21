@@ -27,7 +27,7 @@ export function shareElement(elementId, usernames, userId) {
       }
 
       // get recipients ids
-      return userModel.getByUsernames(usernames)
+      return userModel.batchGet(usernames)
         .then(users => {
           let recipientIds = users.map(user => user.id);
           let pendingUsers = usernames.filter(email => !users.find(u => u.username === email));

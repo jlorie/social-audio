@@ -43,7 +43,8 @@
     "URI_DEVICES_BY_USERS": "${devicesByUsersTableName}",
     "URI_NOTIFICATIONS": "${notificationsTableName}",
     "URI_USERS_INVITE": "${inviteEnpointFunctionName}",
-    "URI_NOTIFY_ENDPOINT": "${notifyEnpointFunctionName}"
+    "URI_NOTIFY_ENDPOINT": "${notifyEnpointFunctionName}",
+    "URI_REGISTER_ENDPOINT": "${registerEnpointFunctionName}"
   },
   "vpc": {
     "securityGroupIds": [],

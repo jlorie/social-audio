@@ -59,10 +59,6 @@ class UserModel extends ResourceModel {
     return new Promise(func);
   }
 
-  getByUsernames(usernames) {
-    return this.batchGet(usernames.map(username => ({ username })));
-  }
-
   addSpaceUsed(username, sizeInBytes) {
     let params = {
       TableName: this.tableName,

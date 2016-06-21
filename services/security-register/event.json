@@ -1,6 +1,6 @@
 {
-  "action": "register",
-  "username": "jlorie@bbluue.com",
+  "action": "register-pending",
+  "usernames": ["jlorie@bbluue.com"],
   "fullname": "Javier Lorie Guerra",
   "genre": "M",
   "birthdate": "1987-10-19",
