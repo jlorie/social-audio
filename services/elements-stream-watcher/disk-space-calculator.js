@@ -1,5 +1,6 @@
 import Storage from '../commons/remote/storage';
 import UserModel from '../commons/resources/user-model';
+import { ERR_USERS } from '../commons/constants';
 
 const URI_USERS = process.env.URI_USERS;
 const userModel = new UserModel(URI_USERS);
@@ -24,7 +25,14 @@ export function substractUserSpace(element) {
       console.info(`Substracting ${sizeInBytes} bytes to user ` + element.owner_id);
 
       return userModel.getById(element.owner_id)
-        .then(user => userModel.addSpaceUsed(user.username, sizeInBytes * -1));
+        .then(user => {
+          if (!user) {
+            console.info('User ' + element.owner_id + ' not exists');
+            return ERR_USERS.INVALID_USER;
+          }
+
+          return userModel.addSpaceUsed(user.username, sizeInBytes * -1);
+        });
     });
 }
 
@@ -75,7 +83,15 @@ function calculateElementSpace(element) {
 
     let args = extractArgsFromUrl(uri);
     return Storage.fileInfo(args.bucket, args.key)
-      .then(info => parseInt(info.ContentLength));
+      .then(info => parseInt(info.ContentLength))
+      .catch(err => {
+        if (err.code === 'NotFound') {
+          console.info('File not found with uri: ', uri);
+          return Promise.resolve(0);
+        }
+
+        throw err;
+      });
   });
 
   return Promise.all(filesSizePromise)

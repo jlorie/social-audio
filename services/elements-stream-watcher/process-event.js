@@ -45,7 +45,7 @@ export function processEvent(record) {
         let oldImage = dynamoDoc.dynamoToJs(record.dynamodb.OldImage);
         let tasks = [
           remove(oldImage.id), // remove relationships
-          deletedElementNotify.notify(JSON.stringify(oldImage)), // notify deleted element
+          // deletedElementNotify.notify(JSON.stringify(oldImage)), // notify deleted element
           substractUserSpace(oldImage) // removing user space
         ];
 

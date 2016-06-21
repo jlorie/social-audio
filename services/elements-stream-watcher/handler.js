@@ -15,6 +15,6 @@ export default (event, context) => {
         status: 'ERROR',
         message: err.message
       };
-      context.fail(JSON.stringify(error));
+      context.succeed(JSON.stringify(error));
     });
 };
