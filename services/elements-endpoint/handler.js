@@ -5,6 +5,7 @@ import { detailElement } from './detail-element';
 import { deleteElement, deleteMultipleElements } from './delete-elements';
 import { detachAudio } from './detach-audio';
 import { markElementAsViewed } from './mark-notification';
+import { resolveSharedWith } from './shared_with';
 
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
@@ -68,6 +69,11 @@ function handleRequest(input) {
       case 'detach_audio':
         {
           result = detachAudio(input.element_id, input.attachment_id, userId);
+          break;
+        }
+      case 'shared_with':
+        {
+          result = resolveSharedWith(input.element_id, userId);
           break;
         }
       default:

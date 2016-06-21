@@ -35,7 +35,8 @@ export const ERR_ELEMENTS = {
 export const ERR_SECURITY = {
   INVALID_OLD_PASSWORD: 'InvalidOldPassword',
   INVALID_USER: 'InvalidUser',
-  ACCOUNT_DISABLED: 'AccountDisabled'
+  ACCOUNT_DISABLED: 'AccountDisabled',
+  ACCESS_DENIED: 'AccessDenied'
 };
 
 export const SUCCESS = {

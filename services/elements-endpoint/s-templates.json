@@ -13,5 +13,8 @@
   },
   "detachRequest": {
     "application/json": "{ \"action\": \"detach_audio\", \"identity_id\": \"$context.identity.cognitoIdentityId\",  \"element_id\": \"$input.params('id')\", \"attachment_id\": $input.json('$.attachment_id') }"
+  },
+  "sharedWithRequest": {
+    "application/json": "{ \"action\": \"shared_with\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\" }"
   }
 }
