@@ -32,6 +32,10 @@ class UserModel extends ResourceModel {
       });
   }
 
+  batchGet(usernames) {
+    return super.batchGet(usernames.map(username => ({ username })));
+  }
+
   batchGetByIds(ids) {
     return Promise.all(ids.map(id => this.getById(id)));
   }

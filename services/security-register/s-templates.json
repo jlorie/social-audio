@@ -1,5 +1,5 @@
 {
-  "registerRequestTemplate": {
-    "application/json": "{\n\t\"username\": $input.json('$.username'),\n\t\"fullname\": $input.json('$.fullname'),\n\t\"genre\": $input.json('$.genre'),\n\t\"birthdate\": $input.json('$.birthdate'),\n\t\"password\": $input.json('$.password')\n}"
+  "registerRequest": {
+    "application/json": "{ \"action\": \"register\", \"username\": $input.json('$.username'), \"fullname\": $input.json('$.fullname'), \"genre\": $input.json('$.genre'), \"birthdate\": $input.json('$.birthdate'),\"password\": $input.json('$.password')}"
   }
 }

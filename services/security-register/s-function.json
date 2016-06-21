@@ -19,7 +19,7 @@
     "authorizerFunction": false,
     "apiKeyRequired": false,
     "requestParameters": {},
-    "requestTemplates": "$${registerRequestTemplate}",
+    "requestTemplates": "$${registerRequest}",
     "responses": "$${responsesForPost}"
   }],
   "events": [],
