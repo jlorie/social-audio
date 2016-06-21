@@ -97,6 +97,18 @@ class ElementUserModel extends ResourceModel {
     return new Promise(func);
   }
 
+  hasPermissions(elementId, userId) {
+    return this.getById(elementId, userId)
+      .then(references => {
+        if (references.length > 0) {
+          return true;
+        }
+
+        return false;
+      });
+  }
+
+
 }
 
 

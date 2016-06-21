@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import ElementUserModel from '../commons/resources/element-user-model';
+import { REF_STATUS } from '../commons/constants';
 
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
 
@@ -7,16 +8,17 @@ const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
 export function bind(element) {
   console.info('Indexing new element with id ' + element.id + ' for user ' + element.owner_id);
-  let binding = {
+  let reference = {
     id: element.id,
     user_id: element.owner_id,
     created_at: element.created_at + '|owner',
     thumbnail_url: element.thumbnail_url,
     audios: 0,
-    favorite: false
+    favorite: false,
+    ref_status: REF_STATUS.RESOLVED
   };
 
-  return elementsByUserModel.create(binding);
+  return elementsByUserModel.create(reference);
 }
 
 export function update(oldData, newData) {

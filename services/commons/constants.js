@@ -15,6 +15,11 @@ export const USER_STATUS = {
   DISABLED: 'disabled'
 };
 
+export const REF_STATUS = {
+  RESOLVED: 'resolved',
+  PENDING: 'pending'
+};
+
 export const ACCOUNT_TYPE = {
   BASIC: 'basic'
 };
