@@ -310,6 +310,31 @@
       }
     },
 
+    "FeedbackDynamoTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [{
+          "AttributeName": "user_id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "created_at",
+          "AttributeType": "S"
+        }],
+        "KeySchema": [{
+          "AttributeName": "user_id",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "created_at",
+          "KeyType": "RANGE"
+        }],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "${db-rcu}",
+          "WriteCapacityUnits": "${db-wcu}"
+        },
+        "TableName": "${stage}-feedback"
+      }
+    },
+
     "ElementsBucket": {
       "Type": "AWS::S3::Bucket",
       "Properties": {
@@ -410,6 +435,11 @@
     "UsersLogTableName": {
       "Value": {
         "Ref": "UsersLogDynamoTable"
+      }
+    },
+    "FeedbackTableName": {
+      "Value": {
+        "Ref": "FeedbackDynamoTable"
       }
     },
     "ElementsBucketName": {

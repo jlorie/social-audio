@@ -1,0 +1,5 @@
+{
+  "newFeedbackRequest": {
+    "application/json": "{ \"identity_id\": \"$context.identity.cognitoIdentityId\", \"text\": $input.json('$.text') }"
+  }
+}
