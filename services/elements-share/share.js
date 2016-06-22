@@ -63,6 +63,8 @@ export function shareMultipleElements(elementIds, recipients, userId) {
 
 
 function createElementReferences(element, recipientIds) {
+  element.audios = element.audios || [];
+
   let references = recipientIds.map(userId => {
     let reference = {
       id: element.id,

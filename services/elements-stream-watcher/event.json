@@ -1,32 +1,32 @@
 {
   "Records": [{
-    "eventID": "a40307d5e19b4ecc4e14acc1f54e2217",
-    "eventName": "REMOVE",
+    "eventID": "b47cc3b4efb66d68183c48e8bdd57850",
+    "eventName": "INSERT",
     "eventVersion": "1.1",
     "eventSource": "aws:dynamodb",
     "awsRegion": "us-east-1",
     "dynamodb": {
-      "ApproximateCreationDateTime": 1466459340,
+      "ApproximateCreationDateTime": 1466613480,
       "Keys": {
         "id": {
-          "S": "2b4dc80c068092fb82dabdedb8aac70e"
+          "S": "20884ad0697b31f730742b8b88509c9d"
         }
       },
-      "OldImage": {
+      "NewImage": {
         "owner_id": {
-          "S": "68f347e0-3252-11e6-ae88-29c2c667b3bd"
+          "S": "d9d77ea5-4d11-4610-a359-14dfd5e4b7f7"
         },
         "created_at": {
-          "S": "2016-06-20T20:57:14.586Z"
+          "S": "2016-06-22T16:38:25.603Z"
         },
         "id": {
-          "S": "2b4dc80c068092fb82dabdedb8aac70e"
+          "S": "20884ad0697b31f730742b8b88509c9d"
         },
         "modified_at": {
-          "S": "2016-06-20T20:57:17.215Z"
+          "S": "2016-06-22T16:38:28.548Z"
         },
         "thumbnail_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/200p-2b4dc80c068092fb82dabdedb8aac70e.jpg"
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/200p-20884ad0697b31f730742b8b88509c9d.jpg"
         },
         "type": {
           "S": "image"
@@ -38,71 +38,19 @@
             },
             "coordinates": {
               "L": [{
-                "S": "-0.19746260301028567552"
+                "S": "-0.19732085522282619139"
               }, {
-                "S": "-78.44431840901005159594"
+                "S": "-78.44428818680201231928"
               }]
             }
           }
         },
         "source_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/720p-2b4dc80c068092fb82dabdedb8aac70e.jpg"
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/720p-20884ad0697b31f730742b8b88509c9d.jpg"
         }
       },
-      "SequenceNumber": "86506400000000005012581411",
+      "SequenceNumber": "95191700000000007122060166",
       "SizeBytes": 522,
-      "StreamViewType": "NEW_AND_OLD_IMAGES"
-    },
-    "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-elements/stream/2016-06-02T15:35:26.339"
-  }, {
-    "eventID": "47bd84d4d3ab530a1f87347c8a9120ab",
-    "eventName": "REMOVE",
-    "eventVersion": "1.1",
-    "eventSource": "aws:dynamodb",
-    "awsRegion": "us-east-1",
-    "dynamodb": {
-      "ApproximateCreationDateTime": 1466459340,
-      "Keys": {
-        "id": {
-          "S": "3c0356258da794eeff9b7f2240633268"
-        }
-      },
-      "OldImage": {
-        "owner_id": {
-          "S": "d9d77ea5-4d11-4610-a359-14dfd5e4b7f7"
-        },
-        "created_at": {
-          "S": "2015-08-28T02:45:17.000Z"
-        },
-        "id": {
-          "S": "3c0356258da794eeff9b7f2240633268"
-        },
-        "modified_at": {
-          "S": "2016-06-02T20:48:28.549Z"
-        },
-        "thumbnail_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/200p-3c0356258da794eeff9b7f2240633268.jpg"
-        },
-        "type": {
-          "S": "image"
-        },
-        "location_info": {
-          "M": {
-            "coordinates": {
-              "L": [{
-                "S": "49.885647"
-              }, {
-                "S": "-119.500900"
-              }]
-            }
-          }
-        },
-        "source_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/720p-3c0356258da794eeff9b7f2240633268.jpg"
-        }
-      },
-      "SequenceNumber": "86506500000000005012581420",
-      "SizeBytes": 446,
       "StreamViewType": "NEW_AND_OLD_IMAGES"
     },
     "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-elements/stream/2016-06-02T15:35:26.339"

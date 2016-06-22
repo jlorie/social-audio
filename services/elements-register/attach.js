@@ -1,6 +1,7 @@
 import Storage from '../commons/remote/storage';
 import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
+import { REF_STATUS } from '../commons/constants';
 
 import { notifyNewAudio } from './notify-new-audio';
 
@@ -56,24 +57,21 @@ function bindElement(userId, elementId) {
   console.info('Binding element ' + elementId + ' with user ' + userId);
 
   // bind user with element
-  return elementModel.getById(elementId)
-    .then(element => {
-      let binding = {
-        id: element.id,
-        user_id: userId,
-        created_at: element.created_at + '|visitor',
-        thumbnail_url: element.thumbnail_url,
-        audios: element.audios.filter(a => a.public).length,
-        favorite: false
+  return elementsByUserModel.getById(elementId, userId)
+    .then(references => {
+      let reference = references[0];
+      if (!reference) {
+        throw new Error('InvalidReference');
+      }
+
+      let key = {
+        user_id: reference.user_id,
+        created_at: reference.created_at
       };
 
-      return elementsByUserModel.getById(elementId, userId)
-        .then(reference => {
-          if (!reference) {
-            return elementsByUserModel.create(binding);
-          }
-
-          return reference;
-        });
+      let data = {
+        ref_status: REF_STATUS.RESOLVED
+      };
+      return elementsByUserModel.update(key, data);
     });
 }

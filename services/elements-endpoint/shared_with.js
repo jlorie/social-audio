@@ -16,6 +16,8 @@ export function resolveSharedWith(elementId, userId) {
         throw new Error(ERR_SECURITY.ACCESS_DENIED);
       }
 
-      return userIds;
+      return {
+        user_ids: userIds
+      };
     });
 }

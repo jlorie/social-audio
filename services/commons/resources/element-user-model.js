@@ -12,7 +12,7 @@ class ElementUserModel extends ResourceModel {
     return super.create(items);
   }
 
-  update(id, updateData) {
+  updateById(id, updateData) {
     return this.getById(id)
       .then(elements => {
         // update the element for every user

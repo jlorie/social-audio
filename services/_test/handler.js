@@ -1,21 +1,25 @@
-import GeneralConfig from '../commons/resources/general-config';
-import ElementModel from '../commons/resources/element-model';
-import Storage from '../commons/remote/storage';
+import ElementUserModel from '../commons/resources/element-user-model';
 
-const config = new GeneralConfig();
-const elementModel = new ElementModel('dev-elements');
+const elementsByUserModel = new ElementUserModel('dev-elements-by-users');
 export default (event, context) => {
-  let ids = ['f8542965c3e42011a48188e1bb4d3882', 'ab49cd6e04b396baeab0af0099bb425e',
-    // '3c0356258da794eeff9b7f2240633268', 'c12f95c8147118dafbd3a8ff25472b17',
-    '3c0356258da794eeff9b7f2240633268'
-  ];
-  return getElements(ids);
+  let userId = 'd9d77ea5-4d11-4610-a359-14dfd5e4b7f7';
+  return getElements(userId)
+    .then(updateReferences);
 };
 
-function getElements(ids) {
-  return elementModel.batchGet(ids)
-    .then(elements => {
-      console.log('==> results: ', JSON.stringify(elements, null, 2));
-      return elements;
-    });
+function getElements(userId) {
+  console.log('Getting references');
+  return elementsByUserModel.get({ userId })
+    .then(elements => elements.items.filter(e => e.created_at.indexOf('owner') !== -1));
+}
+
+function updateReferences(references) {
+  let refStatus = {
+    ref_status: 'resolved'
+  };
+
+  return Promise.all(references.map(reference => {
+    console.log('Updating reference ' + reference.id);
+    return elementsByUserModel.update(reference.id, refStatus);
+  }));
 }

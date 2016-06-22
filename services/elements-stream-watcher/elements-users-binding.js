@@ -45,7 +45,7 @@ export function update(oldData, newData) {
 
   let newDataToUpdate = _.values(updateData).length > 0;
   if (newDataToUpdate) {
-    return elementsByUserModel.update(oldData.id, updateData);
+    return elementsByUserModel.updateById(oldData.id, updateData);
   }
 
   return 'NoUpdate';
