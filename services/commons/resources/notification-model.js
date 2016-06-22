@@ -67,6 +67,40 @@ class NotificationModel extends ResourceModel {
     return new Promise(func);
   }
 
+  getPendingRequest({ userId, elementId, limit }) {
+    let params = {
+      TableName: this.tableName,
+      KeyConditionExpression: 'user_id = :user_id',
+      FilterExpression: '#type = :audio_request',
+      ExpressionAttributeNames: {
+        '#type': 'type'
+      },
+      ExpressionAttributeValues: {
+        ':user_id': userId,
+        ':audio_request': 'audio_request'
+      },
+      ScanIndexForward: false,
+      Limit: limit || 0
+    };
+
+    if (elementId) {
+      params.FilterExpression += ' AND element_id = :element_id';
+      params.ExpressionAttributeValues[':element_id'] = elementId;
+    }
+
+    const func = (resolve, reject) => {
+      this.dynamo.query(params, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(result.Items);
+      });
+    };
+
+    return new Promise(func);
+  }
+
   getNotificationsFrom({ userId, date, limit = MAX_NOTIFICATIONS_RESULTS }) {
     let params = {
       TableName: this.tableName,

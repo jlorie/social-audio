@@ -48,3 +48,4 @@ export const ERR_ACTION = {
 };
 
 export const PREFIX_SECRET = 'bbluue-';
+export const MAX_NOTIFICATIONS = 50;

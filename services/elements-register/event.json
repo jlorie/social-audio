@@ -3,7 +3,7 @@
     "eventVersion": "2.0",
     "eventSource": "aws:s3",
     "awsRegion": "us-east-1",
-    "eventTime": "2016-06-22T17:06:45.993Z",
+    "eventTime": "2016-06-22T20:55:09.737Z",
     "eventName": "ObjectCreated:Put",
     "userIdentity": {
       "principalId": "AWS:AROAJPS4ZNFOHDCH2YESS:jlorie87@gmail.com"
@@ -12,8 +12,8 @@
       "sourceIPAddress": "181.39.138.19"
     },
     "responseElements": {
-      "x-amz-request-id": "01E1F09B211C2C23",
-      "x-amz-id-2": "YYm6p/sMGRzoD2ebU24MjUIh/2C8EZWJuckfFGDrPxRPPNlw6szkB8+S/fv7v949WUCij0Dld+A="
+      "x-amz-request-id": "920F3EA034B295E0",
+      "x-amz-id-2": "JxgIViapJOLQk5QHC6ofImDujP8bQozscNiGSE1z6bJkzAH4LGNfNcgKyOIPLHuEZEQ5ihH6SUI="
     },
     "s3": {
       "s3SchemaVersion": "1.0",
@@ -26,10 +26,10 @@
         "arn": "arn:aws:s3:::dev-bbluue-upload"
       },
       "object": {
-        "key": "elements/426EAA1A-2898-45EF-9E1E-1818BFCC9FF3-2651-0000054B20CBB57C.caf",
-        "size": 31880,
-        "eTag": "a52dd6f6653e230a6e96b347c82f8b2e",
-        "sequencer": "00576AC5A59DD633FA"
+        "key": "elements/DF631425-194E-4AA8-A494-C25156A02D83-2651-000005753C6B932F.caf",
+        "size": 21417,
+        "eTag": "f8f09f11fc3a0ce9390b38ab31713427",
+        "sequencer": "00576AFB2D3DEDB30F"
       }
     }
   }]

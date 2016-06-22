@@ -4,6 +4,7 @@ import ElementUserModel from '../commons/resources/element-user-model';
 import { REF_STATUS } from '../commons/constants';
 
 import { notifyNewAudio } from './notify-new-audio';
+import { markRequestAsResolved } from './mark-notification';
 
 const URI_ELEMENTS_RESOURCE = process.env.URI_ELEMENTS_RESOURCE;
 const BUCKET_ELEMENT_FILES = process.env.BUCKET_ELEMENT_FILES;
@@ -31,7 +32,8 @@ export function attach(attachment) {
     .then(() => {
       let tasks = [
         bindElement(attachment.owner_id, attachment.attached_to),
-        notifyNewAudio(attachment.owner_id, attachment.attached_to)
+        notifyNewAudio(attachment.owner_id, attachment.attached_to),
+        markRequestAsResolved(attachment.owner_id, attachment.attached_to)
       ];
 
       return Promise.all(tasks);
