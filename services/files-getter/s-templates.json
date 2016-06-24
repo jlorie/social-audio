@@ -1,0 +1,5 @@
+{
+  "elementRequest": {
+    "application/json": "{ \"resource\": \"element\", \"identity_id\": \"$context.identity.cognitoIdentityId\",  \"element_id\": \"$input.params('element_id')\", \"option\": \"$input.params('option')\"}"
+  }
+}

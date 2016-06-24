@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "async": "^2.0.0-rc.4",
+    "aws-cloudfront-sign": "^2.1.2",
     "aws-sdk": "^2.3.3",
     "bluebird": "^3.3.5",
     "cls-bluebird": "^1.0.1",

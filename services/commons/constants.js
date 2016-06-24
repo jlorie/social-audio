@@ -51,5 +51,11 @@ export const ERR_AWS = {
   INVALID_PARAMS: 'InvalidParameter'
 };
 
+export const IMAGES_RES = {
+  STANDARD: 720,
+  THUMB: 200,
+  PROFILE: 480
+};
+
 export const PREFIX_SECRET = 'bbluue-';
 export const MAX_NOTIFICATIONS = 50;

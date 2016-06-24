@@ -1,25 +1,26 @@
-import ElementUserModel from '../commons/resources/element-user-model';
+import fs from 'fs';
+import moment from 'moment';
 
-const elementsByUserModel = new ElementUserModel('dev-elements-by-users');
+import cfSigner from 'aws-cloudfront-sign';
+
+const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT : __dirname);
+const keyPairId = 'APKAIKCDQ3OSQD7QYOKA';
+const cfUrl = 'https://cdn.bbluue.com/image/720p-56e73e576c8698fa383e1dd3.jpg';
+
 export default (event, context) => {
-  let userId = 'd9d77ea5-4d11-4610-a359-14dfd5e4b7f7';
-  return getElements(userId)
-    .then(updateReferences);
+  return resolvePrivateKey()
+    .then(sign);
 };
 
-function getElements(userId) {
-  console.log('Getting references');
-  return elementsByUserModel.get({ userId })
-    .then(elements => elements.items.filter(e => e.created_at.indexOf('owner') !== -1));
-}
-
-function updateReferences(references) {
-  let refStatus = {
-    ref_status: 'resolved'
+function sign(privateKey) {
+  let signingParams = {
+    keypairId: keyPairId,
+    // privateKeyString: privateKey,
+    privateKeyPath: DIRNAME + '/pk.pem',
+    expireTime: moment().add(60, 'seconds').utc().valueOf()
   };
 
-  return Promise.all(references.map(reference => {
-    console.log('Updating reference ' + reference.id);
-    return elementsByUserModel.update(reference.id, refStatus);
-  }));
+  let signedUrl = cfSigner.getSignedUrl(cfUrl, signingParams);
+
+  return Promise.resolve(signedUrl);
 }
