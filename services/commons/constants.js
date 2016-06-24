@@ -47,5 +47,9 @@ export const ERR_ACTION = {
   UNDEFINED: 'UndefinedAction'
 };
 
+export const ERR_AWS = {
+  INVALID_PARAMS: 'InvalidParameter'
+};
+
 export const PREFIX_SECRET = 'bbluue-';
 export const MAX_NOTIFICATIONS = 50;

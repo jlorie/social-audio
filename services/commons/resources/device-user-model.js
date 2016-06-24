@@ -27,6 +27,18 @@ class DeviceUserModel extends ResourceModel {
     return new Promise(promise);
   }
 
+  findByToken(token) {
+    let query = {
+      device_token: token
+    };
+
+    return this.get({ query })
+      .then(results => {
+        console.log('==> results: ', JSON.stringify(results, null, 2));
+        return results[0];
+      });
+  }
+
 }
 
 

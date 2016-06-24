@@ -1,5 +1,6 @@
 import DeviceUserModel from '../commons/resources/device-user-model';
 import Notification from '../commons/remote/notification';
+import { ERR_AWS } from '../commons/constants';
 
 const URI_DEVICES_BY_USERS = process.env.URI_DEVICES_BY_USERS;
 const PLATFORM_ARN_IOS = process.env.PLATFORM_ARN_IOS;
@@ -26,6 +27,17 @@ export function registerDevice(userId, deviceToken, platform) {
 
       return deviceByUserModel.create(deviceData)
         .then(() => ({ message: 'OK' }));
+    })
+    .catch(err => {
+      if (err.code === ERR_AWS.INVALID_PARAMS) {
+        console.info('Overwriting endpoint for user ' + userId);
+        // deleteEndoint
+        return deleteEndoint(deviceToken)
+          // re-registerDevice
+          .then(() => registerDevice(userId, deviceToken, platform));
+      }
+
+      throw err;
     });
 }
 
@@ -46,4 +58,24 @@ function resolvePlatformId(platform) {
   }
 
   return platformId;
+}
+
+function deleteEndoint(deviceToken) {
+  console.info('Deleting endpoint with token ' + deviceToken);
+
+  // find device
+  return deviceByUserModel.findByToken(deviceToken)
+    .then(deviceData => {
+      // delete endpoint
+      return Notification.deleteDeviceEndpoint(deviceData.endpoint)
+        .then(() => {
+          // delete record
+          let key = {
+            user_id: deviceData.user_id,
+            device_token: deviceData.device_token
+          };
+
+          deviceByUserModel.remove(key);
+        });
+    });
 }

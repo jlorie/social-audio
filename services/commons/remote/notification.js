@@ -77,6 +77,27 @@ class Notification {
     return new Promise(promise);
   }
 
+  static deleteDeviceEndpoint(endpoint, region = 'us-east-1') {
+    AWS.config.update({ region });
+    this.sns = new AWS.SNS();
+
+    let promise = (resolve, reject) => {
+      let params = {
+        EndpointArn: endpoint
+      };
+
+      this.sns.deleteEndpoint(params, err => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve('OK');
+      });
+    };
+
+    return new Promise(promise);
+  }
+
 }
 
 module.exports = Notification;
