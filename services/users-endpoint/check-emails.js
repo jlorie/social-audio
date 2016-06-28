@@ -8,11 +8,11 @@ const userModel = new UserModel(URI_USERS);
 export function checkEmails(emails) {
   let unique = _.uniq(emails);
   return userModel.batchGet(unique)
+    .then(users => users.filter(user => user.user_status !== USER_STATUS.PENDING))
     .then(users => users.map(user => ({
       id: user.id,
       username: user.username,
       fullname: user.fullname,
-      photo_url: user.photo_url,
-      pending: user.user_status === USER_STATUS.PENDING
+      photo_url: user.photo_url
     })));
 }
