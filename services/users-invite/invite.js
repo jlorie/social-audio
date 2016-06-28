@@ -1,9 +1,12 @@
 import fs from 'fs';
+import jwt from 'jsonwebtoken';
+
 import EmailService from '../commons/remote/email-service';
 import UserModel from '../commons/resources/user-model';
 
 const URI_USERS = process.env.URI_USERS;
 const EMAIL_SUPPORT = process.env.EMAIL_SUPPORT;
+const URL_EMAIL_UNSUBSCRIBE = process.env.URL_EMAIL_UNSUBSCRIBE;
 const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT +
   '/users-invite' : __dirname);
 
@@ -13,11 +16,14 @@ const userModel = new UserModel(URI_USERS);
 export function invite(hostId, emails) {
   return userModel.getById(hostId)
     .then(host => {
-      let params = {
-        hostname: host.fullname
-      };
+      return Promise.all(emails.map(email => {
+          let params = {
+            hostname: host.fullname,
+            unsubscribeLink: URL_EMAIL_UNSUBSCRIBE + '?email=' + email + '&token=' + getToken(email)
+          };
 
-      return Promise.all(emails.map(email => sendMail(email, params)))
+          return sendMail(email, params);
+        }))
         .then(() => ({ message: 'OK' }));
     });
 }
@@ -65,4 +71,13 @@ function render(template, params) {
   }
 
   return body;
+}
+
+function getToken(email) {
+  let secret = 'bbluue-' + email;
+  let data = { email };
+
+  return jwt.sign(data, secret, {
+    expiresIn: '1d'
+  });
 }

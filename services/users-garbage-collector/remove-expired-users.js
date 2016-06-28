@@ -1,13 +1,17 @@
 import UserModel from '../commons/resources/user-model';
 import EmailService from '../commons/remote/email-service';
+import { render } from '../commons/helpers/mail-helper';
 
 const EMAIL_SUPPORT = process.env.EMAIL_SUPPORT;
 const URI_USERS = process.env.URI_USERS;
+const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT +
+  '/users-garbage-collector' : __dirname);
+
 
 const userModel = new UserModel(URI_USERS);
 const emailService = new EmailService();
 
-const MONTH_DAYS = 30;
+const MONTH_DAYS = 6;
 
 export function removeExpiredUsers() {
   return userModel.expiredUsers(MONTH_DAYS)
@@ -31,14 +35,16 @@ function deleteUser(user) {
 function sendmail(email) {
   console.info('Sending removal mail to ' + email);
 
-  let body = `Hello!
-              Your account has been deleted from bbluue app
-              30 days have passed without your account activation`;
+  let templatePath = DIRNAME + '/html/account-expired.html';
+  return render(templatePath)
+    .then(body => {
+      let params = {
+        subject: 'Account deleted',
+        from: `'BBLUUE Team' <${EMAIL_SUPPORT}>`,
+        to: email,
+        body
+      };
 
-  return emailService.send({
-    subject: 'Account deleted',
-    from: `'BBLUUE Team' <${EMAIL_SUPPORT}>`,
-    to: email,
-    body
-  });
+      return emailService.send(params);
+    });
 }

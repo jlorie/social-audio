@@ -1,12 +1,14 @@
-import jwt from 'jsonwebtoken';
 import UserModel from '../commons/resources/user-model';
 import EmailService from '../commons/remote/email-service';
+import { render, genToken } from '../commons/helpers/mail-helper';
 
 const URI_USERS = process.env.URI_USERS;
 const EMAIL_SUPPORT = process.env.EMAIL_SUPPORT;
 const URL_CONFIRM_EMAIL = process.env.URL_CONFIRM_EMAIL;
+const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT +
+  '/users-garbage-collector' : __dirname);
 
-const PREFIX_SECRET = 'bbluue-';
+
 const WEEK_DAYS = 7;
 const STATUS_DISABLED = 'disabled';
 
@@ -36,26 +38,18 @@ function sendmail(email) {
   console.info('Sending disabling mail to ' + email);
 
   // generating confirmation link
-  let confimationLink = URL_CONFIRM_EMAIL + '?email=' + email + '&token=' + getToken(email);
-  let body = `Hello!
-              Your account has been disabled from bbluue app
-              a week have passed without your account activation.
-              To confirm your email address, go to the following url:
-              <a href="${confimationLink}">enlace</a>`;
+  let params = {
+    confimationLink: URL_CONFIRM_EMAIL + '?email=' + email + '&token=' + genToken(email),
+  };
 
-  return emailService.send({
-    subject: 'Account disabled',
-    from: `'BBLUUE Team' <${EMAIL_SUPPORT}>`,
-    to: email,
-    body
-  });
-}
-
-function getToken(email) {
-  let secret = PREFIX_SECRET + email;
-  let data = { email };
-
-  return jwt.sign(data, secret, {
-    expiresIn: '1d'
-  });
+  let templatePath = DIRNAME + '/html/account-disabled.html';
+  return render(templatePath, params)
+    .then(body => {
+      emailService.send({
+        subject: 'Account disabled',
+        from: `'BBLUUE Team' <${EMAIL_SUPPORT}>`,
+        to: email,
+        body
+      });
+    });
 }

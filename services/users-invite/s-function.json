@@ -28,7 +28,8 @@
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
     "URI_USERS": "${usersTableName}",
-    "EMAIL_SUPPORT": "${supportEmail}"
+    "EMAIL_SUPPORT": "${supportEmail}",
+    "URL_EMAIL_UNSUBSCRIBE": "${unsubscribeEmailApiUrl}"
   },
   "vpc": {
     "securityGroupIds": [],
