@@ -237,7 +237,10 @@
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
-        "TableName": "${stage}-devices-by-users"
+        "TableName": "${stage}-devices-by-users",
+        "StreamSpecification": {
+          "StreamViewType": "NEW_AND_OLD_IMAGES"
+        }
       }
     },
 
@@ -344,7 +347,13 @@
     "UploadBucket": {
       "Type": "AWS::S3::Bucket",
       "Properties": {
-        "BucketName": "${stage}-bbluue-upload"
+        "BucketName": "${stage}-bbluue-upload",
+        "LifecycleConfiguration": {
+          "Rules": [{
+            "Status": "Enabled",
+            "ExpirationInDays": "1"
+          }]
+        }
       }
     },
 
