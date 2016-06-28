@@ -1,13 +1,20 @@
-import fs from 'fs';
-
+import Storage from '../commons/remote/storage';
 import EmailService from '../commons/remote/email-service';
-import { EMAIL_STATUS, NOTIFICATION_TYPE } from '../commons/constants';
+import ElementModel from '../commons/resources/element-model';
 
+import { EMAIL_STATUS, NOTIFICATION_TYPE } from '../commons/constants';
+import { render, genToken } from '../commons/helpers/mail-helper';
+import { ERR_ELEMENTS } from '../commons/constants';
+
+const WEEK_IN_SECONDS = 604800;
+const URI_ELEMENTS = process.env.URI_ELEMENTS;
 const EMAIL_SUPPORT = process.env.EMAIL_SUPPORT;
+const URL_EMAIL_UNSUBSCRIBE = process.env.URL_EMAIL_UNSUBSCRIBE;
 const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT +
   '/users-notify' : __dirname);
 
 const emailService = new EmailService();
+const elementModel = new ElementModel(URI_ELEMENTS);
 
 export function email(pendingUsers, type, elementId, emitter) {
   let isEmpty = pendingUsers.length === 0;
@@ -15,24 +22,33 @@ export function email(pendingUsers, type, elementId, emitter) {
     return Promise.resolve('OK');
   }
 
+  if (type !== NOTIFICATION_TYPE.AUDIO_REQUEST) {
+    return Promise.resolve('NothingToDo');
+  }
+
   console.info(`Notifying ${type} via email ${pendingUsers.length} users`);
 
-  // filter by email status
-  let users = pendingUsers.filter(user => user.email_status !== EMAIL_STATUS.UNSUSCRIBED);
-  let emails = users.map(user => user.username);
+  return resolveImageUrl(elementId)
+    .then(imageUrl => {
+      // filter by email status
+      let users = pendingUsers.filter(user => user.email_status !== EMAIL_STATUS.UNSUSCRIBED);
+      let emails = users.map(user => user.username);
 
-  let params = {
-    emitterName: emitter.fullname
-  };
-
-  return Promise.all(emails.map(email => sendMail(email, params, type)));
+      return Promise.all(emails.map(email => sendMail(emitter.fullname, email, imageUrl)));
+    });
 }
 
-export function sendMail(email, params, type) {
+export function sendMail(emitterName, email, imageUrl) {
   console.info('Sending invitation mail to ' + email);
 
-  return getTemplate(type)
-    .then(template => render(template, params))
+  let params = {
+    emitterName,
+    imageUrl,
+    unsubscribeLink: URL_EMAIL_UNSUBSCRIBE + '?email=' + email + '&token=' + genToken(email)
+  };
+
+  let templatePath = DIRNAME + '/html/audio-request.html';
+  return render(templatePath, params)
     .then(body => {
       let params = {
         subject: 'BBLUUE Notification',
@@ -45,47 +61,13 @@ export function sendMail(email, params, type) {
     });
 }
 
-function getTemplate(type) {
-  let result = (resolve, reject) => {
-    let options = {
-      encoding: 'utf-8'
-    };
-
-    let filePath;
-    switch (type) {
-      case NOTIFICATION_TYPE.AUDIO_REQUEST:
-        {
-          filePath = DIRNAME + '/html/audio-request.html';
-          break;
-        }
-      case NOTIFICATION_TYPE.NEW_AUDIO:
-        {
-          filePath = DIRNAME + '/html/new-audio.html';
-          break;
-        }
-      default:
-        {
-          throw new Error('InvalidNotificationType');
-        }
-    }
-
-    fs.readFile(filePath, options, (err, data) => {
-      if (err) {
-        return reject(err);
+function resolveImageUrl(elementId) {
+  return elementModel.getById(elementId)
+    .then(element => {
+      if (!element) {
+        throw new Error(ERR_ELEMENTS.INVALID_ELEMENT);
       }
 
-      resolve(data);
+      return Storage.signUrl(element.source_url, WEEK_IN_SECONDS);
     });
-  };
-
-  return new Promise(result);
-}
-
-function render(template, params) {
-  let body = template;
-  for (let param in params) {
-    body = body.replace(`{{${param}}}`, params[param]);
-  }
-
-  return body;
 }

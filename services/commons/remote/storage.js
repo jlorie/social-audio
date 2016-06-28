@@ -67,12 +67,13 @@ class Storage {
     });
   }
 
-  static signUrl(url) {
+  static signUrl(url, timeToExpire = 900) {
     let result = (resolve, reject) => {
       const s3FileInfo = extractArgsFromUrl(url);
       let params = {
         Bucket: s3FileInfo.bucket,
-        Key: s3FileInfo.key
+        Key: s3FileInfo.key,
+        Expires: timeToExpire
       };
 
       s3.getSignedUrl('getObject', params, (err, signedUrl) => {
