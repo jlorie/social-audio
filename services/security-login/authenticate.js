@@ -1,6 +1,7 @@
 import UserModel from '../commons/resources/user-model';
-import { getEncryptedPassword } from '../commons/helpers/password-helper';
 import CredentialProvider from '../commons/remote/credentials-provider';
+import { getEncryptedPassword } from '../commons/helpers/password-helper';
+import { USER_STATUS, ERR_USERS } from '../commons/constants';
 
 const URL_USERS_API = process.env.URL_USERS_API;
 const IDENTITY_POOL_ID = process.env.IDENTITY_POOL_ID;
@@ -25,13 +26,18 @@ export function authenticate(username, password) {
 }
 
 function verify(user, password) {
-  console.info('Verifying password ...');
   if (!user) {
-    throw new Error('InvalidUser');
+    throw new Error(ERR_USERS.INVALID_USER);
   }
 
+  console.info('Verifying user status ...');
+  if (user.user_status !== USER_STATUS.ENABLED) {
+    throw new Error(ERR_USERS.INVALID_STATUS);
+  }
+
+  console.info('Verifying password ...');
   if (getEncryptedPassword(password) !== user.password) {
-    throw new Error('InvalidPassword');
+    throw new Error(ERR_USERS.INVALID_PASS);
   }
 
   return user;

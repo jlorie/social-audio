@@ -25,7 +25,9 @@ export const ACCOUNT_TYPE = {
 };
 
 export const ERR_USERS = {
-  INVALID_USER: 'InvalidUser'
+  INVALID_USER: 'InvalidUser',
+  INVALID_PASS: 'InvalidPassword',
+  INVALID_STATUS: 'InvalidStatus'
 };
 
 export const ERR_ELEMENTS = {

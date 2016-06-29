@@ -23,7 +23,7 @@ export function register({ username, password, fullname, genre, birthdate }) {
     birthdate: new Date(birthdate).toISOString(),
     password: getEncryptedPassword(password),
     email_status: EMAIL_STATUS.SUSCRIBED,
-    user_status: USER_STATUS.IDLE,
+    user_status: USER_STATUS.DISABLED,
 
     // profile data
     space_used: 0,
