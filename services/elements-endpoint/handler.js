@@ -6,6 +6,9 @@ import { deleteElement, deleteMultipleElements } from './delete-elements';
 import { detachAudio } from './detach-audio';
 import { markElementAsViewed } from './mark-notification';
 import { resolveSharedWith } from './shared_with';
+import { updateFavoriteStatus } from './mark-favorite';
+
+const YES = 'yes';
 
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
@@ -76,6 +79,12 @@ function handleRequest(input) {
           result = resolveSharedWith(input.element_id, userId);
           break;
         }
+      case 'favorite':
+        {
+          result = updateFavoriteStatus(input.element_id, userId, input.favorite === YES);
+          break;
+        }
+
       default:
         {
           throw new Error('ActionNotSupported');

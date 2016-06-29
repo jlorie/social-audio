@@ -16,5 +16,11 @@
   },
   "sharedWithRequest": {
     "application/json": "{ \"action\": \"shared_with\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\" }"
+  },
+  "markAsFavoriteRequest": {
+    "application/json": "{ \"action\": \"favorite\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\", \"favorite\": \"yes\"}"
+  },
+  "unmarkAsFavoriteRequest": {
+    "application/json": "{ \"action\": \"favorite\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\", \"favorite\": \"no\"}"
   }
 }

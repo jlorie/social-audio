@@ -71,6 +71,26 @@
     "requestParameters": {},
     "requestTemplates": "$${sharedWithRequest}",
     "responses": "$${responsesForGet}"
+  }, {
+    "path": "elements/favorite/{id}",
+    "method": "POST",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${markAsFavoriteRequest}",
+    "responses": "$${responsesForPost}"
+  }, {
+    "path": "elements/favorite/{id}",
+    "method": "DELETE",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${unmarkAsFavoriteRequest}",
+    "responses": "$${responsesForPost}"
   }],
   "events": [],
   "environment": {

@@ -12,6 +12,23 @@ class ElementUserModel extends ResourceModel {
     return super.create(items);
   }
 
+  update(elementId, userId, data) {
+    return this.getById(elementId, userId)
+      .then(references => {
+        let reference = references[0];
+        if (!reference) {
+          throw new Error('InvalidReference');
+        }
+
+        let key = {
+          user_id: reference.user_id,
+          created_at: reference.created_at
+        };
+
+        return super.update(key, data);
+      });
+  }
+
   updateById(id, updateData) {
     return this.getById(id)
       .then(elements => {
