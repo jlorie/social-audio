@@ -7,6 +7,7 @@ import { detachAudio } from './detach-audio';
 import { markElementAsViewed } from './mark-notification';
 import { resolveSharedWith } from './shared_with';
 import { updateFavoriteStatus } from './mark-favorite';
+import { updateAudioPrivacies } from './update-privacy';
 
 const YES = 'yes';
 
@@ -34,12 +35,12 @@ export default (event, context) => {
     });
 };
 
-function handleRequest(input) {
+function handleRequest(req) {
   let result;
-  let userId = input.identity_id.split(':').pop();
+  let userId = req.identity_id.split(':').pop();
 
   try {
-    switch (input.action) {
+    switch (req.action) {
       case 'list':
         {
           result = listElements(userId);
@@ -48,8 +49,8 @@ function handleRequest(input) {
       case 'detail':
         {
           let tasks = [
-            detailElement(input.element_id, userId),
-            markElementAsViewed(input.element_id, userId)
+            detailElement(req.element_id, userId),
+            markElementAsViewed(req.element_id, userId)
           ];
 
           result = Promise.all(tasks).then(results => results[0]);
@@ -57,31 +58,43 @@ function handleRequest(input) {
         }
       case 'delete':
         {
-          result = deleteElement(input.element_id, userId);
+          result = deleteElement(req.element_id, userId);
           break;
         }
       case 'batch_delete':
         {
-          if (!_.isArray(input.element_ids) || input.element_ids.length === 0) {
+          if (!_.isArray(req.element_ids) || req.element_ids.length === 0) {
             throw new Error('InvalidParameters');
           }
 
-          result = deleteMultipleElements(input.element_ids, userId);
+          result = deleteMultipleElements(req.element_ids, userId);
           break;
         }
       case 'detach_audio':
         {
-          result = detachAudio(input.element_id, input.attachment_id, userId);
+          result = detachAudio(req.element_id, req.attachment_id, userId);
           break;
         }
       case 'shared_with':
         {
-          result = resolveSharedWith(input.element_id, userId);
+          result = resolveSharedWith(req.element_id, userId);
           break;
         }
       case 'favorite':
         {
-          result = updateFavoriteStatus(input.element_id, userId, input.favorite === YES);
+          result = updateFavoriteStatus(req.element_id, userId, req.favorite === YES);
+          break;
+        }
+      case 'privacy':
+        {
+          let params = {
+            audioId: req.audio_id,
+            elementId: req.element_id,
+            isPublic: req.public === YES,
+            userId
+          };
+
+          result = updateAudioPrivacies(params);
           break;
         }
 

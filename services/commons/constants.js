@@ -31,14 +31,16 @@ export const ERR_USERS = {
 };
 
 export const ERR_ELEMENTS = {
-  INVALID_ELEMENT: 'InvalidElement'
+  INVALID_ELEMENT: 'InvalidElement',
+  INVALID_AUDIO: 'InvalidAudio'
 };
 
 export const ERR_SECURITY = {
   INVALID_OLD_PASSWORD: 'InvalidOldPassword',
   INVALID_USER: 'InvalidUser',
   ACCOUNT_DISABLED: 'AccountDisabled',
-  ACCESS_DENIED: 'AccessDenied'
+  ACCESS_DENIED: 'AccessDenied',
+  PERMISSION_DENIED: 'PermisionDenied'
 };
 
 export const SUCCESS = {
