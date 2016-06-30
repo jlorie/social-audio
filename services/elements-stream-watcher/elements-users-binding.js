@@ -1,10 +1,14 @@
 import _ from 'lodash';
+import Storage from '../commons/remote/storage';
 import ElementUserModel from '../commons/resources/element-user-model';
-import { REF_STATUS } from '../commons/constants';
+import ElementModel from '../commons/resources/element-model';
+import { REF_STATUS, ERR_ELEMENTS } from '../commons/constants';
 
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
+const URI_ELEMENTS = process.env.URI_ELEMENTS;
 
 const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
+const elementModel = new ElementModel(URI_ELEMENTS);
 
 export function bind(element) {
   console.info('Indexing new element with id ' + element.id + ' for user ' + element.owner_id);
@@ -55,22 +59,62 @@ export function remove(elementId) {
   // notify element deleted
 
   return elementsByUserModel.getById(elementId)
-    .then(elements => {
-      let noRelationships = elements.length === 0;
+    .then(references => {
+      let noRelationships = references.length === 0;
       if (noRelationships) {
         return 'NoRelationships';
       }
 
-      console.info('Deleting ' + elements.length + ' relationships for ' + elementId);
+      return Promise.all(references.map(cleanAttachments))
+        .then(() => {
+          let keys = references.map(item => {
+            let key = {
+              user_id: item.user_id,
+              created_at: item.created_at
+            };
 
-      let keys = elements.map(item => {
-        let key = {
-          user_id: item.user_id,
-          created_at: item.created_at
-        };
+            return key;
+          });
 
-        return key;
-      });
-      return elementsByUserModel.batchRemove(keys);
+          console.info('Deleting ' + references.length + ' relationships for ' + elementId);
+          return elementsByUserModel.batchRemove(keys);
+        });
     });
+}
+
+function cleanAttachments(reference) {
+  let userId = reference.user_id;
+  let elementId = reference.id;
+
+  let isOwner = reference.created_at.endsWith('owner');
+  if (isOwner) {
+    return Promise.resolve('NothingToDo');
+  }
+
+  console.info('Cleaning audios records for ' + userId + ' in element ' + elementId);
+  return elementModel.getById(elementId)
+    .then(element => {
+      if (!element) {
+        throw new Error(ERR_ELEMENTS.INVALID_ELEMENT);
+      }
+
+      let isEmpty = element.audios.length === 0;
+      if (isEmpty) {
+        return Promise.resolve('NothingToDo');
+      }
+
+      let expiredAudios = element.audios.map((audio, index) => {
+        let audioUrl = audio.source_url;
+        // delete record
+        element.audios.splice(index, 1);
+        return audioUrl;
+      });
+
+      return deleteAudioFiles(expiredAudios);
+    });
+}
+
+function deleteAudioFiles(uris) {
+  console.info('Deleting ' + uris.length + ' files');
+  return Storage.batchRemoveFiles(uris);
 }
