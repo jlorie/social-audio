@@ -63,21 +63,27 @@ export function shareMultipleElements(elementIds, recipients, userId) {
 
 
 function createElementReferences(element, recipientIds) {
-  element.audios = element.audios || [];
+  console.info('Creating new references for element ' + element.id);
+  return elementsByUserModel.getById(element.id)
+    .then(references => {
+      // ignore existing users
+      let userIds = references.map(r => r.user_id);
+      let filteredRecipients = _.difference(recipientIds, userIds);
 
-  let references = recipientIds.map(userId => {
-    let reference = {
-      id: element.id,
-      user_id: userId,
-      created_at: new Date().toISOString() + '|visitor',
-      thumbnail_url: element.thumbnail_url,
-      audios: element.audios.filter(a => a.public).length,
-      favorite: false,
-      ref_status: REF_STATUS.PENDING
-    };
+      let newReferences = filteredRecipients.map(userId => {
+        let reference = {
+          id: element.id,
+          user_id: userId,
+          created_at: new Date().toISOString() + '|visitor',
+          thumbnail_url: element.thumbnail_url,
+          audios: (element.audios || []).filter(a => a.public).length,
+          favorite: false,
+          ref_status: REF_STATUS.PENDING
+        };
 
-    return reference;
-  });
+        return reference;
+      });
 
-  return elementsByUserModel.batchCreate(references);
+      return elementsByUserModel.batchCreate(newReferences);
+    });
 }
