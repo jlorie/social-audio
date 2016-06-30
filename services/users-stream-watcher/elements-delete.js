@@ -10,7 +10,12 @@ const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 export function deleteElementsFor(userId) {
   console.info('Deleting elements owned by ' + userId);
 
-  return elementsByUserModel.get({ userId })
-    .then(elements => elements.items.map(e => e.id))
+  return resolveOwnedElements(userId)
     .then(elementIds => elementModel.batchRemove(elementIds));
+}
+
+function resolveOwnedElements(userId) {
+  return elementsByUserModel.get({ userId })
+    .then(elements => elements.items.filter(e => e.created_at.endsWith('owner')))
+    .then(elements => elements.map(e => e.id));
 }
