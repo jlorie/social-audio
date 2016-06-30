@@ -20,15 +20,16 @@ export function detailElement(id, userId) {
       }
 
       // check permissions
-      return checkPermissions(element, userId)
-        .then(hasPermissions => {
+      return resolveReference(element.id, userId)
+        .then(reference => {
+          let isElementOwner = element.owner_id === userId;
+          let hasPermissions = isElementOwner || reference;
           if (!hasPermissions) {
             throw new Error(ERR_ELEMENTS.INVALID_ELEMENT);
           }
 
-          let isElementOwner = element.owner_id === userId;
-
           // formating output
+          element.favorite = reference.favorite;
           element.owner = isElementOwner;
           delete element.owner_id;
 
@@ -51,10 +52,7 @@ export function detailElement(id, userId) {
     });
 }
 
-function checkPermissions(element, userId) {
-  if (element.owner_id === userId) {
-    return Promise.resolve(true);
-  }
-
-  return elementsByUserModel.hasPermissions(element.id, userId);
+function resolveReference(elementId, userId) {
+  return elementsByUserModel.getById(elementId, userId)
+    .then(references => references[0]);
 }
