@@ -55,5 +55,6 @@ export const ERR_AWS = {
   INVALID_PARAMS: 'InvalidParameter'
 };
 
+export const NOTHING_TO_DO = 'NothingToDo';
 export const PREFIX_SECRET = 'bbluue-';
 export const MAX_NOTIFICATIONS = 50;
