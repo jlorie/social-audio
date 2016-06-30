@@ -91,6 +91,16 @@
     "requestParameters": {},
     "requestTemplates": "$${unmarkAsFavoriteRequest}",
     "responses": "$${responsesForPost}"
+  }, {
+    "path": "elements/privacy/{id}",
+    "method": "POST",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${updatePrivacyRequest}",
+    "responses": "$${responsesForPost}"
   }],
   "events": [],
   "environment": {

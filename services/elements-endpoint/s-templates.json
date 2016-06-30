@@ -22,5 +22,8 @@
   },
   "unmarkAsFavoriteRequest": {
     "application/json": "{ \"action\": \"favorite\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\", \"favorite\": \"no\"}"
+  },
+  "updatePrivacyRequest": {
+    "application/json": "{ \"action\": \"privacy\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\", \"audio_id\": $input.json('$.audio_id'), \"public\": $input.json('$.public')}"
   }
 }
