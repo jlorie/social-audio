@@ -34,7 +34,7 @@ function removeOwnedElements(references) {
 
 function cleanGuestReferences(references) {
   console.info(`Cleaning attachments in ${references.length}  referenced elements`);
-  return Promise.all(references.map(checkAttachments))
+  return Promise.all(references.map(cleanAttachments))
     .then(() => {
       // remove guest references
       let keys = references.map(r => ({
@@ -46,7 +46,7 @@ function cleanGuestReferences(references) {
     });
 }
 
-function checkAttachments(reference) {
+function cleanAttachments(reference) {
   let elementId = reference.id;
 
   return elementModel.getById(elementId)
@@ -55,13 +55,17 @@ function checkAttachments(reference) {
         throw new Error(ERR_ELEMENTS.INVALID_ELEMENT);
       }
 
-      element.audios = element.audios || [];
-      let expiredAudios = element.audios.map((audio, index) => {
-        let audioUrl = audio.source_url;
-        // delete record
-        element.audios.splice(index, 1);
-        return audioUrl;
-      });
+      let expiredAudios = [];
+      for (let i = 0; i < (element.audios || []).length; i++) {
+        let audio = element.audios[i];
+
+        let isAudioOwner = audio.user_id === reference.user_id;
+        if (isAudioOwner) {
+          // delete record
+          element.audios.splice(i, 1);
+          expiredAudios.push(audio.source_url);
+        }
+      }
 
       let isEmpty = expiredAudios.length === 0;
       if (isEmpty) {
