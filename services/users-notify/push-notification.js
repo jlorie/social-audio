@@ -7,6 +7,7 @@ import { NOTIFICATION_TYPE } from '../commons/constants';
 
 const URI_DEVICES_BY_USERS = process.env.URI_DEVICES_BY_USERS;
 const ERR_ENDPOINT_DISABLED = 'EndpointDisabled';
+const MAX_RETRIES = 3;
 
 const deviceByUserModel = new DeviceUserModel(URI_DEVICES_BY_USERS);
 
@@ -28,20 +29,19 @@ export function push(recipients, type, elementId, emitter) {
   return Promise.all(tasks)
     .then(tasksResult => {
       const badgeMap = tasksResult[0];
-      const devices = tasksResult[1];
       const message = resolveMessage(emitter, type);
+      const devices = tasksResult[1];
 
       return Promise.all(devices.map(device => {
         let badge = badgeMap.get(device.user_id);
-        return notify(device.endpoint, message, badge, type);
+        return notify(device, message, badge, type);
       }));
     });
 }
 
-
-function notify(deviceEndpoint, message, bagde, type) {
-  // Notifying every device
-  const notification = new Notification(deviceEndpoint);
+function notify(device, message, bagde, type, retries = 0) {
+  console.info('Notifying device with endpoint ' + device.endpoint);
+  const notification = new Notification(device.endpoint);
 
   let apns = JSON.stringify({
     APNS: JSON.stringify({
@@ -54,14 +54,24 @@ function notify(deviceEndpoint, message, bagde, type) {
     })
   });
 
-  console.info('Sending push: ', apns);
-
   return notification.push(apns, true)
     .catch(err => {
-      if (err.code !== ERR_ENDPOINT_DISABLED) {
-        throw err;
+      if (err.code === ERR_ENDPOINT_DISABLED) {
+        console.info(`Endpoint ${device.endpoint}  is disabled, deleting endpoint`);
+        return deleteDeviceEndpoint(device);
+
+        // TODO check
+        // if (retries >= MAX_RETRIES) {
+        //   console.info('Deleting device endpoint ' + device.endpoint);
+        //   return deleteDeviceEndpoint(device);
+        // }
+        //
+        // // enable endpoint & retry
+        // return Notification.enableDeviceEndpoint(device.endpoint, device.device_token)
+        //   .then(() => notify(device, message, bagde, type, retries + 1));
       }
-      console.info(`Endpoint ${deviceEndpoint}  is disabled`);
+
+      throw err;
     });
 }
 
@@ -95,4 +105,16 @@ function resolveEndpointDevices(userIds) {
   // Getting endpoint for user's devices
   return Promise.all(userIds.map(id => deviceByUserModel.getByUserId(id)))
     .then(results => _.flattenDeep(results));
+}
+
+// TODO remove endpoint by dynamo stream
+function deleteDeviceEndpoint(device) {
+  // delete endpoint
+  let key = {
+    user_id: device.user_id,
+    device_token: device.device_token
+  };
+
+  return deviceByUserModel.remove(key)
+    .then(() => Notification.deleteDeviceEndpoint(device.endpoint));
 }

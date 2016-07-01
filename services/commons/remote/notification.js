@@ -1,5 +1,8 @@
 const AWS = require('aws-sdk');
 
+const ZERO = '0';
+const TRUE = 'true';
+
 class Notification {
   constructor(topic, region = 'us-east-1') {
     AWS.config.update({ region });
@@ -86,7 +89,33 @@ class Notification {
         EndpointArn: endpoint
       };
 
+      console.log('====> Deleting endpoint: ' + params);
       this.sns.deleteEndpoint(params, err => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve('OK');
+      });
+    };
+
+    return new Promise(promise);
+  }
+
+  static enableDeviceEndpoint(endpoint, token, region = 'us-east-1') {
+    AWS.config.update({ region });
+    this.sns = new AWS.SNS();
+
+    let promise = (resolve, reject) => {
+      let params = {
+        Attributes: {
+          Token: token,
+          Enabled: TRUE
+        },
+        EndpointArn: endpoint
+      };
+
+      this.sns.setEndpointAttributes(params, err => {
         if (err) {
           return reject(err);
         }
