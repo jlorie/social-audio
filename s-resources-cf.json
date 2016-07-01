@@ -60,7 +60,9 @@
             "Effect": "Allow",
             "Action": [
               "sns:Publish",
-              "sns:CreatePlatformEndpoint"
+              "sns:CreatePlatformEndpoint",
+              "sns:DeleteEndpoint",
+              "sns:SetEndpointAttributes"
             ],
             "Resource": [
               "*"
