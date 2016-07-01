@@ -33,13 +33,13 @@ export function push(recipients, type, elementId, emitter) {
 
       return Promise.all(devices.map(device => {
         let badge = badgeMap.get(device.user_id);
-        return notify(device.endpoint, message, badge);
+        return notify(device.endpoint, message, badge, type);
       }));
     });
 }
 
 
-function notify(deviceEndpoint, message, bagde) {
+function notify(deviceEndpoint, message, bagde, type) {
   // Notifying every device
   const notification = new Notification(deviceEndpoint);
 
@@ -48,7 +48,8 @@ function notify(deviceEndpoint, message, bagde) {
       aps: {
         alert: message,
         sound: 'default',
-        badge: bagde
+        badge: bagde,
+        type
       }
     })
   });
