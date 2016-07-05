@@ -1,6 +1,12 @@
-import Notification from '../commons/remote/notification';
+import { resizeImage } from './resize-image';
 
-const endpoint = 'arn:aws:sns:us-east-1:141310850160:endpoint/APNS/prod-bbluue-ios/fed0eb23-a45e-3b46-8479-193b7da6a9a4';
-export default (event, context) => {
-  return Notification.enableDeviceEndpoint(endpoint);
+const SOURCE_DIR = '/Users/jlorie/Downloads/test-images';
+const FILENAME = 'image-one.png';
+const RESOLUTION = 1080;
+
+export default () => {
+  const sourceUrl = SOURCE_DIR + '/' + FILENAME;
+  const destUrl = SOURCE_DIR + '/' + RESOLUTION + 'p-' + FILENAME;
+
+  return resizeImage({ sourceUrl, destUrl, resolution: RESOLUTION });
 };

@@ -1,4 +1,4 @@
-import im from 'imagemagick';
+import im from './lib/imagemagick';
 import Storage from '../commons/remote/storage';
 
 export function resizeImage({ sourceUrl, destUrl, resolution }) {
@@ -10,13 +10,14 @@ export function resizeImage({ sourceUrl, destUrl, resolution }) {
 }
 
 
-function resize(imageBuffer, height) {
+function resize(imageBuffer, resolution) {
   let resizeOptions = {
     srcData: imageBuffer,
-    height,
-    quality: 0.82,
+    width: resolution,
+    height: resolution,
+    shrink: true,
+    quality: 0.75,
     format: 'jpg'
-      // customArgs: config.resizeArgs
   };
 
   let func = (resolve, reject) => {
