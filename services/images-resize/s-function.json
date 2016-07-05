@@ -6,7 +6,7 @@
   "customRole": false,
   "handler": "images-resize/handler.default",
   "timeout": 6,
-  "memorySize": 1408,
+  "memorySize": 1536,
   "authorizer": {},
   "custom": {
     "excludePatterns": []
