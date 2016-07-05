@@ -1,6 +1,6 @@
 import FunctionInvoker from '../commons/remote/function-invoker';
 
-const RESOLUTIONS = [200, 720];
+const RESOLUTIONS = [200, 1080];
 const S3_URL_PREFIX = 'https://s3.amazonaws.com';
 const URI_IMAGES_RESIZE = process.env.URI_IMAGES_RESIZE;
 const BUCKET_ELEMENT_FILES = process.env.BUCKET_ELEMENT_FILES;
