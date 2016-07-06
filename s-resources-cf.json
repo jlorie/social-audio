@@ -340,6 +340,31 @@
       }
     },
 
+    "SubscribersDynamoTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [{
+          "AttributeName": "email",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "created_at",
+          "AttributeType": "S"
+        }],
+        "KeySchema": [{
+          "AttributeName": "email",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "created_at",
+          "KeyType": "RANGE"
+        }],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "${db-rcu}",
+          "WriteCapacityUnits": "${db-wcu}"
+        },
+        "TableName": "${stage}-subscribers"
+      }
+    },
+
     "ElementsBucket": {
       "Type": "AWS::S3::Bucket",
       "Properties": {
@@ -451,6 +476,11 @@
     "FeedbackTableName": {
       "Value": {
         "Ref": "FeedbackDynamoTable"
+      }
+    },
+    "SubscribersTableName": {
+      "Value": {
+        "Ref": "SubscribersDynamoTable"
       }
     },
     "ElementsBucketName": {

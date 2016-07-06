@@ -1,0 +1,5 @@
+{
+  "newSubscriberRequest": {
+    "application/json": "{ \"email\": $input.json('$.email') }"
+  }
+}
