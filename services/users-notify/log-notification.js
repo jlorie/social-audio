@@ -22,7 +22,7 @@ export function log({ emitterId, type, elementId, details, recipientIds }) {
     };
 
     if (type === NOTIFICATION_TYPE.AUDIO_REQUEST) {
-      log.pending = true;
+      log.details.pending = true;
     }
 
     logs.push(log);

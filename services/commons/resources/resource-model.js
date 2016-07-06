@@ -24,7 +24,7 @@ class ResourceModel {
     // resolving expressions for query
     const { expressions, attrValues } = this._resolveExpression(query);
     if (expressions.length) {
-      params.FilterExpression = expressions.join(',');
+      params.FilterExpression = expressions.join(' and ');
       params.ExpressionAttributeValues = attrValues;
     }
 
@@ -268,8 +268,9 @@ class ResourceModel {
         expressions = _.concat(expressions, innerExpressions.expressions);
         attrValues = _.merge(attrValues, innerExpressions.attrValues);
       } else {
-        expressions.push(`${prefix}${field} = :${prefix}${field}`);
-        attrValues[`:${prefix}${field}`] = data[field];
+        let attrName = `${prefix}${field}`.replace('.', '_');
+        expressions.push(`${prefix}${field} = :${attrName}`);
+        attrValues[`:${attrName}`] = data[field];
       }
     }
 

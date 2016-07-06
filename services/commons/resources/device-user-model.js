@@ -33,10 +33,7 @@ class DeviceUserModel extends ResourceModel {
     };
 
     return this.get({ query })
-      .then(results => {
-        console.log('==> results: ', JSON.stringify(results, null, 2));
-        return results[0];
-      });
+      .then(results => results[0]);
   }
 
 }

@@ -1,12 +1,11 @@
-import { resizeImage } from './resize-image';
+import NotificationModel from '../commons/resources/notification-model';
 
-const SOURCE_DIR = '/Users/jlorie/Downloads/test-images';
-const FILENAME = 'image-one.png';
-const RESOLUTION = 1080;
+const URI_NOTIFICATIONS = 'dev-notifications';
+const notificationModel = new NotificationModel(URI_NOTIFICATIONS);
 
 export default () => {
-  const sourceUrl = SOURCE_DIR + '/' + FILENAME;
-  const destUrl = SOURCE_DIR + '/' + RESOLUTION + 'p-' + FILENAME;
+  const userId = '07484310-0a1a-48e0-b9c7-28257150f04a';
+  const elementId = '2a70b7f684b7fb9f5345071f52281bf6';
 
-  return resizeImage({ sourceUrl, destUrl, resolution: RESOLUTION });
+  return notificationModel.getPendingRequest({ userId, elementId });
 };

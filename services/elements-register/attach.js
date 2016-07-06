@@ -58,22 +58,10 @@ function saveAttachment(attachment) {
 function bindElement(userId, elementId) {
   console.info('Binding element ' + elementId + ' with user ' + userId);
 
+  let data = {
+    ref_status: REF_STATUS.RESOLVED
+  };
+
   // bind user with element
-  return elementsByUserModel.getById(elementId, userId)
-    .then(references => {
-      let reference = references[0];
-      if (!reference) {
-        throw new Error('InvalidReference');
-      }
-
-      let key = {
-        user_id: reference.user_id,
-        created_at: reference.created_at
-      };
-
-      let data = {
-        ref_status: REF_STATUS.RESOLVED
-      };
-      return elementsByUserModel.update(key, data);
-    });
+  return elementsByUserModel.update(elementId, userId, data);
 }
