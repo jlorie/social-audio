@@ -91,16 +91,36 @@ function createNewUser(userData) {
 
   return provider.getUserIdentity()
     .then(identityId => {
-      // configuring identity
-      userData.created_at = new Date().toISOString();
-      userData.id = identityId.split(':').pop();
-      userData.identity_id = identityId;
+      return isIdentityRegistered(identityId)
+        .then(identityExists => {
+          if (identityExists) {
+            console.info('Identity id already exist retrying ...');
+            return createNewUser(userData);
+          }
 
-      return userModel.create(userData);
+          // configuring identity
+          userData.created_at = new Date().toISOString();
+          userData.id = identityId.split(':').pop();
+          userData.identity_id = identityId;
+
+          return userModel.create(userData);
+        });
     });
 }
 
 function activatePendingUser(username, userData) {
   console.info('Activating pending user : ' + username);
   return userModel.update(username, userData);
+}
+
+function isIdentityRegistered(identityId) {
+  let id = identityId.split(':').pop();
+  return userModel.getById(id)
+    .then(user => {
+      if (user) {
+        return true;
+      }
+
+      return false;
+    });
 }

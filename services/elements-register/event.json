@@ -3,17 +3,17 @@
     "eventVersion": "2.0",
     "eventSource": "aws:s3",
     "awsRegion": "us-east-1",
-    "eventTime": "2016-07-06T17:55:20.752Z",
+    "eventTime": "2016-07-07T14:38:37.011Z",
     "eventName": "ObjectCreated:Put",
     "userIdentity": {
-      "principalId": "AWS:AROAJPS4ZNFOHDCH2YESS:jlorie@bbluue.com"
+      "principalId": "AWS:AROAJPS4ZNFOHDCH2YESS:dfpmisle@gmail.com"
     },
     "requestParameters": {
-      "sourceIPAddress": "181.39.138.19"
+      "sourceIPAddress": "190.63.1.122"
     },
     "responseElements": {
-      "x-amz-request-id": "892D24BCC9E2B6D2",
-      "x-amz-id-2": "giN2FKSbEwNsntnU7cu+Yk6XPSkP9DsKK4+e2GXAT2EmpEB/bR8FeXpnr3HC3U7zVGx1NCSL7LY="
+      "x-amz-request-id": "52FB9D5029C0AECD",
+      "x-amz-id-2": "4d9dyXoSFOGtpze1//WRpHdfwyzeQj6f/6PRQRPrHsaBbyIIM+84pCFsmFCe4a3i"
     },
     "s3": {
       "s3SchemaVersion": "1.0",
@@ -26,10 +26,10 @@
         "arn": "arn:aws:s3:::dev-bbluue-upload"
       },
       "object": {
-        "key": "elements/9789F41D-D802-4A7E-8E32-4D4A6D022EB8-5355-000008C444F0AFEB.caf",
-        "size": 20922,
-        "eTag": "b86883dd5c21baf2adba0eda02086aa0",
-        "sequencer": "00577D460853189C05"
+        "key": "elements/0144EE71-2FBF-49F4-9AE1-C394C5346EEB-6756-00000640A3E64B55.caf",
+        "size": 82695,
+        "eTag": "85789b1c92f4675cbddb04bcf4edc10e",
+        "sequencer": "00577E696C3CE926E0"
       }
     }
   }]
