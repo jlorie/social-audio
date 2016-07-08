@@ -61,8 +61,6 @@ function getCredentials(user) {
       credentials.userId = user.id;
       credentials.userStatus = user.status;
 
-      console.warn('=> User: ', JSON.stringify(user, null, 2));
-      console.warn('=> Credentials: ', JSON.stringify(credentials, null, 2));
       return credentials;
     });
 }
