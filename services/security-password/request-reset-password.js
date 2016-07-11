@@ -77,7 +77,7 @@ function getTemplate() {
 
 function render(template, params) {
   let body = template;
-  for (let param in params) {
+  for (let param of params) {
     body = body.replace(`{{${param}}}`, params[param]);
   }
 
