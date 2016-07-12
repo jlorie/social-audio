@@ -20,6 +20,16 @@
       "startingPosition": "LATEST",
       "enabled": true
     }
+  }, {
+    "name": "keep-alive-elem-stream",
+    "type": "schedule",
+    "config": {
+      "schedule": "rate(5 minutes)",
+      "enabled": true,
+      "input": {
+        "keepalive": true
+      }
+    }
   }],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
