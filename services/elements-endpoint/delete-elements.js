@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
 
@@ -32,16 +33,11 @@ export function deleteMultipleElements(ids, userId) {
         if (element.owner_id === userId) {
           ownerIds.push(element.id);
         } else {
-          let id = {
-            user_id: userId,
-            created_at: `${element.created_at}|visitor`
-          };
-
-          invitedIds.push(id);
+          invitedIds.push(element.id);
         }
       }
 
-      let tasks = [deleteOwnElements(ownerIds), deleteInvitedElements(invitedIds)];
+      let tasks = [deleteOwnElements(ownerIds), deleteInvitedElements(invitedIds, userId)];
       return Promise.all(tasks)
         .then(() => ({ message: 'OK' }));
     });
@@ -57,12 +53,17 @@ function deleteOwnElements(ids) {
   return elementModel.batchRemove(ids);
 }
 
-function deleteInvitedElements(ids) {
+function deleteInvitedElements(ids, userId) {
   let noElements = ids.length === 0;
   if (noElements) {
     return null;
   }
 
   console.info('Deleting ' + ids.length + ' invited elements');
-  return elementsByUserModel.batchRemove(ids);
+  return Promise.all(ids.map(elementId => elementsByUserModel.getById(elementId, userId)))
+    .then(references => {
+      let flatten = _.flattenDeep(references);
+      let keys = flatten.map(ref => ({ user_id: ref.user_id, created_at: ref.created_at }));
+      return elementsByUserModel.batchRemove(keys);
+    });
 }

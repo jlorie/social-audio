@@ -1,8 +1,7 @@
 {
-
-  "action": "privacy",
-  "identity_id": "us-east-1:d9d77ea5-4d11-4610-a359-14dfd5e4b7f7",
-  "element_id": "3bef30ed6b423f4670612aec9c2919ca",
-  "public": "yes",
-  "audio_id": "e71d86904657f25643845cfa8c37ae59"
+  "action": "batch_delete",
+  "identity_id": "us-east-1:07484310-0a1a-48e0-b9c7-28257150f04a",
+  "element_ids": [
+    "2a70b7f684b7fb9f5345071f52281bf6"
+  ]
 }
