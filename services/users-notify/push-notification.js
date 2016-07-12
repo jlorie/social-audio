@@ -82,7 +82,8 @@ function resolveMessage(emitter, type) {
   switch (type) {
     case NOTIFICATION_TYPE.AUDIO_REQUEST:
       {
-        message = `${emitter.fullname} is asking you to add an audiography`;
+        message = emitter.fullname + ' is asking you to add an audiography. ' +
+        'Please record an emotion, a comment, learning experience or just something funny';
         break;
       }
     case NOTIFICATION_TYPE.NEW_AUDIO:
