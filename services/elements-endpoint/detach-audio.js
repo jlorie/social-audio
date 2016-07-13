@@ -1,4 +1,5 @@
 import ElementModel from '../commons/resources/element-model';
+import { ERR_SECURITY, ERR_ELEMENTS } from '../commons/constants';
 
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
 const elementModel = new ElementModel(URI_ELEMENTS);
@@ -8,9 +9,16 @@ export function detachAudio(elementId, attachmentId, userId) {
 
   return elementModel.getById(elementId)
     .then(element => {
+      // get audio
+      let audios = element.audios || [];
+      let audio = audios.find(audio => audio.id === attachmentId);
+
+      if (!audio) {
+        throw new Error(ERR_ELEMENTS.INVALID_ATTACHMENT);
+      }
       // check permissions
-      if (element.owner_id !== userId) {
-        throw new Error('AccessDenied');
+      if (element.owner_id !== userId && audio.user_id !== userId) {
+        throw new Error(ERR_SECURITY.ACCESS_DENIED);
       }
 
       return elementModel.detachFile({ element, attachmentId })
