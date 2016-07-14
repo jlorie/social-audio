@@ -32,7 +32,8 @@ export const ERR_USERS = {
 
 export const ERR_ELEMENTS = {
   INVALID_ELEMENT: 'InvalidElement',
-  INVALID_AUDIO: 'InvalidAudio'
+  INVALID_AUDIO: 'InvalidAudio',
+  INVALID_ATTACHMENT: 'InvalidAttachment'
 };
 
 export const ERR_SECURITY = {

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
+import { cleanElementsNotifications } from './clean-notifications';
 
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
@@ -37,20 +38,21 @@ export function deleteMultipleElements(ids, userId) {
         }
       }
 
-      let tasks = [deleteOwnElements(ownerIds), deleteInvitedElements(invitedIds, userId)];
+      let tasks = [deleteOwnElements(ownerIds, userId), deleteInvitedElements(invitedIds, userId)];
       return Promise.all(tasks)
         .then(() => ({ message: 'OK' }));
     });
 }
 
-function deleteOwnElements(ids) {
+function deleteOwnElements(ids, userId) {
   let noElements = ids.length === 0;
   if (noElements) {
     return null;
   }
 
   console.info('Deleting ' + ids.length + ' own elements');
-  return elementModel.batchRemove(ids);
+  return elementModel.batchRemove(ids)
+    .then(() => cleanElementsNotifications(ids, userId, true));
 }
 
 function deleteInvitedElements(ids, userId) {
@@ -65,5 +67,6 @@ function deleteInvitedElements(ids, userId) {
       let flatten = _.flattenDeep(references);
       let keys = flatten.map(ref => ({ user_id: ref.user_id, created_at: ref.created_at }));
       return elementsByUserModel.batchRemove(keys);
-    });
+    })
+    .then(() => cleanElementsNotifications(ids, userId, false));
 }

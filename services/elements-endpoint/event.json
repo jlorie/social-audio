@@ -1,7 +1,6 @@
 {
-  "action": "batch_delete",
+  "action": "detach_audio",
   "identity_id": "us-east-1:07484310-0a1a-48e0-b9c7-28257150f04a",
-  "element_ids": [
-    "2a70b7f684b7fb9f5345071f52281bf6"
-  ]
+  "element_id": "5e3703e329774940062aa5019edf5670",
+  "attachment_id": "8eb8a8bcdf43ff9598b24a2f637bc3a6"
 }

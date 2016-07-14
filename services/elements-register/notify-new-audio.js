@@ -1,5 +1,4 @@
-import FunctionInvoker from '../commons/remote/function-invoker';
-import { INVOKE_TYPE } from '../commons/remote/function-invoker';
+import FunctionInvoker, { INVOKE_TYPE } from '../commons/remote/function-invoker';
 import UserModel from '../commons/resources/user-model';
 import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
@@ -16,17 +15,27 @@ const elementModel = new ElementModel(URI_ELEMENTS_RESOURCE);
 const invoker = new FunctionInvoker(URI_NOTIFY_ENDPOINT);
 const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
-export function notifyNewAudio(ownerId, elementId) {
+export function notifyNewAudio(attachment) {
+  let ownerId = attachment.owner_id;
+  let elementId = attachment.attached_to;
+  let audioId = attachment.id;
+  let isPublic = attachment.public;
+
   console.info('Notifying new audio uploaded for users related to element ' + elementId);
 
   // get users related to the element
   return elementsByUserModel.getById(elementId)
-    .then(elements => {
+    .then(references => {
       // get ids for recipients
-      let recipientIds = elements.filter(e => e.user_id !== ownerId).map(e => e.user_id);
+      let recipientIds = references.filter(ref => {
+          // if the attachment is private then only the owner receive the notification
+          let hasPermissions = (isPublic ? true : ref.created_at.endsWith('owner'));
+          return ref.user_id !== ownerId && hasPermissions;
+        })
+        .map(e => e.user_id);
 
       // get details
-      return getNotificationDetails(elementId, ownerId)
+      return getNotificationDetails(elementId, ownerId, audioId)
         .then(details => {
           let body = JSON.stringify({
             emitterId: ownerId,
@@ -42,7 +51,7 @@ export function notifyNewAudio(ownerId, elementId) {
 }
 
 
-function getNotificationDetails(elementId, userId) {
+function getNotificationDetails(elementId, userId, audioId) {
   let tasks = [
     getThumbnailUrl(elementId), // thumb url
     getUsername(userId) // user name
@@ -51,6 +60,7 @@ function getNotificationDetails(elementId, userId) {
   return Promise.all(tasks)
     .then(results => {
       let details = {
+        audio_id: audioId,
         thumbnail_url: results[0],
         emitter_name: results[1]
       };

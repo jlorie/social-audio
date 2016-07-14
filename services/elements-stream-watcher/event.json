@@ -1,32 +1,32 @@
 {
   "Records": [{
-    "eventID": "b47cc3b4efb66d68183c48e8bdd57850",
-    "eventName": "INSERT",
+    "eventID": "16330bef4a033204b191c078cdd29687",
+    "eventName": "REMOVE",
     "eventVersion": "1.1",
     "eventSource": "aws:dynamodb",
     "awsRegion": "us-east-1",
     "dynamodb": {
-      "ApproximateCreationDateTime": 1466613480,
+      "ApproximateCreationDateTime": 1468447260,
       "Keys": {
         "id": {
-          "S": "20884ad0697b31f730742b8b88509c9d"
+          "S": "1b6a26b3afd89617947db63a0b71cece"
         }
       },
-      "NewImage": {
+      "OldImage": {
         "owner_id": {
-          "S": "d9d77ea5-4d11-4610-a359-14dfd5e4b7f7"
+          "S": "07484310-0a1a-48e0-b9c7-28257150f04a"
         },
         "created_at": {
-          "S": "2016-06-22T16:38:25.603Z"
+          "S": "2016-07-05T22:04:17.856Z"
         },
         "id": {
-          "S": "20884ad0697b31f730742b8b88509c9d"
+          "S": "1b6a26b3afd89617947db63a0b71cece"
         },
         "modified_at": {
-          "S": "2016-06-22T16:38:28.548Z"
+          "S": "2016-07-05T22:04:56.164Z"
         },
         "thumbnail_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/200p-20884ad0697b31f730742b8b88509c9d.jpg"
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/360p-1b6a26b3afd89617947db63a0b71cece.jpg"
         },
         "type": {
           "S": "image"
@@ -38,19 +38,19 @@
             },
             "coordinates": {
               "L": [{
-                "S": "-0.19732085522282619139"
+                "S": "-0.19745182245988160408"
               }, {
-                "S": "-78.44428818680201231928"
+                "S": "-78.44425348572288214655"
               }]
             }
           }
         },
         "source_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/720p-20884ad0697b31f730742b8b88509c9d.jpg"
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/1080p-1b6a26b3afd89617947db63a0b71cece.jpg"
         }
       },
-      "SequenceNumber": "95191700000000007122060166",
-      "SizeBytes": 522,
+      "SequenceNumber": "195971800000000006182392914",
+      "SizeBytes": 523,
       "StreamViewType": "NEW_AND_OLD_IMAGES"
     },
     "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-elements/stream/2016-06-02T15:35:26.339"

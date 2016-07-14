@@ -1,6 +1,7 @@
 import ResourceModel from './resource-model';
 
-const MAX_NOTIFICATIONS_RESULTS = 20;
+const MAX_NOTIFICATIONS_RESULTS = 50;
+const INDEX_ID_NAME = 'index-id';
 
 class NotificationModel extends ResourceModel {
   constructor(uri, region = 'us-east-1') {
@@ -21,6 +22,63 @@ class NotificationModel extends ResourceModel {
     if (id) {
       params.FilterExpression = 'id = :id';
       params.ExpressionAttributeValues[':id'] = id;
+    }
+
+    const func = (resolve, reject) => {
+      this.dynamo.query(params, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(result.Items);
+      });
+    };
+
+    return new Promise(func);
+  }
+
+  getNotificationsForElement(elementId, userId) {
+    let params = {
+      TableName: this.tableName,
+      IndexName: INDEX_ID_NAME,
+      KeyConditionExpression: 'element_id = :element_id',
+      ExpressionAttributeValues: {
+        ':element_id': elementId,
+      }
+    };
+
+    if (userId) {
+      params.FilterExpression = 'user_id = :user_id';
+      params.ExpressionAttributeValues[':user_id'] = userId;
+    }
+
+    console.log('=> params: ', JSON.stringify(params, null, 2));
+    const func = (resolve, reject) => {
+      this.dynamo.query(params, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(result.Items);
+      });
+    };
+
+    return new Promise(func);
+  }
+
+  getNotificationsForUser({ userId, elementId }) {
+    let params = {
+      TableName: this.tableName,
+      KeyConditionExpression: 'user_id = :user_id',
+      ExpressionAttributeValues: {
+        ':user_id': userId
+      },
+      ScanIndexForward: false
+    };
+
+    if (elementId) {
+      params.FilterExpression = 'element_id = :element_id';
+      params.ExpressionAttributeValues[':element_id'] = elementId;
     }
 
     const func = (resolve, reject) => {
