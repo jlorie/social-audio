@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
-import { cleanNotifications } from './clean-notifications';
+import { cleanElementsNotifications } from './clean-notifications';
 
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
@@ -52,7 +52,7 @@ function deleteOwnElements(ids, userId) {
 
   console.info('Deleting ' + ids.length + ' own elements');
   return elementModel.batchRemove(ids)
-    .then(() => cleanNotifications(ids, userId, true));
+    .then(() => cleanElementsNotifications(ids, userId, true));
 }
 
 function deleteInvitedElements(ids, userId) {
@@ -68,5 +68,5 @@ function deleteInvitedElements(ids, userId) {
       let keys = flatten.map(ref => ({ user_id: ref.user_id, created_at: ref.created_at }));
       return elementsByUserModel.batchRemove(keys);
     })
-    .then(() => cleanNotifications(ids, userId, false));
+    .then(() => cleanElementsNotifications(ids, userId, false));
 }

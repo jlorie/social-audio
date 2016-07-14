@@ -32,7 +32,7 @@ export function attach(attachment) {
     .then(() => {
       let tasks = [
         bindElement(attachment.owner_id, attachment.attached_to),
-        notifyNewAudio(attachment.owner_id, attachment.attached_to),
+        notifyNewAudio(attachment.owner_id, attachment.attached_to, attachment.id),
         markRequestAsResolved(attachment.owner_id, attachment.attached_to)
       ];
 

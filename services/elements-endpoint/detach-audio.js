@@ -1,5 +1,6 @@
 import ElementModel from '../commons/resources/element-model';
 import { ERR_SECURITY, ERR_ELEMENTS } from '../commons/constants';
+import { cleanAudioNotifications } from './clean-notifications';
 
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
 const elementModel = new ElementModel(URI_ELEMENTS);
@@ -22,6 +23,7 @@ export function detachAudio(elementId, attachmentId, userId) {
       }
 
       return elementModel.detachFile({ element, attachmentId })
+        .then(() => cleanAudioNotifications(elementId, attachmentId))
         .then(() => ({ status: 'OK' }));
     });
 }

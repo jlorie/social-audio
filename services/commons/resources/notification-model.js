@@ -52,6 +52,7 @@ class NotificationModel extends ResourceModel {
       params.ExpressionAttributeValues[':user_id'] = userId;
     }
 
+    console.log('=> params: ', JSON.stringify(params, null, 2));
     const func = (resolve, reject) => {
       this.dynamo.query(params, (err, result) => {
         if (err) {

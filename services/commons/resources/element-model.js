@@ -1,4 +1,5 @@
 import ResourceModel from './resource-model';
+import { ERR_ELEMENTS } from '../constants';
 
 class ElementModel extends ResourceModel {
   constructor(uri, region = 'us-east-1') {
@@ -46,6 +47,10 @@ class ElementModel extends ResourceModel {
   attachFile(id, attachmentData) {
     return this.getById(id)
       .then(element => {
+        if (!element) {
+          throw new Error(ERR_ELEMENTS.INVALID_ELEMENT);
+        }
+
         let audios = element.audios || [];
         audios.push(attachmentData);
 
