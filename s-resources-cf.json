@@ -340,6 +340,31 @@
       }
     },
 
+    "FriendsDynamoTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [{
+          "AttributeName": "user_id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "friend_id",
+          "AttributeType": "S"
+        }],
+        "KeySchema": [{
+          "AttributeName": "user_id",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "friend_id",
+          "KeyType": "RANGE"
+        }],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "${db-rcu}",
+          "WriteCapacityUnits": "${db-wcu}"
+        },
+        "TableName": "${stage}-friends"
+      }
+    },
+
     "SubscribersDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
@@ -476,6 +501,11 @@
     "FeedbackTableName": {
       "Value": {
         "Ref": "FeedbackDynamoTable"
+      }
+    },
+    "FriendsTableName": {
+      "Value": {
+        "Ref": "FriendsDynamoTable"
       }
     },
     "SubscribersTableName": {
