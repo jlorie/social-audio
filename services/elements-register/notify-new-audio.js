@@ -15,14 +15,24 @@ const elementModel = new ElementModel(URI_ELEMENTS_RESOURCE);
 const invoker = new FunctionInvoker(URI_NOTIFY_ENDPOINT);
 const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
-export function notifyNewAudio(ownerId, elementId, audioId) {
+export function notifyNewAudio(attachment) {
+  let ownerId = attachment.owner_id;
+  let elementId = attachment.attached_to;
+  let audioId = attachment.id;
+  let isPublic = attachment.public;
+
   console.info('Notifying new audio uploaded for users related to element ' + elementId);
 
   // get users related to the element
   return elementsByUserModel.getById(elementId)
-    .then(elements => {
+    .then(references => {
       // get ids for recipients
-      let recipientIds = elements.filter(e => e.user_id !== ownerId).map(e => e.user_id);
+      let recipientIds = references.filter(ref => {
+          // if the attachment is private then only the owner receive the notification
+          let hasPermissions = (isPublic ? true : ref.created_at.endsWith('owner'));
+          return ref.user_id !== ownerId && hasPermissions;
+        })
+        .map(e => e.user_id);
 
       // get details
       return getNotificationDetails(elementId, ownerId, audioId)
@@ -79,4 +89,8 @@ function getUsername(userId) {
 
       return user.fullname;
     });
+}
+
+function hasPermissions(ref, ownerId) {
+
 }
