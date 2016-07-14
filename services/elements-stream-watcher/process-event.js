@@ -8,11 +8,9 @@ const INSERT = 'INSERT';
 const MODIFY = 'MODIFY';
 const REMOVE = 'REMOVE';
 
-const TOPIC_DELETED_ELEMENT = process.env.TOPIC_DELETED_ELEMENT;
 const TOPIC_REGISTERED_ELEMENT = process.env.TOPIC_REGISTERED_ELEMENT;
 
 const newElementNotify = new Notification(TOPIC_REGISTERED_ELEMENT);
-const deletedElementNotify = new Notification(TOPIC_DELETED_ELEMENT);
 
 export function processEvent(record) {
   let result;
@@ -45,8 +43,7 @@ export function processEvent(record) {
         let oldImage = dynamoDoc.dynamoToJs(record.dynamodb.OldImage);
         let tasks = [
           remove(oldImage.id), // remove relationships
-          // deletedElementNotify.notify(JSON.stringify(oldImage)), // notify deleted element
-          substractUserSpace(oldImage) // removing user space
+          substractUserSpace(oldImage) // removing user space,
         ];
 
         result = Promise.all(tasks);
@@ -54,7 +51,6 @@ export function processEvent(record) {
       }
     default:
       {
-        console.info('Unfined Action');
         return new Promise(resolve => resolve('UndefinedAction'));
       }
   }

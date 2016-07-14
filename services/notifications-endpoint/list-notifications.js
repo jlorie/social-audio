@@ -1,7 +1,7 @@
 import UserLogModel from '../commons/resources/user-log-model';
 import NotificationModel from '../commons/resources/notification-model';
 
-const MAX_NOTIFICATIONS = 20;
+const MAX_NOTIFICATIONS = 50;
 const URI_NOTIFICATION = process.env.URI_NOTIFICATION;
 const URI_USERS_LOG_ENDPOINT = process.env.URI_USERS_LOG_ENDPOINT;
 

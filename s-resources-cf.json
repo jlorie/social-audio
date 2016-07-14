@@ -255,6 +255,9 @@
         }, {
           "AttributeName": "created_at",
           "AttributeType": "S"
+        }, {
+          "AttributeName": "element_id",
+          "AttributeType": "S"
         }],
         "KeySchema": [{
           "AttributeName": "user_id",
@@ -267,7 +270,24 @@
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
-        "TableName": "${stage}-notifications"
+        "TableName": "${stage}-notifications",
+        "GlobalSecondaryIndexes": [{
+          "IndexName": "index-id",
+          "KeySchema": [{
+            "AttributeName": "element_id",
+            "KeyType": "HASH"
+          }, {
+            "AttributeName": "created_at",
+            "KeyType": "RANGE"
+          }],
+          "Projection": {
+            "ProjectionType": "ALL"
+          },
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "${db-rcu}",
+            "WriteCapacityUnits": "${db-wcu}"
+          }
+        }]
       }
     },
 

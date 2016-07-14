@@ -111,7 +111,8 @@
     "URI_ELEMENTS": "${elementsTableName}",
     "URI_USERS": "${usersTableName}",
     "URI_DEVICES_BY_USERS": "${devicesByUsersTableName}",
-    "URI_NOTIFICATIONS": "${notificationsTableName}"
+    "URI_NOTIFICATIONS": "${notificationsTableName}",
+    "URI_CLEAN_NOTIFICATIONS": "${cleanNotificationsFunctionName}"
   },
   "vpc": {
     "securityGroupIds": [],
