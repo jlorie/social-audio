@@ -83,6 +83,37 @@ describe('notifications-cleaner', () => {
           expect(result).to.deep.equal(SUCCESS);
         });
     });
+
+  // TODO
+  it('Cleaning notification for an audio should remove notifications related with this audio',
+    function() {
+      // input
+      const input = {
+        element_id: 'd5d3ea1899a313e9a430bc4359871c64',
+        audio_id: '8eb8a8bcdf43ff9598b24a2f637bc3a6'
+      };
+
+      // stubs
+      const getNotificationsStub = this.sandbox.stub(NotificationModel.prototype,
+        'getNotificationsForElement', getNotifications);
+      const batchRemoveStub = this.sandbox.stub(NotificationModel.prototype,
+        'batchRemove', batchRemove);
+
+      return notificationsCleaner(input, context)
+        .then(result => {
+          const expectedParams = [{
+            created_at: '2016-07-10T15:48:09.250Z',
+            user_id: 'f186e582-9362-4d20-8618-4ab24f753c9d'
+          }];
+
+          // spies
+          expect(getNotificationsStub).to.be.calledWith(input.element_id, null);
+          expect(batchRemoveStub).to.be.calledWith(sinon.match(expectedParams));
+
+          // asserts
+          expect(result).to.deep.equal(SUCCESS);
+        });
+    });
 });
 
 function getNotifications(elementId, userId) {
@@ -102,6 +133,7 @@ function getNotifications(elementId, userId) {
   }, {
     created_at: '2016-07-10T15:48:09.250Z',
     details: {
+      audio_id: '8eb8a8bcdf43ff9598b24a2f637bc3a6',
       emitter_name: 'Maria Alejandra Villamar',
       thumbnail_url: 'https://s3.amazonaws.com/dev-bbluue-files/images/480p-f4d1ec5f603f56c4a606eb4449b370a9.jpg'
     },
