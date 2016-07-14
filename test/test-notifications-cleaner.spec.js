@@ -145,7 +145,8 @@ function getNotifications(elementId, userId) {
     viewed: false
   }];
 
-  results = results.filter(r => r.element_id === elementId && (userId ? r.user_id === userId : true));
+  results = results.filter(r => r.element_id === elementId &&
+    (userId ? r.user_id === userId : true));
   return Promise.resolve(results);
 }
 

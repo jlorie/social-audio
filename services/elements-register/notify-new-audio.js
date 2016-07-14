@@ -90,7 +90,3 @@ function getUsername(userId) {
       return user.fullname;
     });
 }
-
-function hasPermissions(ref, ownerId) {
-
-}
