@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import CredentialProvider from '../commons/remote/credentials-provider';
 import UserModel from '../commons/resources/user-model';
 
@@ -60,13 +61,28 @@ export function registerPending(usernames) {
 
   // deleting duplicates
   return userModel.batchGet(usernames)
-    .then(users => usernames.filter(u => !users.find(user => user.username === u)))
-    .then(filteredUsernames => {
-      // resolve user data
-      let promises = filteredUsernames.map(username => formatUserData(username));
+    .then(users => {
+      let promises = []; {
+        let newUsernames = usernames.filter(u => {
+          let userData = users.find(user => user.username === u);
+          if (!userData) {
+            return true;
+          }
 
-      return Promise.all(promises)
-        .then(users => userModel.batchCreate(users));
+          promises.push(userData);
+          return false;
+        });
+
+        // resolve user data
+        let createUsersPromises = [];
+        if (newUsernames.length > 0) { // not empty
+          let formatPromises = newUsernames.map(username => formatUserData(username));
+          createUsersPromises = Promise.all(formatPromises).then(userModel.batchCreate);
+        }
+
+        promises = _.concat(createUsersPromises, promises);
+      }
+      return promises;
     });
 
 

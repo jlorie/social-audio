@@ -1,8 +1,6 @@
 {
   "action": "register-pending",
-  "usernames": ["pepe@bbluue.com"],
-  "fullname": "Javier Lorie Guerra",
-  "genre": "M",
-  "birthdate": "1987-10-19",
-  "password": "password"
+  "usernames": [
+    "jlorie87@gmail.com"
+  ]
 }
