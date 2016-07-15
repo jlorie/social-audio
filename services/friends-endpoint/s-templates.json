@@ -1,0 +1,8 @@
+{
+  "listRequest": {
+    "application/json": "{ \"action\": \"list\", \"identity_id\": \"$context.identity.cognitoIdentityId\" }"
+  },
+  "addRequest": {
+    "application/json": "{ \"action\": \"add\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"friend_id\": $input.json('$.friend_id') }"
+  }
+}

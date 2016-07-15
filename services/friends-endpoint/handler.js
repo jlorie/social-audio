@@ -1,4 +1,5 @@
 import { listFriends } from './list-friends';
+import { addFriend } from './add-friend';
 
 export default (event, context) => {
   let input = event;
@@ -6,8 +7,7 @@ export default (event, context) => {
 
   return handleRequest(input)
     .then(result => {
-      context.succeed(result);
-      return result;
+      return context.succeed(result);
     })
     .catch(err => {
       console.info('==> An error occurred. ', err.stack);
@@ -16,7 +16,7 @@ export default (event, context) => {
         message: err.message
       };
 
-      context.fail(JSON.stringify(error));
+      return context.fail(JSON.stringify(error));
     });
 };
 
@@ -29,6 +29,11 @@ function handleRequest(req) {
       case 'list':
         {
           result = listFriends(userId);
+          break;
+        }
+      case 'add':
+        {
+          result = addFriend(userId, req.friend_id);
           break;
         }
 
