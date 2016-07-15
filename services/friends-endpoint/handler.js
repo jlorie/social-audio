@@ -1,5 +1,6 @@
 import { listFriends } from './list-friends';
 import { addFriend } from './add-friend';
+import { invite } from './invite';
 
 export default (event, context) => {
   let input = event;
@@ -36,7 +37,11 @@ function handleRequest(req) {
           result = addFriend(userId, req.friend_id);
           break;
         }
-
+      case 'invite':
+        {
+          result = invite(userId, req.emails);
+          break;
+        }
       default:
         {
           throw new Error('ActionNotSupported');

@@ -4,5 +4,8 @@
   },
   "addRequest": {
     "application/json": "{ \"action\": \"add\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"friend_id\": $input.json('$.friend_id') }"
+  },
+  "inviteRequest": {
+    "application/json": "{ \"action\": \"invite\", \"identity_id\": \"$context.identity.cognitoIdentityId\",  \"emails\": $input.json('$.emails') }"
   }
 }

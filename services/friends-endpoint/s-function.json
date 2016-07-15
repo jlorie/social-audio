@@ -31,13 +31,27 @@
     "requestParameters": {},
     "requestTemplates": "$${addRequest}",
     "responses": "$${responsesForGet}"
+  }, {
+    "path": "friends/invite",
+    "method": "POST",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${inviteRequest}",
+    "responses": "$${responsesForPost}"
   }],
   "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-    "URI_FRIENDS": "${friendsTableName}"
+    "URI_FRIENDS": "${friendsTableName}",
+    "URI_USERS": "${usersTableName}",
+    "EMAIL_SUPPORT": "${supportEmail}",
+    "URL_EMAIL_UNSUBSCRIBE": "${unsubscribeEmailApiUrl}",
+    "URI_REGISTER_ENDPOINT": "${registerEnpointFunctionName}"
   },
   "vpc": {
     "securityGroupIds": [],
