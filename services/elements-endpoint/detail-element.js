@@ -30,8 +30,6 @@ export function detailElement(id, userId) {
 
           // formating output
           element.favorite = reference.favorite;
-          element.owner = isElementOwner;
-          delete element.owner_id;
 
           if (isElementOwner) {
             return element;
