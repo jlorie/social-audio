@@ -1,5 +1,5 @@
 {
-  "action": "invite",
-  "emails": ["jlorie87@gmail.com"],
+  "action": "check_emails",
+  "emails": ["calvarez@bbluue.com", "pj@bbluue.com"],
   "identity_id": "us-east-1:07484310-0a1a-48e0-b9c7-28257150f04a"
 }

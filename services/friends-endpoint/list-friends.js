@@ -12,6 +12,7 @@ export function listFriends(userId) {
   console.info('Listing friends for user ' + userId);
   return friendsModel.getByUserId(userId)
     .then(friends => friends);
+  // TODO format remove user_id field
 }
 
 function getFriendsAudioCount(userId) {

@@ -1,6 +1,7 @@
 import { listFriends } from './list-friends';
 import { addFriend } from './add-friend';
 import { invite } from './invite';
+import { checkEmails } from './check-emails';
 
 export default (event, context) => {
   let input = event;
@@ -40,6 +41,11 @@ function handleRequest(req) {
       case 'invite':
         {
           result = invite(userId, req.emails);
+          break;
+        }
+      case 'check_emails':
+        {
+          result = checkEmails(req.emails, userId);
           break;
         }
       default:

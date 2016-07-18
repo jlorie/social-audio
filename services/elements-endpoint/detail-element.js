@@ -30,11 +30,11 @@ export function detailElement(id, userId) {
 
           // formating output
           element.favorite = reference.favorite;
+          element.owner = isElementOwner;
 
           if (isElementOwner) {
             return element;
           }
-
           // filter audios
           // show only public audios
           let restrictedAudios = [];

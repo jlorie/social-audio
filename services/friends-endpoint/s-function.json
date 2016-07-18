@@ -41,6 +41,16 @@
     "requestParameters": {},
     "requestTemplates": "$${inviteRequest}",
     "responses": "$${responsesForPost}"
+  }, {
+    "path": "friends/check",
+    "method": "POST",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${checkEmailsRequest}",
+    "responses": "$${responsesForPost}"
   }],
   "events": [],
   "environment": {
