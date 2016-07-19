@@ -8,6 +8,7 @@ import { markElementAsViewed } from './mark-notification';
 import { resolveSharedWith } from './shared_with';
 import { updateFavoriteStatus } from './mark-favorite';
 import { updateAudioPrivacies } from './update-privacy';
+import { filterByFriend } from './filter-by-friend';
 
 const YES = 'yes';
 
@@ -85,6 +86,12 @@ function handleRequest(req) {
           result = updateFavoriteStatus(req.element_id, userId, req.favorite === YES);
           break;
         }
+      case 'filter_friend':
+        {
+          result = filterByFriend(userId, req.friend_id);
+          break;
+        }
+
       case 'privacy':
         {
           let params = {

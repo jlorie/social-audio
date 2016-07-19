@@ -101,6 +101,16 @@
     "requestParameters": {},
     "requestTemplates": "$${updatePrivacyRequest}",
     "responses": "$${responsesForPost}"
+  }, {
+    "path": "elements/friend/{id}",
+    "method": "GET",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {},
+    "requestTemplates": "$${filterByFriendRequest}",
+    "responses": "$${responsesForGet}"
   }],
   "events": [],
   "environment": {
