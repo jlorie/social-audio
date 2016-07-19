@@ -44,7 +44,7 @@ export function listFriends(userId) {
 }
 
 function getFriendsAudioCount(userId) {
-  console.info('Querying elements for user with id ' + userId);
+  console.info('Querying elements for friend with id ' + userId);
   let filters = {
     ref_status: REF_STATUS.RESOLVED
   };

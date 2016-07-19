@@ -13,20 +13,24 @@ export function checkEmails(emails, requesterId) {
   console.info(`Discovering friends from ${emails.length} emails`);
 
   let unique = _.uniq(emails);
-  return userModel.batchGet(unique)
-    .then(users => users.filter(user => user.user_status !== USER_STATUS.PENDING))
-    .then(users => {
-      // checking friends
-      let userIds = users.map(u => u.id);
-      return checkFriends(userIds, requesterId)
-        .then(friends => users.map(user => ({
+  return userModel.batchGet(unique).then(users => {
+    // checking friends
+    let userIds = users.map(u => u.id);
+    return checkFriends(userIds, requesterId)
+      .then(friends => users.map(user => {
+        let isFriend = friends.find(f => f.friend_id === user.id) !== undefined;
+        let output = {
           id: user.id,
           username: user.username,
           fullname: user.fullname,
           photo_url: user.photo_url,
-          friend: friends.find(f => f.friend_id === user.id) !== undefined
-        })));
-    });
+          friend: isFriend,
+          pending: user.user_status === USER_STATUS.PENDING && isFriend
+        };
+
+        return output;
+      }));
+  });
 }
 
 function checkFriends(userIds, requesterId) {
