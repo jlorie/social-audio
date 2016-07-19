@@ -61,7 +61,8 @@
     "URI_USERS": "${usersTableName}",
     "EMAIL_SUPPORT": "${supportEmail}",
     "URL_EMAIL_UNSUBSCRIBE": "${unsubscribeEmailApiUrl}",
-    "URI_REGISTER_ENDPOINT": "${registerEnpointFunctionName}"
+    "URI_REGISTER_ENDPOINT": "${registerEnpointFunctionName}",
+    "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}"
   },
   "vpc": {
     "securityGroupIds": [],
