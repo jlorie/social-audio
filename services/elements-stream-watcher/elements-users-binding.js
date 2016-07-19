@@ -13,7 +13,6 @@ export function bind(element) {
     user_id: element.owner_id,
     created_at: element.created_at + '|owner',
     thumbnail_url: element.thumbnail_url,
-    audios: 0,
     favorite: false,
     ref_status: REF_STATUS.RESOLVED
   };
@@ -32,10 +31,9 @@ export function update(oldData, newData) {
   }
 
   // check audios
-  newData.audios = newData.audios || [];
-  oldData.audios = oldData.audios || [];
-  if (oldData.audios.length !== newData.audios.length) {
-    updateData.audios = newData.audios.length;
+  if ((oldData.audios || []).length !== (newData.audios || []).length) {
+    // count audios by users
+    updateData.audios = countAudios(newData.audios);
   }
 
   // check favorite
@@ -72,4 +70,13 @@ export function remove(elementId) {
       console.info('Deleting ' + references.length + ' relationships for ' + elementId);
       return elementsByUserModel.batchRemove(keys);
     });
+}
+
+function countAudios(audioList) {
+  let audios = {};
+  for (let audio of audioList) {
+    audios[audio.user_id] = (audios[audio.user_id] || 0) + 1;
+  }
+
+  return audios;
 }

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import ElementUserModel from '../commons/resources/element-user-model';
 import { REF_STATUS } from '../commons/constants';
 
@@ -28,11 +29,25 @@ function formatResults(elements) {
       id: item.id,
       created_at: created[0],
       owner: created[1] === 'owner',
-      audios: item.audios,
+      audios: tmpAudioFlag(item.audios),
       thumbnail_url: item.thumbnail_url,
       favorite: item.favorite
     });
   }
 
   return result;
+}
+
+
+// FIXME audios field should reutrn boolean value
+function tmpAudioFlag(audios) {
+  if (!audios) {
+    return 0;
+  }
+
+  if (_.isNumber(audios)) {
+    return audios;
+  }
+
+  return 1;
 }

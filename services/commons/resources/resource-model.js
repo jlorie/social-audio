@@ -106,7 +106,7 @@ class ResourceModel {
   }
 
   update(key, data) {
-    const { expressions, attrValues } = this._resolveExpression(data);
+    const { expressions, attrValues } = this._resolveUpdateExpression(data);
 
     let params = {
       TableName: this.tableName,
@@ -116,6 +116,7 @@ class ResourceModel {
       ReturnValues: 'ALL_NEW'
     };
 
+    console.log('==> params: ', JSON.stringify(params, null, 2));
     const func = (resolve, reject) => {
       this.dynamo.update(params, (err, data) => {
         if (err) {
@@ -268,10 +269,22 @@ class ResourceModel {
         expressions = _.concat(expressions, innerExpressions.expressions);
         attrValues = _.merge(attrValues, innerExpressions.attrValues);
       } else {
-        let attrName = `${prefix}${field}`.replace('.', '_');
+        let attrName = `${prefix}${field}`.replace(/\W/g, '');
         expressions.push(`${prefix}${field} = :${attrName}`);
         attrValues[`:${attrName}`] = data[field];
       }
+    }
+
+    return { expressions, attrValues };
+  }
+
+  _resolveUpdateExpression(data) {
+    let expressions = [];
+    let attrValues = {};
+    for (let field in data) {
+      let attrName = `${field}`.replace(/\W/g, '');
+      expressions.push(`${field} = :${attrName}`);
+      attrValues[`:${attrName}`] = data[field];
     }
 
     return { expressions, attrValues };

@@ -1,15 +1,70 @@
 {
   "Records": [{
-    "eventID": "16330bef4a033204b191c078cdd29687",
-    "eventName": "REMOVE",
+    "eventID": "0926399f33774125be746c14783295ed",
+    "eventName": "MODIFY",
     "eventVersion": "1.1",
     "eventSource": "aws:dynamodb",
     "awsRegion": "us-east-1",
     "dynamodb": {
-      "ApproximateCreationDateTime": 1468447260,
+      "ApproximateCreationDateTime": 1468949220,
       "Keys": {
         "id": {
-          "S": "1b6a26b3afd89617947db63a0b71cece"
+          "S": "ea2e32a705b097e7935d6165b35eb908"
+        }
+      },
+      "NewImage": {
+        "owner_id": {
+          "S": "07484310-0a1a-48e0-b9c7-28257150f04a"
+        },
+        "audios": {
+          "L": [{
+            "M": {
+              "public": {
+                "BOOL": true
+              },
+              "user_id": {
+                "S": "07484310-0a1a-48e0-b9c7-28257150f04a"
+              },
+              "created_at": {
+                "S": "2016-07-19T17:27:08.545Z"
+              },
+              "id": {
+                "S": "da0bf68874d9bb390e92524c5ff4d812"
+              },
+              "source_url": {
+                "S": "https://s3.amazonaws.com/dev-bbluue-files/audio/attachment-da0bf68874d9bb390e92524c5ff4d812.caf"
+              }
+            }
+          }]
+        },
+        "created_at": {
+          "S": "2016-07-06T20:31:34.300Z"
+        },
+        "id": {
+          "S": "ea2e32a705b097e7935d6165b35eb908"
+        },
+        "modified_at": {
+          "S": "2016-07-08T23:45:35.128Z"
+        },
+        "thumbnail_url": {
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/480p-ea2e32a705b097e7935d6165b35eb908.jpg"
+        },
+        "type": {
+          "S": "image"
+        },
+        "location_info": {
+          "M": {
+            "coordinates": {
+              "L": [{
+                "S": "-0.197522"
+              }, {
+                "S": "-78.444283"
+              }]
+            }
+          }
+        },
+        "source_url": {
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/1080p-ea2e32a705b097e7935d6165b35eb908.jpg"
         }
       },
       "OldImage": {
@@ -17,40 +72,37 @@
           "S": "07484310-0a1a-48e0-b9c7-28257150f04a"
         },
         "created_at": {
-          "S": "2016-07-05T22:04:17.856Z"
+          "S": "2016-07-06T20:31:34.300Z"
         },
         "id": {
-          "S": "1b6a26b3afd89617947db63a0b71cece"
+          "S": "ea2e32a705b097e7935d6165b35eb908"
         },
         "modified_at": {
-          "S": "2016-07-05T22:04:56.164Z"
+          "S": "2016-07-08T23:45:35.128Z"
         },
         "thumbnail_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/360p-1b6a26b3afd89617947db63a0b71cece.jpg"
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/480p-ea2e32a705b097e7935d6165b35eb908.jpg"
         },
         "type": {
           "S": "image"
         },
         "location_info": {
           "M": {
-            "address": {
-              "S": "Avenida del Establo - Pichincha - Ecuador"
-            },
             "coordinates": {
               "L": [{
-                "S": "-0.19745182245988160408"
+                "S": "-0.197522"
               }, {
-                "S": "-78.44425348572288214655"
+                "S": "-78.444283"
               }]
             }
           }
         },
         "source_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/1080p-1b6a26b3afd89617947db63a0b71cece.jpg"
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/1080p-ea2e32a705b097e7935d6165b35eb908.jpg"
         }
       },
-      "SequenceNumber": "195971800000000006182392914",
-      "SizeBytes": 523,
+      "SequenceNumber": "223606300000000008337379209",
+      "SizeBytes": 1099,
       "StreamViewType": "NEW_AND_OLD_IMAGES"
     },
     "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-elements/stream/2016-06-02T15:35:26.339"
