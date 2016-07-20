@@ -10,5 +10,8 @@
   },
   "checkEmailsRequest": {
     "application/json": "{ \"action\": \"check_emails\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"emails\": $input.json('$.emails') }"
+  },
+  "deleteRequest": {
+    "application/json": "{ \"action\": \"delete\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"friend_id\": \"$input.params('id')\" }"
   }
 }

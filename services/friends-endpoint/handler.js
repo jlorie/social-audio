@@ -2,6 +2,7 @@ import { listFriends } from './list-friends';
 import { addFriend } from './add-friend';
 import { invite } from './invite';
 import { checkEmails } from './check-emails';
+import { deleteFriend } from './delete-friend';
 
 export default (event, context) => {
   let input = event;
@@ -36,6 +37,11 @@ function handleRequest(req) {
       case 'add':
         {
           result = addFriend(userId, req.friend_id);
+          break;
+        }
+      case 'delete':
+        {
+          result = deleteFriend(userId, req.friend_id);
           break;
         }
       case 'invite':

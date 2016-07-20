@@ -1,7 +1,5 @@
 {
-  "action": "check_emails",
+  "action": "delete",
   "identity_id": "us-east-1:c6db8888-cfc5-4e4a-b130-80409469d21a",
-  "emails": [
-    "jlorie87@gmail.com"
-  ]
+  "friend_id": "07484310-0a1a-48e0-b9c7-28257150f04a"
 }
