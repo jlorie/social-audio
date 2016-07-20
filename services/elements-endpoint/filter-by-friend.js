@@ -7,6 +7,7 @@ const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
 const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
 export function filterByFriend(userId, friendId) {
+  // TODO chequear permisos si friendId es realmente amigo de userId
   console.info('Filtering elements for friend with id ' + friendId);
   let filters = {
     ref_status: REF_STATUS.RESOLVED

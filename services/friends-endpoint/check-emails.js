@@ -19,17 +19,24 @@ export function checkEmails(emails, requesterId) {
     return checkFriends(userIds, requesterId)
       .then(friends => users.map(user => {
         let isFriend = friends.find(f => f.friend_id === user.id) !== undefined;
+        // ignoring pending not friend users
+        if (!isFriend && user.user_status === USER_STATUS.PENDING) {
+          return null;
+        }
+
         let output = {
           id: user.id,
           username: user.username,
           fullname: user.fullname,
           photo_url: user.photo_url,
           friend: isFriend,
-          pending: user.user_status === USER_STATUS.PENDING && isFriend
+          pending: user.user_status === USER_STATUS.PENDING
         };
 
         return output;
-      }));
+      }))
+      // cleaning null values
+      .then(results => results.filter(r => r !== null));
   });
 }
 
