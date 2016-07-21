@@ -3,15 +3,14 @@ import { addFriend } from './add-friend';
 import { invite } from './invite';
 import { checkEmails } from './check-emails';
 import { deleteFriend } from './delete-friend';
+import { activateFriend } from './activate-friend';
 
 export default (event, context) => {
   let input = event;
   console.info('=> Input: ', JSON.stringify(input, null, 2));
 
   return handleRequest(input)
-    .then(result => {
-      return context.succeed(result);
-    })
+    .then(context.succeed)
     .catch(err => {
       console.info('==> An error occurred. ', err.stack);
       let error = {
@@ -25,7 +24,7 @@ export default (event, context) => {
 
 function handleRequest(req) {
   let result;
-  let userId = req.identity_id.split(':').pop();
+  let userId = (req.identity_id || '').split(':').pop();
 
   try {
     switch (req.action) {
@@ -54,6 +53,12 @@ function handleRequest(req) {
           result = checkEmails(req.emails, userId);
           break;
         }
+      case 'activate':
+        {
+          result = activateFriend(req.friend_id);
+          break;
+        }
+
       default:
         {
           throw new Error('ActionNotSupported');

@@ -381,7 +381,21 @@
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
-        "TableName": "${stage}-friends"
+        "TableName": "${stage}-friends",
+        "GlobalSecondaryIndexes": [{
+          "IndexName": "index-id",
+          "KeySchema": [{
+            "AttributeName": "friend_id",
+            "KeyType": "HASH"
+          }],
+          "Projection": {
+            "ProjectionType": "ALL"
+          },
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "${db-rcu}",
+            "WriteCapacityUnits": "${db-wcu}"
+          }
+        }]
       }
     },
 
