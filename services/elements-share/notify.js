@@ -1,6 +1,5 @@
 import UserModel from '../commons/resources/user-model';
-import FunctionInvoker from '../commons/remote/function-invoker';
-import { INVOKE_TYPE } from '../commons/remote/function-invoker';
+import FunctionInvoker, { INVOKE_TYPE } from '../commons/remote/function-invoker';
 
 const AUDIO_REQUEST_TYPE = 'audio_request';
 const URI_USERS = process.env.URI_USERS;

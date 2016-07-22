@@ -33,7 +33,8 @@ export const ERR_USERS = {
 export const ERR_ELEMENTS = {
   INVALID_ELEMENT: 'InvalidElement',
   INVALID_AUDIO: 'InvalidAudio',
-  INVALID_ATTACHMENT: 'InvalidAttachment'
+  INVALID_ATTACHMENT: 'InvalidAttachment',
+  INVALID_TO_SHARE: 'InvalidElementToShare'
 };
 
 export const ERR_SECURITY = {
