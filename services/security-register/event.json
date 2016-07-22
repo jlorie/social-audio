@@ -1,8 +1,6 @@
 {
-  "action": "register",
-  "username": "jlorie87@gmail.com",
-  "fullname": "Pepito",
-  "genre": "M",
-  "birthdate": "1987-10-19",
-  "password": "Password00"
+  "action": "register-pending",
+  "usernames": [
+    "allekoss@gmail.com"
+  ]
 }

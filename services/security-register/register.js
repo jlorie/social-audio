@@ -59,48 +59,42 @@ export function register({ username, password, fullname, genre, birthdate }) {
 
 export function registerPending(usernames) {
   console.info('Registering pending users: ' + usernames);
+  let existingUsers = [];
 
   // deleting duplicates
   return userModel.batchGet(usernames)
     .then(users => {
-      let promises = []; {
-        let newUsernames = usernames.filter(u => {
-          let userData = users.find(user => user.username === u);
-          if (!userData) {
-            return true;
-          }
-
-          promises.push(userData);
-          return false;
-        });
-
-        // resolve user data
-        let createUsersPromises = [];
-        if (newUsernames.length > 0) { // not empty
-          let formatPromises = newUsernames.map(username => formatUserData(username));
-          createUsersPromises = Promise.all(formatPromises).then(userModel.batchCreate);
+      // filtering users not registered yet
+      let newUsernames = usernames.filter(username => {
+        let userData = users.find(user => user.username === username);
+        if (!userData) {
+          return true;
         }
 
-        promises = _.concat(createUsersPromises, promises);
-      }
-      return promises;
-    });
-
-
-  function formatUserData(username) {
-    return provider.getUserIdentity()
-      .then(identityId => {
-        let newUser = {
-          id: identityId.split(':').pop(),
-          username,
-          user_status: USER_STATUS.PENDING,
-          created_at: new Date().toISOString(),
-          identity_id: identityId
-        };
-
-        return newUser;
+        existingUsers.push(userData);
+        return false;
       });
-  }
+
+      // resolve user data
+      return Promise.all(newUsernames.map(u => formatUserData(u)));
+    })
+    .then(newUsersData => userModel.batchCreate(newUsersData)) // creating new users
+    .then(users => _.concat(users, existingUsers)); // adding existing users to results
+}
+
+
+function formatUserData(username) {
+  return provider.getUserIdentity().then(identityId => {
+    let newUser = {
+      id: identityId.split(':').pop(),
+      username,
+      user_status: USER_STATUS.PENDING,
+      created_at: new Date().toISOString(),
+      identity_id: identityId
+    };
+
+    return newUser;
+  });
 }
 
 function createNewUser(userData) {
