@@ -1,4 +1,7 @@
 {
-  "action": "activate",
-  "friend_id": "e394f5a3-c4da-42c3-9473-4a80a08591d7"
+  "action": "invite",
+  "identity_id": "us-east-1:c6db8888-cfc5-4e4a-b130-80409469d21a",
+  "emails": [
+    "bdbfhdd@bd.hd"
+  ]
 }

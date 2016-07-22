@@ -4,6 +4,7 @@ import UserModel from '../commons/resources/user-model';
 
 import { getEncryptedPassword } from '../commons/helpers/password-helper';
 import { USER_STATUS, ACCOUNT_TYPE, EMAIL_STATUS } from '../commons/constants';
+import { activateAsFriend } from './activate-friends';
 
 const URL_USERS_API = process.env.URL_USERS_API;
 const IDENTITY_POOL_ID = process.env.IDENTITY_POOL_ID;
@@ -42,8 +43,8 @@ export function register({ username, password, fullname, genre, birthdate }) {
         userData.username = username;
         result = createNewUser(userData);
       } else if (user.user_status === USER_STATUS.PENDING) {
-        // active the pending user
-        result = activatePendingUser(username, userData);
+        // activate the pending user
+        result = activatePendingUser(username, userData, user.id);
       } else {
         throw new Error('UserAlreadyExists');
       }
@@ -51,7 +52,7 @@ export function register({ username, password, fullname, genre, birthdate }) {
       return result;
     })
     .catch(err => {
-      console.error('An error occurred registering username ' + username + '. ' + err);
+      console.info('An error occurred registering username ' + username + '. ' + err);
       throw err;
     });
 }
@@ -124,9 +125,14 @@ function createNewUser(userData) {
     });
 }
 
-function activatePendingUser(username, userData) {
+function activatePendingUser(username, userData, userId) {
   console.info('Activating pending user : ' + username);
-  return userModel.update(username, userData);
+  let tasks = [
+    userModel.update(username, userData),
+    activateAsFriend(userId)
+  ];
+
+  return Promise.all(tasks).then(results => results[0]);
 }
 
 function isIdentityRegistered(identityId) {

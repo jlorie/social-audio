@@ -12,7 +12,7 @@ export default (event, context) => {
       context.succeed(result);
     })
     .catch(err => {
-      console.error('==> An error occurred. ', err.stack);
+      console.info('==> An error occurred. ', err.stack);
 
       let error = {
         status: 'ERROR',
