@@ -67,5 +67,5 @@ function tmpAudioFlag(audios) {
     return audios;
   }
 
-  return 1;
+  return _.size(audios);
 }
