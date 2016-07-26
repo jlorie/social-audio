@@ -25,5 +25,8 @@
   },
   "updatePrivacyRequest": {
     "application/json": "{ \"action\": \"privacy\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": \"$input.params('id')\", \"audio_id\": $input.json('$.audio_id'), \"public\": $input.json('$.public')}"
+  },
+  "filterByFriendRequest": {
+    "application/json": "{ \"action\": \"filter_friend\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"friend_id\": \"$input.params('id')\"}"
   }
 }

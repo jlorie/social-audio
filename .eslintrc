@@ -18,6 +18,7 @@
     "arrow-body-style": 1,
     "prefer-arrow-callback": 1,
     "func-names": 0,
-    "space-before-function-paren": 0
+    "space-before-function-paren": 0,
+    "no-restricted-syntax": 1
   }
 }

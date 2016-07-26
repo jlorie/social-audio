@@ -2,8 +2,7 @@ import _ from 'lodash';
 import UserModel from '../commons/resources/user-model';
 import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
-
-import { REF_STATUS } from '../commons/constants';
+import { ERR_ELEMENTS, SUCCESS, REF_STATUS } from '../commons/constants';
 
 import { notifySharedElement } from './notify';
 import { registerPendingUsers } from './pending-users';
@@ -23,12 +22,12 @@ export function shareElement(elementId, usernames, userId) {
   return elementModel.getById(elementId)
     .then(element => {
       if (!element) {
-        throw new Error('InvalidElement');
+        throw new Error(ERR_ELEMENTS.INVALID_ELEMENT);
       }
 
       // check permissions
       if (element.owner_id !== userId) {
-        throw new Error('InvalidElementToShare');
+        throw new Error(ERR_ELEMENTS.INVALID_TO_SHARE);
       }
 
       // get recipients ids
@@ -45,7 +44,7 @@ export function shareElement(elementId, usernames, userId) {
           return createElementReferences(element, recipientIds)
             .then(() => notifySharedElement(element, userId, recipientIds));
         })
-        .then(() => ({ message: 'OK' }));
+        .then(() => SUCCESS);
     });
 }
 
@@ -58,7 +57,7 @@ export function shareMultipleElements(elementIds, recipients, userId) {
   }
 
   return Promise.all(promises)
-    .then(() => ({ message: 'OK' }));
+    .then(() => SUCCESS);
 }
 
 

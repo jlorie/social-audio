@@ -1,8 +1,10 @@
+import _ from 'lodash';
 import CredentialProvider from '../commons/remote/credentials-provider';
 import UserModel from '../commons/resources/user-model';
 
 import { getEncryptedPassword } from '../commons/helpers/password-helper';
 import { USER_STATUS, ACCOUNT_TYPE, EMAIL_STATUS } from '../commons/constants';
+import { activateAsFriend } from './activate-friends';
 
 const URL_USERS_API = process.env.URL_USERS_API;
 const IDENTITY_POOL_ID = process.env.IDENTITY_POOL_ID;
@@ -41,8 +43,8 @@ export function register({ username, password, fullname, genre, birthdate }) {
         userData.username = username;
         result = createNewUser(userData);
       } else if (user.user_status === USER_STATUS.PENDING) {
-        // active the pending user
-        result = activatePendingUser(username, userData);
+        // activate the pending user
+        result = activatePendingUser(username, userData, user.id);
       } else {
         throw new Error('UserAlreadyExists');
       }
@@ -50,40 +52,49 @@ export function register({ username, password, fullname, genre, birthdate }) {
       return result;
     })
     .catch(err => {
-      console.error('An error occurred registering username ' + username + '. ' + err);
+      console.info('An error occurred registering username ' + username + '. ' + err);
       throw err;
     });
 }
 
 export function registerPending(usernames) {
   console.info('Registering pending users: ' + usernames);
+  let existingUsers = [];
 
   // deleting duplicates
   return userModel.batchGet(usernames)
-    .then(users => usernames.filter(u => !users.find(user => user.username === u)))
-    .then(filteredUsernames => {
-      // resolve user data
-      let promises = filteredUsernames.map(username => formatUserData(username));
+    .then(users => {
+      // filtering users not registered yet
+      let newUsernames = usernames.filter(username => {
+        let userData = users.find(user => user.username === username);
+        if (!userData) {
+          return true;
+        }
 
-      return Promise.all(promises)
-        .then(users => userModel.batchCreate(users));
-    });
-
-
-  function formatUserData(username) {
-    return provider.getUserIdentity()
-      .then(identityId => {
-        let newUser = {
-          id: identityId.split(':').pop(),
-          username,
-          user_status: USER_STATUS.PENDING,
-          created_at: new Date().toISOString(),
-          identity_id: identityId
-        };
-
-        return newUser;
+        existingUsers.push(userData);
+        return false;
       });
-  }
+
+      // resolve user data
+      return Promise.all(newUsernames.map(u => formatUserData(u)));
+    })
+    .then(newUsersData => userModel.batchCreate(newUsersData)) // creating new users
+    .then(users => _.concat(users, existingUsers)); // adding existing users to results
+}
+
+
+function formatUserData(username) {
+  return provider.getUserIdentity().then(identityId => {
+    let newUser = {
+      id: identityId.split(':').pop(),
+      username,
+      user_status: USER_STATUS.PENDING,
+      created_at: new Date().toISOString(),
+      identity_id: identityId
+    };
+
+    return newUser;
+  });
 }
 
 function createNewUser(userData) {
@@ -108,9 +119,14 @@ function createNewUser(userData) {
     });
 }
 
-function activatePendingUser(username, userData) {
+function activatePendingUser(username, userData, userId) {
   console.info('Activating pending user : ' + username);
-  return userModel.update(username, userData);
+  let tasks = [
+    userModel.update(username, userData),
+    activateAsFriend(userId)
+  ];
+
+  return Promise.all(tasks).then(results => results[0]);
 }
 
 function isIdentityRegistered(identityId) {

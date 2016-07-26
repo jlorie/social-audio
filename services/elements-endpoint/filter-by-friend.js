@@ -5,15 +5,34 @@ import { REF_STATUS } from '../commons/constants';
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
 
 const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
-export function listElements(userId) {
-  console.info('Querying elements for user with id ' + userId);
 
+export function filterByFriend(userId, friendId) {
+  // TODO chequear permisos si friendId es realmente amigo de userId
+  console.info('Filtering elements for friend with id ' + friendId);
   let filters = {
     ref_status: REF_STATUS.RESOLVED
   };
 
   return elementsByUserModel.get({ userId, filters })
-    .then(formatResults);
+    .then(references => {
+      let filteredReferences = [];
+
+      for (let reference of references.items) {
+        let audioMap = reference.audios;
+        if (!audioMap || _.isNumber(audioMap)) {
+          audioMap = {};
+        }
+
+        for (let id in audioMap) {
+          if (id === friendId) {
+            filteredReferences.push(reference);
+            break;
+          }
+        }
+      }
+
+      return formatResults(filteredReferences);
+    });
 }
 
 function formatResults(elements) {
@@ -22,7 +41,7 @@ function formatResults(elements) {
     next: elements.next
   };
 
-  for (let item of elements.items) {
+  for (let item of elements) {
     let created = item.created_at.split('|');
 
     result.items.push({
@@ -37,7 +56,6 @@ function formatResults(elements) {
 
   return result;
 }
-
 
 // FIXME audios field should reutrn boolean value
 function tmpAudioFlag(audios) {

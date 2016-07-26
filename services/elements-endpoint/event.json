@@ -1,6 +1,5 @@
 {
-  "action": "detach_audio",
+  "action": "filter_friend",
   "identity_id": "us-east-1:07484310-0a1a-48e0-b9c7-28257150f04a",
-  "element_id": "5e3703e329774940062aa5019edf5670",
-  "attachment_id": "8eb8a8bcdf43ff9598b24a2f637bc3a6"
+  "friend_id": "d9d77ea5-4d11-4610-a359-14dfd5e4b7f7"
 }

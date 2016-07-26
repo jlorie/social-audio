@@ -1,0 +1,17 @@
+{
+  "listRequest": {
+    "application/json": "{ \"action\": \"list\", \"identity_id\": \"$context.identity.cognitoIdentityId\" }"
+  },
+  "addRequest": {
+    "application/json": "{ \"action\": \"add\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"friend_id\": $input.json('$.friend_id') }"
+  },
+  "inviteRequest": {
+    "application/json": "{ \"action\": \"invite\", \"identity_id\": \"$context.identity.cognitoIdentityId\",  \"emails\": $input.json('$.emails') }"
+  },
+  "checkEmailsRequest": {
+    "application/json": "{ \"action\": \"check_emails\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"emails\": $input.json('$.emails') }"
+  },
+  "deleteRequest": {
+    "application/json": "{ \"action\": \"delete\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"friend_id\": \"$input.params('id')\" }"
+  }
+}

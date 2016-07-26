@@ -32,7 +32,8 @@
     "TOPIC_REGISTERED_USER_ARN": "${registeredUserTopicArn}",
     "URL_EMAIL_UNSUBSCRIBE": "${unsubscribeEmailApiUrl}",
     "EMAIL_SUPPORT": "${supportEmail}",
-    "URL_USERS_API": "${usersTableName}"
+    "URL_USERS_API": "${usersTableName}",
+    "URI_FRIENDS_ENDPOINT": "${friendsEndpointFunctionName}"
   },
   "vpc": {
     "securityGroupIds": [],

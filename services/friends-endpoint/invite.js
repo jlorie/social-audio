@@ -1,0 +1,98 @@
+import fs from 'fs';
+import jwt from 'jsonwebtoken';
+
+import EmailService from '../commons/remote/email-service';
+import UserModel from '../commons/resources/user-model';
+import { registerPendingUsers } from './pending-users';
+import { addFriend } from './add-friend';
+
+const URI_USERS = process.env.URI_USERS;
+const EMAIL_SUPPORT = process.env.EMAIL_SUPPORT;
+const URL_EMAIL_UNSUBSCRIBE = process.env.URL_EMAIL_UNSUBSCRIBE;
+const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT +
+  '/users-invite' : __dirname);
+
+const emailService = new EmailService();
+const userModel = new UserModel(URI_USERS);
+
+export function invite(userId, emails) {
+  return userModel.getById(userId)
+    .then(host => {
+      let promises; {
+        let sendEmailsPromises = emails.map(email => {
+          let params = {
+            hostname: host.fullname,
+            unsubscribeLink: URL_EMAIL_UNSUBSCRIBE + '?email=' + email + '&token=' + getToken(email)
+          };
+
+          return sendMail(email, params);
+        });
+
+        promises = sendEmailsPromises;
+        promises.push(registerPendingFriends(userId, emails));
+      }
+
+      return Promise.all(promises)
+        .then(() => ({ message: 'OK' }));
+    });
+}
+
+export function sendMail(email, params) {
+  console.info('Sending invitation mail to ' + email);
+
+  return getTemplate()
+    .then(template => render(template, params))
+    .then(body => {
+      let params = {
+        subject: 'Invitation to BBLUUE!',
+        from: `'BBLUUE Team' <${EMAIL_SUPPORT}>`,
+        to: email,
+        body
+      };
+
+      return emailService.send(params);
+    });
+}
+
+function getTemplate() {
+  let result = (resolve, reject) => {
+    let options = {
+      encoding: 'utf-8'
+    };
+
+    const filePath = DIRNAME + '/html/invite.html';
+    fs.readFile(filePath, options, (err, data) => {
+      if (err) {
+        return reject(err);
+      }
+
+      resolve(data);
+    });
+  };
+
+  return new Promise(result);
+}
+
+function render(template, params) {
+  let body = template;
+  for (let param in params) {
+    body = body.replace(`{{${param}}}`, params[param]);
+  }
+
+  return body;
+}
+
+function getToken(email) {
+  let secret = 'bbluue-' + email;
+  let data = { email };
+
+  return jwt.sign(data, secret, {
+    expiresIn: '1d'
+  });
+}
+
+function registerPendingFriends(userId, emails) {
+  console.info(`Registering pending ${emails.length} friends`);
+  return registerPendingUsers(emails)
+    .then(users => users.map(u => addFriend(userId, u.id, true)));
+}

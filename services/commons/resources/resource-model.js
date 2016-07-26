@@ -106,7 +106,7 @@ class ResourceModel {
   }
 
   update(key, data) {
-    const { expressions, attrValues } = this._resolveExpression(data);
+    const { expressions, attrValues } = this._resolveUpdateExpression(data);
 
     let params = {
       TableName: this.tableName,
@@ -149,6 +149,7 @@ class ResourceModel {
   }
 
   batchCreate(items) {
+    console.log('==> items: ', JSON.stringify(items, null, 2));
     // Execute batch requests in chunks of 25 items
     let chunks = _.chunk(items, MAX_ITEMS_BATCH);
     let putRequests = chunks.map(this._resolvePutRequests);
@@ -268,10 +269,22 @@ class ResourceModel {
         expressions = _.concat(expressions, innerExpressions.expressions);
         attrValues = _.merge(attrValues, innerExpressions.attrValues);
       } else {
-        let attrName = `${prefix}${field}`.replace('.', '_');
+        let attrName = `${prefix}${field}`.replace(/\W/g, '');
         expressions.push(`${prefix}${field} = :${attrName}`);
         attrValues[`:${attrName}`] = data[field];
       }
+    }
+
+    return { expressions, attrValues };
+  }
+
+  _resolveUpdateExpression(data) {
+    let expressions = [];
+    let attrValues = {};
+    for (let field in data) {
+      let attrName = `${field}`.replace(/\W/g, '');
+      expressions.push(`${field} = :${attrName}`);
+      attrValues[`:${attrName}`] = data[field];
     }
 
     return { expressions, attrValues };
