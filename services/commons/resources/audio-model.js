@@ -82,8 +82,8 @@ class AudioModel extends ResourceModel {
     const params = {
       TableName: this.tableName,
       Key: { id: elementId },
-      ConditionExpression: conditions.join(','),
-      UpdateExpression: `add ${expressions.join(',')}`,
+      ConditionExpression: conditions.join(' and '),
+      UpdateExpression: `add ${expressions.join(', ')}`,
       ExpressionAttributeValues: attrValues,
       ReturnValues: 'ALL_NEW'
     };

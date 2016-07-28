@@ -49,6 +49,11 @@ export const SUCCESS = {
   status: 'OK'
 };
 
+export const EMPTY = {
+  message: 'EMPTY',
+};
+
+
 export const ERR_ACTION = {
   UNDEFINED: 'UndefinedAction'
 };
