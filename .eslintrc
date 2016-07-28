@@ -19,6 +19,7 @@
     "prefer-arrow-callback": 1,
     "func-names": 0,
     "space-before-function-paren": 0,
-    "no-restricted-syntax": 1
+    "no-restricted-syntax": 1,
+    "no-underscore-dangle": 0
   }
 }

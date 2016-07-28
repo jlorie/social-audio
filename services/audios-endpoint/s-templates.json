@@ -1,0 +1,5 @@
+{
+  "countRequest": {
+    "application/json": "{ \"action\": \"count\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_id\": $input.json('$.element_id'), \"audios\": $input.json('$.audios') }"
+  }
+}

@@ -1,10 +1,16 @@
-import CredentialProvider from '../commons/remote/credentials-provider';
+import AudioModel from '../commons/resources/audio-model';
 
-const provider = new CredentialProvider({
-  identityPoolId: 'us-east-1:b24b2f58-2384-4ebe-a390-90b52fb6dda8',
-  identityRoleArn: 'arn:aws:iam::141310850160:role/Cognito_bbluuePoolIdentityAuth_Role'
-});
+const tableName = 'dev-elements';
+const audioModel = new AudioModel(tableName);
+
+const input = {
+  element_id: '3b5b6b654c30bd11b3b2a1e4622514e9',
+  audios: [{
+    id: '6ae0df1e36fcf66eca14e1643fa67ff0',
+    playbacks: 1
+  }]
+};
 
 export default () => {
-  return provider.getUserIdentity();
+  return audioModel.updatePlaybacks(input.element_id, input.audios);
 };

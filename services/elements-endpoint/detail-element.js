@@ -31,6 +31,7 @@ export function detailElement(id, userId) {
           // formating output
           element.favorite = reference.favorite;
           element.owner = isElementOwner;
+          element.audios = formatAudioList(element.audios || []);
 
           if (isElementOwner) {
             return element;
@@ -53,4 +54,14 @@ export function detailElement(id, userId) {
 function resolveReference(elementId, userId) {
   return elementsByUserModel.getById(elementId, userId)
     .then(references => references[0]);
+}
+
+function formatAudioList(audios) {
+  for (let audio of audios) {
+    if (!audio.playbacks) {
+      audio.playbacks = 0;
+    }
+  }
+
+  return audios;
 }
