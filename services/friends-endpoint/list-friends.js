@@ -64,7 +64,7 @@ function getFriendsAudioCount(userId) {
 
         let ownership = reference.created_at.split('|').pop();
         for (let friendId in audioMap) {
-          audios[ownership][friendId] = (audios[ownership][friendId] || 0) + 1;
+          audios[ownership][friendId] = (audios[ownership][friendId] || 0) + audioMap[friendId];
         }
       }
 
