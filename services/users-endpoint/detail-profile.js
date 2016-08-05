@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import UserModel from '../commons/resources/user-model';
 import GeneralConfig from '../commons/resources/general-config';
+import { ERR_AWS } from '../commons/constants'
 
 const URI_USERS = process.env.URI_USERS;
 
@@ -30,7 +31,13 @@ export function updateProfile(userId, data) {
       let cleanData = _.omitBy(updateData, _.isNil);
       return userModel.update(user.username, cleanData);
     })
-    .then(formatProfileOutput);
+    .then(formatProfileOutput)
+    .catch(err => {
+      return {
+        "status": "ERROR",
+        "message": ERR_AWS.INVALID_PARAMS
+      }
+    });
 }
 
 function formatProfileOutput(user) {
