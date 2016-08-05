@@ -17,6 +17,10 @@ class UserModel extends ResourceModel {
     return super.update({ username }, data);
   }
 
+  get() {
+    return super.get({ query: {} });
+  }
+
   remove(username) {
     return super.remove({ username });
   }
