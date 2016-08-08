@@ -24,7 +24,7 @@ export function invite(hostId, emails) {
 
           return sendMail(email, params);
         }))
-        .then(() => ({ message: 'OK' }));
+        .then(() => ({ status: 'OK' }));
     });
 }
 
