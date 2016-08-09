@@ -6,24 +6,19 @@ import { deleteUser } from './delete-user';
 export default (event, context) => {
   console.info('=> Input: ', JSON.stringify(event, null, 2));
 
-  try {
-    return handleRequest(event)
-      .then(result => {
-        console.info('==> Success: ', JSON.stringify(result, null, 2));
-        context.succeed(result);
-      })
-      .catch(err => {
-        throw err;
-      });
-  } catch (err) {
-    console.info('==> An error occurred. ', err.stack);
+  return handleRequest(event)
+    .then(result => {
+      console.info('==> Success: ', JSON.stringify(result, null, 2));
+      context.succeed(result);
+    })
+    .catch(err => {
+      let error = {
+        status: 'ERROR',
+        message: err.message
+      };
 
-    let error = {
-      status: 'ERROR',
-      message: err.message
-    };
-    context.fail(JSON.stringify(error));
-  }
+      context.fail(JSON.stringify(error));
+    });
 };
 
 function handleRequest(input) {
@@ -63,7 +58,7 @@ function handleRequest(input) {
       }
     default:
       {
-        throw new Error('ActionNotSupported');
+        result = Promise.reject('ActionNotSupported');
       }
   }
 
