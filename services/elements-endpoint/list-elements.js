@@ -39,7 +39,6 @@ function formatResults(elements) {
 }
 
 
-// FIXME audios field should reutrn boolean value
 function tmpAudioFlag(audios) {
   if (!audios) {
     return 0;
