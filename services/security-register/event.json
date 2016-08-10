@@ -1,6 +1,8 @@
 {
-  "action": "register-pending",
-  "usernames": [
-    "allekoss@gmail.com"
-  ]
+  "action": "register",
+  "username": "belenvillamaro@hotmail.com",
+  "fullname": "Ana Belen",
+  "genre": "F",
+  "birthdate": "2001-10-04",
+  "password": "Ab102001!"
 }

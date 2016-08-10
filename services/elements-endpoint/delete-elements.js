@@ -2,6 +2,7 @@ import _ from 'lodash';
 import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
 import { cleanElementsNotifications } from './clean-notifications';
+import { SUCCESS, ERR_SECURITY } from '../commons/constants';
 
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
@@ -15,11 +16,11 @@ export function deleteElement(id, userId) {
   return elementModel.getById(id)
     .then(element => {
       if (element.owner_id !== userId) {
-        throw new Error('AccessDenied');
+        throw new Error(ERR_SECURITY.ACCESS_DENIED);
       }
 
       return elementModel.remove(id)
-        .then(() => ({ message: 'OK' }));
+        .then(() => SUCCESS);
     });
 }
 
@@ -40,7 +41,7 @@ export function deleteMultipleElements(ids, userId) {
 
       let tasks = [deleteOwnElements(ownerIds, userId), deleteInvitedElements(invitedIds, userId)];
       return Promise.all(tasks)
-        .then(() => ({ message: 'OK' }));
+        .then(() => SUCCESS);
     });
 }
 

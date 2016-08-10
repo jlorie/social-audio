@@ -25,7 +25,7 @@ export function updateAudioPrivacies({ elementId, audioId, isPublic, userId }) {
       // check permission
       let hasPermissions = audio.user_id === userId;
       if (!hasPermissions) {
-        throw new Error(ERR_SECURITY.PERMISSION_DENIED);
+        throw new Error(ERR_SECURITY.ACCESS_DENIED);
       }
 
       audio.public = isPublic;

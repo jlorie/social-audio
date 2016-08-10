@@ -11,5 +11,12 @@ export function register(email) {
   };
 
   return subscriberModel.create(feedbackData)
-    .then(() => SUCCESS);
+    .then(() => SUCCESS)
+    .catch(err => {
+      if (err.code === 'ConditionalCheckFailedException') {
+        throw new Error('DuplicatedData');
+      }
+
+      throw err;
+    });
 }

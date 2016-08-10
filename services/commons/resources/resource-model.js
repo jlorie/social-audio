@@ -149,7 +149,6 @@ class ResourceModel {
   }
 
   batchCreate(items) {
-    console.log('==> items: ', JSON.stringify(items, null, 2));
     // Execute batch requests in chunks of 25 items
     let chunks = _.chunk(items, MAX_ITEMS_BATCH);
     let putRequests = chunks.map(this._resolvePutRequests);
