@@ -1,18 +1,43 @@
-import SubscriberModel from '../commons/resources/subscriber-model';
+import { transfer } from './transfer';
 
-const tableName = 'dev-subscribers';
-const subscriberModel = new SubscriberModel(tableName);
+const tasks = [
+  // {
+  //   source: 'dev-devices-by-users',
+  //   dest: 'beta-devices-by-users'
+  // },
+  // {
+  //   source: 'dev-elements',
+  //   dest: 'beta-elements'
+  // },
+  // {
+  //   source: 'dev-elements-by-users',
+  //   dest: 'beta-elements-by-users'
+  // },
+  // {
+  //   source: 'dev-feedback',
+  //   dest: 'beta-feedback'
+  // }, {
+  //   source: 'dev-friends',
+  //   dest: 'beta-friends'
+  // },
+  // {
+  //   source: 'dev-notifications',
+  //   dest: 'beta-notifications'
+  // },
+  // ,
+  // {
+  //   source: 'dev-subscribers',
+  //   dest: 'beta-subscribers'
+  // }, {
+  //   source: 'dev-users',
+  //   dest: 'beta-users'
+  // },
+  {
+    source: 'dev-users-log',
+    dest: 'beta-users-log'
+  }
+];
 
 export default () => {
-  let data = {
-    email: 'jlorie@bbluue.com',
-    created_at: new Date().toISOString()
-  };
-
-  return subscriberModel.create(data)
-    .catch(err => {
-      if (err.ConditionalCheckFailedException) {
-        throw new Error('DuplicatedData');
-      }
-    });
+  return Promise.all(tasks.map(task => transfer(task.source, task.dest)));
 };

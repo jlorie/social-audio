@@ -14,7 +14,10 @@ export function register(email) {
     .then(() => SUCCESS)
     .catch(err => {
       if (err.code === 'ConditionalCheckFailedException') {
-        throw new Error('DuplicatedData');
+        return {
+          status: 'FAILED',
+          message: 'DuplicatedData'
+        };
       }
 
       throw err;
