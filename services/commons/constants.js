@@ -17,7 +17,8 @@ export const USER_STATUS = {
 
 export const REF_STATUS = {
   RESOLVED: 'resolved',
-  PENDING: 'pending'
+  PENDING: 'pending',
+  HIDDEN: 'hidden'
 };
 
 export const ACCOUNT_TYPE = {
