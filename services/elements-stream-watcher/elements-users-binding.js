@@ -14,9 +14,10 @@ export function bind(element) {
     created_at: element.created_at + '|owner',
     thumbnail_url: element.thumbnail_url,
     favorite: false,
-    ref_status: REF_STATUS.RESOLVED
+    ref_status: REF_STATUS.RESOLVED,
   };
 
+  console.info(" ===> elmento: ", JSON.stringify(reference, null, 2));
   return elementsByUserModel.create(reference);
 }
 

@@ -22,5 +22,5 @@ function updateNotification(notification) {
     }
   };
 
-  return notificationModel.update(key, data);
+  return notificationModel.updateMarkNotification(key, data);
 }
