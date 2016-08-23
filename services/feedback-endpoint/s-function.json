@@ -11,17 +11,19 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [{
-    "path": "feedback",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${newFeedbackRequest}",
-    "responses": "$${responsesForPost}"
-  }],
+  "endpoints": [
+    {
+      "path": "feedback",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${newFeedbackRequest}",
+      "responses": "$${responsesForPost}"
+    }
+  ],
   "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",

@@ -12,14 +12,16 @@
     "excludePatterns": []
   },
   "endpoints": [],
-  "events": [{
-    "name": "daily-collect",
-    "type": "schedule",
-    "config": {
-      "schedule": "rate(1 day)",
-      "enabled": true
+  "events": [
+    {
+      "name": "daily-collect",
+      "type": "schedule",
+      "config": {
+        "schedule": "rate(1 day)",
+        "enabled": true
+      }
     }
-  }],
+  ],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",

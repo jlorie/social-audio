@@ -11,107 +11,118 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [{
-    "path": "elements",
-    "method": "GET",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${listRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "elements",
-    "method": "DELETE",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${bacthDeleteRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "elements/{id}",
-    "method": "GET",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${detailRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "elements/{id}",
-    "method": "DELETE",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${deleteRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "elements/detach/{id}",
-    "method": "DELETE",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${detachRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "elements/shared_with/{id}",
-    "method": "GET",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${sharedWithRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "elements/favorite/{id}",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${markAsFavoriteRequest}",
-    "responses": "$${responsesForPost}"
-  }, {
-    "path": "elements/favorite/{id}",
-    "method": "DELETE",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${unmarkAsFavoriteRequest}",
-    "responses": "$${responsesForPost}"
-  }, {
-    "path": "elements/privacy/{id}",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${updatePrivacyRequest}",
-    "responses": "$${responsesForPost}"
-  }, {
-    "path": "elements/friend/{id}",
-    "method": "GET",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${filterByFriendRequest}",
-    "responses": "$${responsesForGet}"
-  }],
+  "endpoints": [
+    {
+      "path": "elements",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${listRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "elements",
+      "method": "DELETE",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${bacthDeleteRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "elements/{id}",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${detailRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "elements/{id}",
+      "method": "DELETE",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${deleteRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "elements/detach/{id}",
+      "method": "DELETE",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${detachRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "elements/shared_with/{id}",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${sharedWithRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "elements/favorite/{id}",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${markAsFavoriteRequest}",
+      "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "elements/favorite/{id}",
+      "method": "DELETE",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${unmarkAsFavoriteRequest}",
+      "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "elements/privacy/{id}",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${updatePrivacyRequest}",
+      "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "elements/friend/{id}",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${filterByFriendRequest}",
+      "responses": "$${responsesForGet}"
+    }
+  ],
   "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",

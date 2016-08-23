@@ -11,28 +11,32 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [{
-    "path": "security/login",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "none",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${requestTemplate}",
-    "responses": "$${responsesForPost}"
-  }],
-  "events": [{
-    "name": "keep-alive-login",
-    "type": "schedule",
-    "config": {
-      "schedule": "rate(5 minutes)",
-      "enabled": true,
-      "input": {
-        "keepalive": true
+  "endpoints": [
+    {
+      "path": "security/login",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${requestTemplate}",
+      "responses": "$${responsesForPost}"
+    }
+  ],
+  "events": [
+    {
+      "name": "keep-alive-login",
+      "type": "schedule",
+      "config": {
+        "schedule": "rate(5 minutes)",
+        "enabled": true,
+        "input": {
+          "keepalive": true
+        }
       }
     }
-  }],
+  ],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",

@@ -12,15 +12,17 @@
     "excludePatterns": []
   },
   "endpoints": [],
-  "events": [{
-    "name": "users-stream-events",
-    "type": "dynamodbstream",
-    "config": {
-      "streamArn": "${usersStreamArn}",
-      "startingPosition": "LATEST",
-      "enabled": true
+  "events": [
+    {
+      "name": "users-stream-events",
+      "type": "dynamodbstream",
+      "config": {
+        "streamArn": "${usersStreamArn}",
+        "startingPosition": "LATEST",
+        "enabled": true
+      }
     }
-  }],
+  ],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
