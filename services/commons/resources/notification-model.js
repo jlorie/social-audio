@@ -8,6 +8,28 @@ class NotificationModel extends ResourceModel {
     super(uri, region);
   }
 
+  updateMarkNotification(key, data) {
+    let params = {
+      TableName: this.tableName,
+      Key: key,
+      UpdateExpression: 'set details.pending = :pending',
+      ExpressionAttributeValues: { ':pending': false },
+      ReturnValues: 'ALL_NEW'
+    };
+
+    const func = (resolve, reject) => {
+      this.dynamo.update(params, (err, data) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(data.Attributes);
+      });
+    };
+
+    return new Promise(func);
+  }
+
   getByUserId({ userId, id, limit }) {
     let params = {
       TableName: this.tableName,

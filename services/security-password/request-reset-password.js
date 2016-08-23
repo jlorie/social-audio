@@ -12,7 +12,6 @@ const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT +
 const emailService = new EmailService();
 
 export function requestReset({ email }) {
-  console.info('Sending reset password mail to ' + email);
 
   return sendmail(email)
     .then(() => SUCCESS)
@@ -27,7 +26,6 @@ export function requestReset({ email }) {
 
 function sendmail(email) {
   console.info('Sending confirmation mail to: ' + email);
-
   let params = {
     resetLink: config.URL_RESET_PASSWORD + '?email=' + email + '&token=' + getToken(email),
     unsubscribeLink: config.URL_EMAIL_UNSUBSCRIBE + '?email=' + email + '&token=' + getToken(email)
@@ -67,7 +65,6 @@ function getTemplate() {
       if (err) {
         return reject(err);
       }
-
       resolve(data);
     });
   };
@@ -77,9 +74,11 @@ function getTemplate() {
 
 function render(template, params) {
   let body = template;
-  for (let param of params) {
+
+  // Se cambia el of por el in debido a que en beta no funciona of y no envia el correo electronico 22-08-2016
+
+  for (let param in params) {
     body = body.replace(`{{${param}}}`, params[param]);
   }
-
   return body;
 }

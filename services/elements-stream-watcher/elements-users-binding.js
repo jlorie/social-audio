@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import ElementUserModel from '../commons/resources/element-user-model';
 import { REF_STATUS } from '../commons/constants';
-import { checkUserSpace } from './check-user-space'
 
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
 
@@ -17,11 +16,8 @@ export function bind(element) {
     favorite: false,
     ref_status: REF_STATUS.RESOLVED,
   };
-  // Verifico si el usuario tiene espacio en disco o no
-  if (checkUserSpace(element.owner_id)) {
-    console.info('EL USUARIO YA NO TIENE ESPACIO EN DISCO');
-    reference.ref_status = REF_STATUS.HIDDEN;
-  }
+
+  console.info(" ===> elmento: ", JSON.stringify(reference, null, 2));
   return elementsByUserModel.create(reference);
 }
 
