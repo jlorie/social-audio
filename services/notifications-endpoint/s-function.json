@@ -11,27 +11,30 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [{
-    "path": "notifications",
-    "method": "GET",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${listRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "notifications/{id}",
-    "method": "DELETE",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${deleteRequest}",
-    "responses": "$${responsesForGet}"
-  }],
+  "endpoints": [
+    {
+      "path": "notifications",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${listRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "notifications/{id}",
+      "method": "DELETE",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${deleteRequest}",
+      "responses": "$${responsesForGet}"
+    }
+  ],
   "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",

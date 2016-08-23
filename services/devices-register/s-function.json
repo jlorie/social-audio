@@ -11,17 +11,19 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [{
-    "path": "devices/register",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${registerRequest}",
-    "responses": "$${responsesForPost}"
-  }],
+  "endpoints": [
+    {
+      "path": "devices/register",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${registerRequest}",
+      "responses": "$${responsesForPost}"
+    }
+  ],
   "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",

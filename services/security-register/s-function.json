@@ -11,17 +11,19 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [{
-    "path": "security/register",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "none",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${registerRequest}",
-    "responses": "$${responsesForPost}"
-  }],
+  "endpoints": [
+    {
+      "path": "security/register",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${registerRequest}",
+      "responses": "$${responsesForPost}"
+    }
+  ],
   "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",

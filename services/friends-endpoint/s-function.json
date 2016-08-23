@@ -11,57 +11,63 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [{
-    "path": "friends",
-    "method": "GET",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${listRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "friends",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${addRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "friends/{id}",
-    "method": "DELETE",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${deleteRequest}",
-    "responses": "$${responsesForPost}"
-  }, {
-    "path": "friends/invite",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${inviteRequest}",
-    "responses": "$${responsesForPost}"
-  }, {
-    "path": "friends/check",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${checkEmailsRequest}",
-    "responses": "$${responsesForPost}"
-  }],
+  "endpoints": [
+    {
+      "path": "friends",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${listRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "friends",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${addRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "friends/{id}",
+      "method": "DELETE",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${deleteRequest}",
+      "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "friends/invite",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${inviteRequest}",
+      "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "friends/check",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${checkEmailsRequest}",
+      "responses": "$${responsesForPost}"
+    }
+  ],
   "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",

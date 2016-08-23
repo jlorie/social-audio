@@ -12,25 +12,28 @@
     "excludePatterns": []
   },
   "endpoints": [],
-  "events": [{
-    "name": "elements-stream-events",
-    "type": "dynamodbstream",
-    "config": {
-      "streamArn": "${elementsStreamArn}",
-      "startingPosition": "LATEST",
-      "enabled": true
-    }
-  }, {
-    "name": "keep-alive-elem-stream",
-    "type": "schedule",
-    "config": {
-      "schedule": "rate(5 minutes)",
-      "enabled": true,
-      "input": {
-        "keepalive": true
+  "events": [
+    {
+      "name": "elements-stream-events",
+      "type": "dynamodbstream",
+      "config": {
+        "streamArn": "${elementsStreamArn}",
+        "startingPosition": "LATEST",
+        "enabled": true
+      }
+    },
+    {
+      "name": "keep-alive-elem-stream",
+      "type": "schedule",
+      "config": {
+        "schedule": "rate(5 minutes)",
+        "enabled": true,
+        "input": {
+          "keepalive": true
+        }
       }
     }
-  }],
+  ],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",

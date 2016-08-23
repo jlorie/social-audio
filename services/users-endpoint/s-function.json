@@ -11,67 +11,74 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [{
-    "path": "users/{id}",
-    "method": "GET",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${detailRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "users",
-    "method": "GET",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${batchDetailRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "users",
-    "method": "DELETE",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${deleteRequest}",
-    "responses": "$${responsesForPost}"
-  }, {
-    "path": "users/profile",
-    "method": "GET",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${profileRequest}",
-    "responses": "$${responsesForGet}"
-  }, {
-    "path": "users/profile",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${updateProfileRequest}",
-    "responses": "$${responsesForPost}"
-  }, {
-    "path": "users/check",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${checkEmailsRequest}",
-    "responses": "$${responsesForPost}"
-  }],
+  "endpoints": [
+    {
+      "path": "users/{id}",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${detailRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "users",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${batchDetailRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "users",
+      "method": "DELETE",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${deleteRequest}",
+      "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "users/profile",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${profileRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "users/profile",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${updateProfileRequest}",
+      "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "users/check",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${checkEmailsRequest}",
+      "responses": "$${responsesForPost}"
+    }
+  ],
   "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",

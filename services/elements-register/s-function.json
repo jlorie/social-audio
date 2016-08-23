@@ -12,18 +12,24 @@
     "excludePatterns": []
   },
   "endpoints": [],
-  "events": [{
-    "name": "s3",
-    "type": "s3",
-    "config": {
-      "bucket": "${uploadBucketName}",
-      "bucketEvents": ["s3:ObjectCreated:*"],
-      "filterRules": [{
-        "name": "prefix",
-        "value": "elements/"
-      }]
+  "events": [
+    {
+      "name": "s3",
+      "type": "s3",
+      "config": {
+        "bucket": "${uploadBucketName}",
+        "bucketEvents": [
+          "s3:ObjectCreated:*"
+        ],
+        "filterRules": [
+          {
+            "name": "prefix",
+            "value": "elements/"
+          }
+        ]
+      }
     }
-  }],
+  ],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",

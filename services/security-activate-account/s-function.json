@@ -9,37 +9,46 @@
   "memorySize": 1024,
   "authorizer": {},
   "custom": {
-    "excludePatterns": ["aws-sdk"],
-    "requires": ["html/account-confirmation"]
+    "excludePatterns": [
+      "aws-sdk"
+    ],
+    "requires": [
+      "html/account-confirmation"
+    ]
   },
-  "endpoints": [{
-    "path": "/security/activate-account",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "none",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${postRequestTemplate}",
-    "responses": "$${responsesForPost}"
-  }, {
-    "path": "/security/activate-account",
-    "method": "GET",
-    "type": "AWS",
-    "authorizationType": "none",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${getRequestTemplate}",
-    "responses": "$${responsesForRedirect}"
-  }],
-  "events": [{
-    "name": "activate-registered-user",
-    "type": "sns",
-    "config": {
-      "topicName": "${stage}-registered-user"
+  "endpoints": [
+    {
+      "path": "/security/activate-account",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${postRequestTemplate}",
+      "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "/security/activate-account",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${getRequestTemplate}",
+      "responses": "$${responsesForRedirect}"
     }
-  }],
+  ],
+  "events": [
+    {
+      "name": "activate-registered-user",
+      "type": "sns",
+      "config": {
+        "topicName": "${stage}-registered-user"
+      }
+    }
+  ],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",

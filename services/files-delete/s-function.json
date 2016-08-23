@@ -12,13 +12,15 @@
     "excludePatterns": []
   },
   "endpoints": [],
-  "events": [{
-    "name": "deleted-image-event",
-    "type": "sns",
-    "config": {
-      "topicName": "${deletedElementTopicArn}"
+  "events": [
+    {
+      "name": "deleted-image-event",
+      "type": "sns",
+      "config": {
+        "topicName": "${deletedElementTopicArn}"
+      }
     }
-  }],
+  ],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",

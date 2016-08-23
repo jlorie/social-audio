@@ -12,18 +12,24 @@
     "excludePatterns": []
   },
   "endpoints": [],
-  "events": [{
-    "name": "s3-upload-profile-photo",
-    "type": "s3",
-    "config": {
-      "bucket": "${uploadBucketName}",
-      "bucketEvents": ["s3:ObjectCreated:*"],
-      "filterRules": [{
-        "name": "prefix",
-        "value": "profile/"
-      }]
+  "events": [
+    {
+      "name": "s3-upload-profile-photo",
+      "type": "s3",
+      "config": {
+        "bucket": "${uploadBucketName}",
+        "bucketEvents": [
+          "s3:ObjectCreated:*"
+        ],
+        "filterRules": [
+          {
+            "name": "prefix",
+            "value": "profile/"
+          }
+        ]
+      }
     }
-  }],
+  ],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",

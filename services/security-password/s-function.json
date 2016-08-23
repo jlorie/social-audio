@@ -11,37 +11,41 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [{
-    "path": "security/change-password",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "AWS_IAM",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${changeRequest}",
-    "responses": "$${responsesForPost}"
-  }, {
-    "path": "security/reset-password",
-    "method": "POST",
-    "type": "AWS",
-    "authorizationType": "none",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${requestResetTemplate}",
-    "responses": "$${responsesForPost}"
-  }, {
-    "path": "security/reset-password",
-    "method": "PUT",
-    "type": "AWS",
-    "authorizationType": "none",
-    "authorizerFunction": false,
-    "apiKeyRequired": false,
-    "requestParameters": {},
-    "requestTemplates": "$${resetTemplate}",
-    "responses": "$${responsesForPost}"
-  }],
+  "endpoints": [
+    {
+      "path": "security/change-password",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${changeRequest}",
+      "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "security/reset-password",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${requestResetTemplate}",
+      "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "security/reset-password",
+      "method": "PUT",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${resetTemplate}",
+      "responses": "$${responsesForPost}"
+    }
+  ],
   "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
