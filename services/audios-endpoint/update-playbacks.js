@@ -2,7 +2,9 @@ import FunctionInvoker, { INVOKE_TYPE } from '../commons/remote/function-invoker
 import { SUCCESS, EMPTY } from '../commons/constants';
 
 const PLAYBACKS_COUNTER = process.env.PLAYBACKS_COUNTER;
-const invoker = new FunctionInvoker(PLAYBACKS_COUNTER);
+const SERVERLESS_STAGE = process.env.SERVERLESS_STAGE;
+
+const invoker = new FunctionInvoker(PLAYBACKS_COUNTER, SERVERLESS_STAGE);
 
 export function updatePlaybaks(userId, elementId, audioPlaybacks) {
   // TODO check user permissions

@@ -472,16 +472,6 @@
     "SubscribersDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-<<<<<<< Updated upstream
-        "AttributeDefinitions": [{
-          "AttributeName": "email",
-          "AttributeType": "S"
-        }],
-        "KeySchema": [{
-          "AttributeName": "email",
-          "KeyType": "HASH"
-        }],
-=======
         "AttributeDefinitions": [
           {
             "AttributeName": "email",
@@ -502,7 +492,6 @@
             "KeyType": "RANGE"
           }
         ],
->>>>>>> Stashed changes
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"

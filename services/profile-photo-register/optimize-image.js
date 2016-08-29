@@ -5,8 +5,9 @@ const S3_URL_PREFIX = 'https://s3.amazonaws.com';
 const PROFILE_RESOLUTION = 480;
 const URI_IMAGES_RESIZE = process.env.URI_IMAGES_RESIZE;
 const BUCKET_ELEMENT_FILES = process.env.BUCKET_ELEMENT_FILES;
+const SERVERLESS_STAGE = process.env.SERVERLESS_STAGE;
 
-const invoker = new FunctionInvoker(URI_IMAGES_RESIZE);
+const invoker = new FunctionInvoker(URI_IMAGES_RESIZE, SERVERLESS_STAGE);
 
 export function optimizeImage(sourceUrl) {
   const dest = `${S3_URL_PREFIX}/${BUCKET_ELEMENT_FILES}/images/profile-${uuid.v1()}.jpg`;
