@@ -1,4 +1,5 @@
 import UserModel from '../commons/resources/user-model';
+import { ERR_SECURITY } from '../commons/constants';
 
 const URI_USERS = process.env.URI_USERS;
 const userModel = new UserModel(URI_USERS);
@@ -7,6 +8,10 @@ export function detailUser(id) {
   console.info('Resolving details for user ' + id);
   return userModel.getById(id)
     .then(user => {
+      if (!user) {
+        throw new Error(ERR_SECURITY.INVALID_USER);
+      }
+
       let output = {
         id: user.id,
         email: user.username,
