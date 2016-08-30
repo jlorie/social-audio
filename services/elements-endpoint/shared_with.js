@@ -16,8 +16,9 @@ export function resolveSharedWith(elementId, userId) {
         throw new Error(ERR_SECURITY.ACCESS_DENIED);
       }
 
+      // remove requester userId
       return {
-        user_ids: userIds
+        user_ids: userIds.filter(id => id !== userId)
       };
     });
 }
