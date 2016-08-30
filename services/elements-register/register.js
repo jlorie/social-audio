@@ -97,6 +97,7 @@ function formatElement(info) {
     created_at: info.created_at,
     id: info.id,
     location_info: info.location_info,
+    uploaded_at: new Date().toISOString(),
     modified_at: new Date().toISOString(),
     owner_id: info.owner_id,
     source_url: info.source_url,
