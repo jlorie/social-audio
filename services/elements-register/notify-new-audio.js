@@ -9,10 +9,11 @@ const URI_USERS = process.env.URI_USERS;
 const URI_ELEMENTS_RESOURCE = process.env.URI_ELEMENTS_RESOURCE;
 const URI_NOTIFY_ENDPOINT = process.env.URI_NOTIFY_ENDPOINT;
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
+const SERVERLESS_STAGE = process.env.SERVERLESS_STAGE;
 
 const userModel = new UserModel(URI_USERS);
 const elementModel = new ElementModel(URI_ELEMENTS_RESOURCE);
-const invoker = new FunctionInvoker(URI_NOTIFY_ENDPOINT);
+const invoker = new FunctionInvoker(URI_NOTIFY_ENDPOINT, SERVERLESS_STAGE);
 const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
 export function notifyNewAudio(attachment) {

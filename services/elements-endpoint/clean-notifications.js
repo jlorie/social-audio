@@ -1,7 +1,9 @@
 import FunctionInvoker, { INVOKE_TYPE } from '../commons/remote/function-invoker';
 
 const URI_CLEAN_NOTIFICATIONS = process.env.URI_CLEAN_NOTIFICATIONS;
-const invoker = new FunctionInvoker(URI_CLEAN_NOTIFICATIONS);
+const SERVERLESS_STAGE = process.env.SERVERLESS_STAGE;
+
+const invoker = new FunctionInvoker(URI_CLEAN_NOTIFICATIONS, SERVERLESS_STAGE);
 
 export function cleanElementsNotifications(elementIds, userId, isOwner) {
   console.info(`Cleaning notifications for ${elementIds.length} element with user ${userId}`);

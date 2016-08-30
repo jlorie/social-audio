@@ -1,17 +1,17 @@
 const AWS = require('aws-sdk');
 
 class FunctionInvoker {
-  constructor(uri, region = 'us-east-1') {
+  constructor(uri, stage = 'dev', region = 'us-east-1') {
     AWS.config.update({ region });
 
-    this.functionName = uri;
+    this.functionName = `${uri}:${stage}`;
     this.lambda = new AWS.Lambda();
   }
 
-  invoke({ body, type }) {
+  invoke({ body = '{}', type = INVOKE_TYPE.RequestResponse }) {
     let params = {
       FunctionName: this.functionName,
-      InvocationType: type || INVOKE_TYPE.RequestResponse,
+      InvocationType: type,
       Payload: body
     };
 

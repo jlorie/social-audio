@@ -1,7 +1,9 @@
 import FunctionInvoker from '../commons/remote/function-invoker';
 
 const URI_REGISTER_ENDPOINT = process.env.URI_REGISTER_ENDPOINT;
-const registerPending = new FunctionInvoker(URI_REGISTER_ENDPOINT);
+const SERVERLESS_STAGE = process.env.SERVERLESS_STAGE;
+
+const registerPending = new FunctionInvoker(URI_REGISTER_ENDPOINT, SERVERLESS_STAGE);
 
 export function registerPendingUsers(usernames) {
   let isEmpty = usernames.length === 0;
