@@ -35,7 +35,10 @@ export const ERR_ELEMENTS = {
   INVALID_ELEMENT: 'InvalidElement',
   INVALID_AUDIO: 'InvalidAudio',
   INVALID_ATTACHMENT: 'InvalidAttachment',
-  INVALID_TO_SHARE: 'InvalidElementToShare'
+  INVALID_TO_SHARE: 'InvalidElementToShare',
+  ALREADY_EXISTS: 'ElementArealdyExists',
+  INVALID_FORMAT: 'InvalidElementFormat',
+  INVALID_ATTACHMENT_FORMAT: 'InvalidAttachmentFormat'
 };
 
 export const ERR_NOTIFICATIONS = {

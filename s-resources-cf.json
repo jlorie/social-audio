@@ -7,19 +7,17 @@
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Principal": {
-                "Service": [
-                  "lambda.amazonaws.com"
-                ]
-              },
-              "Action": [
-                "sts:AssumeRole"
+          "Statement": [{
+            "Effect": "Allow",
+            "Principal": {
+              "Service": [
+                "lambda.amazonaws.com"
               ]
-            }
-          ]
+            },
+            "Action": [
+              "sts:AssumeRole"
+            ]
+          }]
         },
         "Path": "/"
       }
@@ -30,8 +28,7 @@
         "PolicyName": "${stage}-${project}-lambda",
         "PolicyDocument": {
           "Version": "2012-10-17",
-          "Statement": [
-            {
+          "Statement": [{
               "Effect": "Allow",
               "Action": [
                 "logs:CreateLogGroup",
@@ -115,18 +112,15 @@
             }
           ]
         },
-        "Roles": [
-          {
-            "Ref": "IamRoleLambda"
-          }
-        ]
+        "Roles": [{
+          "Ref": "IamRoleLambda"
+        }]
       }
     },
     "UsersDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "AttributeDefinitions": [
-          {
+        "AttributeDefinitions": [{
             "AttributeName": "id",
             "AttributeType": "S"
           },
@@ -135,12 +129,10 @@
             "AttributeType": "S"
           }
         ],
-        "KeySchema": [
-          {
-            "AttributeName": "username",
-            "KeyType": "HASH"
-          }
-        ],
+        "KeySchema": [{
+          "AttributeName": "username",
+          "KeyType": "HASH"
+        }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
@@ -149,41 +141,33 @@
         "StreamSpecification": {
           "StreamViewType": "NEW_AND_OLD_IMAGES"
         },
-        "GlobalSecondaryIndexes": [
-          {
-            "IndexName": "index-id",
-            "KeySchema": [
-              {
-                "AttributeName": "id",
-                "KeyType": "HASH"
-              }
-            ],
-            "Projection": {
-              "ProjectionType": "ALL"
-            },
-            "ProvisionedThroughput": {
-              "ReadCapacityUnits": "${db-rcu}",
-              "WriteCapacityUnits": "${db-wcu}"
-            }
+        "GlobalSecondaryIndexes": [{
+          "IndexName": "index-id",
+          "KeySchema": [{
+            "AttributeName": "id",
+            "KeyType": "HASH"
+          }],
+          "Projection": {
+            "ProjectionType": "ALL"
+          },
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "${db-rcu}",
+            "WriteCapacityUnits": "${db-wcu}"
           }
-        ]
+        }]
       }
     },
     "ElementsDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "AttributeDefinitions": [
-          {
-            "AttributeName": "id",
-            "AttributeType": "S"
-          }
-        ],
-        "KeySchema": [
-          {
-            "AttributeName": "id",
-            "KeyType": "HASH"
-          }
-        ],
+        "AttributeDefinitions": [{
+          "AttributeName": "id",
+          "AttributeType": "S"
+        }],
+        "KeySchema": [{
+          "AttributeName": "id",
+          "KeyType": "HASH"
+        }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
@@ -197,8 +181,7 @@
     "ElementsByUsersDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "AttributeDefinitions": [
-          {
+        "AttributeDefinitions": [{
             "AttributeName": "user_id",
             "AttributeType": "S"
           },
@@ -211,8 +194,7 @@
             "AttributeType": "S"
           }
         ],
-        "KeySchema": [
-          {
+        "KeySchema": [{
             "AttributeName": "user_id",
             "KeyType": "HASH"
           },
@@ -226,35 +208,31 @@
           "WriteCapacityUnits": "${db-wcu}"
         },
         "TableName": "${stage}-elements-by-users",
-        "GlobalSecondaryIndexes": [
-          {
-            "IndexName": "index-id",
-            "KeySchema": [
-              {
-                "AttributeName": "id",
-                "KeyType": "HASH"
-              },
-              {
-                "AttributeName": "user_id",
-                "KeyType": "RANGE"
-              }
-            ],
-            "Projection": {
-              "ProjectionType": "ALL"
+        "GlobalSecondaryIndexes": [{
+          "IndexName": "index-id",
+          "KeySchema": [{
+              "AttributeName": "id",
+              "KeyType": "HASH"
             },
-            "ProvisionedThroughput": {
-              "ReadCapacityUnits": "${db-rcu}",
-              "WriteCapacityUnits": "${db-wcu}"
+            {
+              "AttributeName": "user_id",
+              "KeyType": "RANGE"
             }
+          ],
+          "Projection": {
+            "ProjectionType": "ALL"
+          },
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "${db-rcu}",
+            "WriteCapacityUnits": "${db-wcu}"
           }
-        ]
+        }]
       }
     },
     "DevicesByUsersDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "AttributeDefinitions": [
-          {
+        "AttributeDefinitions": [{
             "AttributeName": "user_id",
             "AttributeType": "S"
           },
@@ -263,8 +241,7 @@
             "AttributeType": "S"
           }
         ],
-        "KeySchema": [
-          {
+        "KeySchema": [{
             "AttributeName": "user_id",
             "KeyType": "HASH"
           },
@@ -286,8 +263,7 @@
     "NotificationsDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "AttributeDefinitions": [
-          {
+        "AttributeDefinitions": [{
             "AttributeName": "user_id",
             "AttributeType": "S"
           },
@@ -300,8 +276,7 @@
             "AttributeType": "S"
           }
         ],
-        "KeySchema": [
-          {
+        "KeySchema": [{
             "AttributeName": "user_id",
             "KeyType": "HASH"
           },
@@ -315,45 +290,38 @@
           "WriteCapacityUnits": "${db-wcu}"
         },
         "TableName": "${stage}-notifications",
-        "GlobalSecondaryIndexes": [
-          {
-            "IndexName": "index-id",
-            "KeySchema": [
-              {
-                "AttributeName": "element_id",
-                "KeyType": "HASH"
-              },
-              {
-                "AttributeName": "created_at",
-                "KeyType": "RANGE"
-              }
-            ],
-            "Projection": {
-              "ProjectionType": "ALL"
+        "GlobalSecondaryIndexes": [{
+          "IndexName": "index-id",
+          "KeySchema": [{
+              "AttributeName": "element_id",
+              "KeyType": "HASH"
             },
-            "ProvisionedThroughput": {
-              "ReadCapacityUnits": "${db-rcu}",
-              "WriteCapacityUnits": "${db-wcu}"
+            {
+              "AttributeName": "created_at",
+              "KeyType": "RANGE"
             }
+          ],
+          "Projection": {
+            "ProjectionType": "ALL"
+          },
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "${db-rcu}",
+            "WriteCapacityUnits": "${db-wcu}"
           }
-        ]
+        }]
       }
     },
     "GeneralConfigDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "AttributeDefinitions": [
-          {
-            "AttributeName": "key",
-            "AttributeType": "S"
-          }
-        ],
-        "KeySchema": [
-          {
-            "AttributeName": "key",
-            "KeyType": "HASH"
-          }
-        ],
+        "AttributeDefinitions": [{
+          "AttributeName": "key",
+          "AttributeType": "S"
+        }],
+        "KeySchema": [{
+          "AttributeName": "key",
+          "KeyType": "HASH"
+        }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
@@ -364,8 +332,7 @@
     "UsersLogDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "AttributeDefinitions": [
-          {
+        "AttributeDefinitions": [{
             "AttributeName": "user_id",
             "AttributeType": "S"
           },
@@ -374,8 +341,7 @@
             "AttributeType": "S"
           }
         ],
-        "KeySchema": [
-          {
+        "KeySchema": [{
             "AttributeName": "user_id",
             "KeyType": "HASH"
           },
@@ -394,8 +360,7 @@
     "FeedbackDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "AttributeDefinitions": [
-          {
+        "AttributeDefinitions": [{
             "AttributeName": "user_id",
             "AttributeType": "S"
           },
@@ -404,8 +369,7 @@
             "AttributeType": "S"
           }
         ],
-        "KeySchema": [
-          {
+        "KeySchema": [{
             "AttributeName": "user_id",
             "KeyType": "HASH"
           },
@@ -424,8 +388,7 @@
     "FriendsDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "AttributeDefinitions": [
-          {
+        "AttributeDefinitions": [{
             "AttributeName": "user_id",
             "AttributeType": "S"
           },
@@ -434,8 +397,7 @@
             "AttributeType": "S"
           }
         ],
-        "KeySchema": [
-          {
+        "KeySchema": [{
             "AttributeName": "user_id",
             "KeyType": "HASH"
           },
@@ -449,31 +411,26 @@
           "WriteCapacityUnits": "${db-wcu}"
         },
         "TableName": "${stage}-friends",
-        "GlobalSecondaryIndexes": [
-          {
-            "IndexName": "index-id",
-            "KeySchema": [
-              {
-                "AttributeName": "friend_id",
-                "KeyType": "HASH"
-              }
-            ],
-            "Projection": {
-              "ProjectionType": "ALL"
-            },
-            "ProvisionedThroughput": {
-              "ReadCapacityUnits": "${db-rcu}",
-              "WriteCapacityUnits": "${db-wcu}"
-            }
+        "GlobalSecondaryIndexes": [{
+          "IndexName": "index-id",
+          "KeySchema": [{
+            "AttributeName": "friend_id",
+            "KeyType": "HASH"
+          }],
+          "Projection": {
+            "ProjectionType": "ALL"
+          },
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "${db-rcu}",
+            "WriteCapacityUnits": "${db-wcu}"
           }
-        ]
+        }]
       }
     },
     "SubscribersDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "AttributeDefinitions": [
-          {
+        "AttributeDefinitions": [{
             "AttributeName": "email",
             "AttributeType": "S"
           },
@@ -482,8 +439,7 @@
             "AttributeType": "S"
           }
         ],
-        "KeySchema": [
-          {
+        "KeySchema": [{
             "AttributeName": "email",
             "KeyType": "HASH"
           },
@@ -510,12 +466,10 @@
       "Properties": {
         "BucketName": "${stage}-bbluue-upload",
         "LifecycleConfiguration": {
-          "Rules": [
-            {
-              "Status": "Enabled",
-              "ExpirationInDays": "1"
-            }
-          ]
+          "Rules": [{
+            "Status": "Enabled",
+            "ExpirationInDays": "1"
+          }]
         }
       }
     },
