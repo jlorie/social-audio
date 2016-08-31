@@ -6,5 +6,5 @@ const elementModel = new ElementModel(URI_ELEMENTS);
 export default (elementIds) => {
   console.info('Checking elements ' + elementIds);
   return elementModel.batchGet(elementIds)
-    .then(elements => elements.map(e => e.id));
+    .then(elements => ({ elements: elements.map(e => e.id) }));
 };
