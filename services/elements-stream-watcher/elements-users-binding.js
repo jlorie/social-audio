@@ -75,7 +75,7 @@ export function remove(elementId) {
 
 function countAudios(audioList) {
   let audios = {};
-  for (let audio of audioList) {
+  for (let audio of audioList || []) {
     audios[audio.user_id] = (audios[audio.user_id] || 0) + 1;
   }
 

@@ -59,6 +59,7 @@ export function updateUserSpace(newElement, oldElement) {
 
       console.info(`${diff > 0 ? 'Adding' : 'Substracting'} ${Math.abs(diff)} bytes`);
 
+      console.log('==> userId: ', newElement.owner_id);
       return userModel.getById(newElement.owner_id)
         .then(user => userModel.addSpaceUsed(user.username, diff));
     });
