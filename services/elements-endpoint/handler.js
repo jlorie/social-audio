@@ -9,6 +9,7 @@ import { resolveSharedWith } from './shared_with';
 import { updateFavoriteStatus } from './mark-favorite';
 import { updateAudioPrivacies } from './update-privacy';
 import { filterByFriend } from './filter-by-friend';
+import checkElements from './check-elements';
 
 const YES = 'yes';
 
@@ -89,6 +90,11 @@ function handleRequest(req) {
       case 'filter_friend':
         {
           result = filterByFriend(userId, req.friend_id);
+          break;
+        }
+      case 'check':
+        {
+          result = checkElements(req.element_ids);
           break;
         }
 

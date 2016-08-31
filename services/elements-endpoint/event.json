@@ -1,5 +1,5 @@
 {
-  "action": "shared_with",
+  "action": "check",
   "identity_id": "us-east-1:a55f4a53-c409-461c-a01f-150456ce830d",
-  "element_id": "fb5c89688a828aed9689d28538aa77ac"
+  "element_ids": ["dabfe88737d97ab8591cfe2ece4333eb", "d5d3ea1899a313e9a430bc4359871c64a", "asd"]
 }

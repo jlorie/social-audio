@@ -11,8 +11,7 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [
-    {
+  "endpoints": [{
       "path": "elements",
       "method": "GET",
       "type": "AWS",
@@ -121,6 +120,17 @@
       "requestParameters": {},
       "requestTemplates": "$${filterByFriendRequest}",
       "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "elements/check",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${checkElementsRequest}",
+      "responses": "$${responsesForPost}"
     }
   ],
   "events": [],

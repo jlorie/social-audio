@@ -110,5 +110,8 @@
   },
   "filterByFriendRequest": {
     "application/json": "{ \"action\": \"filter_friend\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"friend_id\": \"$input.params('id')\"}"
+  },
+  "checkElementsRequest": {
+    "application/json": "{ \"action\": \"check\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_ids\": $input.json('$.element_ids')}"
   }
 }
