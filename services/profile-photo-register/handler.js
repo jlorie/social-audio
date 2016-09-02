@@ -5,6 +5,8 @@ import { updateProfilePicture } from './user-profile';
 
 export default (event, context) => {
   const { username, bucket, key } = extractObjectFromS3Message(event);
+  console.info('==> Input: ', JSON.stringify({ username, bucket, key }, null, 2));
+
   let sourceUrl = generateUrlFromArgs(bucket, key);
 
   return optimizeImage(sourceUrl)

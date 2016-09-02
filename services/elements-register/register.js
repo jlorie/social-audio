@@ -72,10 +72,11 @@ function createElement(elementInfo) {
   return exists(element.id)
     .then((elementExists) => {
       if (elementExists) {
+        console.info(`Element with id ${element.id} already exists`);
         throw new Error(ERR_ELEMENTS.ALREADY_EXISTS);
       }
 
-      return optimizeImage(element.source_url, element.id)
+      return optimizeImage(element.source_url, element.id);
     })
     .then(images => {
       element.source_url = images.sourceUrl;
