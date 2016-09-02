@@ -1,0 +1,56 @@
+{
+  "name": "log-service",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: bbluue-audios",
+  "customName": false,
+  "customRole": false,
+  "handler": "log-service/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [{
+      "name": "deleted-user-event",
+      "type": "sns",
+      "config": {
+        "topicName": "${deletedUserTopicArn}"
+      }
+    }, {
+      "name": "deleted-element-event",
+      "type": "sns",
+      "config": {
+        "topicName": "${deletedElementTopicArn}"
+      }
+    }, {
+      "name": "registered-user-event",
+      "type": "sns",
+      "config": {
+        "topicName": "${registeredUserTopicArn}"
+      }
+    }, {
+      "name": "registered-element-event",
+      "type": "sns",
+      "config": {
+        "topicName": "${registeredElementTopicArn}"
+      }
+    }
+
+  ],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "URL_USERS_LOG_API": "${usersLogTableName}",
+    "REGISTERED_USER_TOPIC": "${registeredUserTopicArn}",
+    "REGISTERED_ELEMENT_TOPIC": "${registeredElementTopicArn}",
+    "DELETED_USER_TOPIC": "${deletedUserTopicArn}",
+    "DELETED_ELEMENT_TOPIC": "${deletedElementTopicArn}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
