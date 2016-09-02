@@ -11,13 +11,12 @@ export function bind(element) {
   let reference = {
     id: element.id,
     user_id: element.owner_id,
-    created_at: element.created_at + '|owner',
+    created_at: [element.created_at, element.uploaded_at, 'owner'].join('|'),
     thumbnail_url: element.thumbnail_url,
     favorite: false,
     ref_status: REF_STATUS.RESOLVED,
   };
 
-  console.info(" ===> elmento: ", JSON.stringify(reference, null, 2));
   return elementsByUserModel.create(reference);
 }
 

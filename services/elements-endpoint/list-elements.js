@@ -23,12 +23,13 @@ function formatResults(elements) {
   };
 
   for (let item of elements.items) {
-    let created = item.created_at.split('|');
+    let [date, ...tail] = item.created_at.split('|');
+    let isOwner = tail.pop() === 'owner';
 
     result.items.push({
       id: item.id,
-      created_at: created[0],
-      owner: created[1] === 'owner',
+      created_at: date,
+      owner: isOwner,
       audios: tmpAudioFlag(item.audios),
       thumbnail_url: item.thumbnail_url,
       favorite: item.favorite

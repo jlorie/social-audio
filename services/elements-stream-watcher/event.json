@@ -1,32 +1,35 @@
 {
   "Records": [{
-    "eventID": "4138405777656e5e5dac24c1ae529970",
-    "eventName": "MODIFY",
+    "eventID": "52344ab40c3d57e52f77d5fc42c083cc",
+    "eventName": "INSERT",
     "eventVersion": "1.1",
     "eventSource": "aws:dynamodb",
     "awsRegion": "us-east-1",
     "dynamodb": {
-      "ApproximateCreationDateTime": 1472586840,
+      "ApproximateCreationDateTime": 1472762700,
       "Keys": {
         "id": {
-          "S": "fb5c89688a828aed9689d28538aa77ac"
+          "S": "60ad4a775293e5468781a2f06c3ad181"
         }
       },
       "NewImage": {
+        "uploaded_at": {
+          "S": "2016-09-01T20:45:37.952Z"
+        },
         "owner_id": {
-          "S": "a55f4a53-c409-461c-a01f-150456ce830d"
+          "S": "c6db8888-cfc5-4e4a-b130-80409469d21a"
         },
         "created_at": {
-          "S": "2016-08-30T01:36:06.051Z"
+          "S": "2016-07-18T19:37:53.228Z"
         },
         "id": {
-          "S": "fb5c89688a828aed9689d28538aa77ac"
+          "S": "60ad4a775293e5468781a2f06c3ad181"
         },
         "modified_at": {
-          "S": "2016-08-30T19:54:01.166Z"
+          "S": "2016-09-01T20:45:37.952Z"
         },
         "thumbnail_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/480p-fb5c89688a828aed9689d28538aa77ac.jpg"
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/480p-60ad4a775293e5468781a2f06c3ad181.jpg"
         },
         "type": {
           "S": "image"
@@ -35,81 +38,21 @@
           "M": {
             "coordinates": {
               "L": [{
-                  "S": "-0.124367"
+                  "S": "-0.197645"
                 },
                 {
-                  "S": "-78.360970"
+                  "S": "-78.444375"
                 }
               ]
             }
           }
         },
         "source_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/1080p-fb5c89688a828aed9689d28538aa77ac.jpg"
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/1080p-60ad4a775293e5468781a2f06c3ad181.jpg"
         }
       },
-      "OldImage": {
-        "owner_id": {
-          "S": "a55f4a53-c409-461c-a01f-150456ce830d"
-        },
-        "audios": {
-          "L": [{
-            "M": {
-              "playbacks": {
-                "N": "1"
-              },
-              "public": {
-                "BOOL": false
-              },
-              "user_id": {
-                "S": "ce180e7f-608c-47cb-abff-71f7790d514b"
-              },
-              "created_at": {
-                "S": "2016-08-30T17:14:57.377Z"
-              },
-              "id": {
-                "S": "cceadc4dfd2be03680a102e414ff9f88"
-              },
-              "source_url": {
-                "S": "https://s3.amazonaws.com/dev-bbluue-files/audio/attachment-cceadc4dfd2be03680a102e414ff9f88.caf"
-              }
-            }
-          }]
-        },
-        "created_at": {
-          "S": "2016-08-30T01:36:06.051Z"
-        },
-        "id": {
-          "S": "fb5c89688a828aed9689d28538aa77ac"
-        },
-        "modified_at": {
-          "S": "2016-08-30T17:10:24.097Z"
-        },
-        "thumbnail_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/480p-fb5c89688a828aed9689d28538aa77ac.jpg"
-        },
-        "type": {
-          "S": "image"
-        },
-        "location_info": {
-          "M": {
-            "coordinates": {
-              "L": [{
-                  "S": "-0.124367"
-                },
-                {
-                  "S": "-78.360970"
-                }
-              ]
-            }
-          }
-        },
-        "source_url": {
-          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/1080p-fb5c89688a828aed9689d28538aa77ac.jpg"
-        }
-      },
-      "SequenceNumber": "424246900000000009361044208",
-      "SizeBytes": 1111,
+      "SequenceNumber": "434017400000000010974864512",
+      "SizeBytes": 481,
       "StreamViewType": "NEW_AND_OLD_IMAGES"
     },
     "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-elements/stream/2016-06-02T15:35:26.339"
