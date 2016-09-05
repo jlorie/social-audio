@@ -8,6 +8,7 @@ export function resolveSharedWith(elementId, userId) {
   console.info('Resolving users related with element ' + elementId);
 
   return elementsByUserModel.getById(elementId)
+    .then(results => results.filter(ref => ref.created_at.split('|').pop() !== 'owner'))
     .then(results => results.map(ref => ref.user_id))
     .then(userIds => {
       // check permissions
