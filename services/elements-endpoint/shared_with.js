@@ -8,18 +8,21 @@ export function resolveSharedWith(elementId, userId) {
   console.info('Resolving users related with element ' + elementId);
 
   return elementsByUserModel.getById(elementId)
-    .then(results => results.filter(ref => ref.created_at.split('|').pop() !== 'owner'))
-    .then(results => results.map(ref => ref.user_id))
-    .then(userIds => {
+    .then(results => {
       // check permissions
-      let hasPermissions = userIds.indexOf(userId) !== -1;
+      let hasPermissions = results.find(ref => ref.user_id);
       if (!hasPermissions) {
         throw new Error(ERR_SECURITY.ACCESS_DENIED);
       }
 
-      // remove requester userId
-      return {
-        user_ids: userIds.filter(id => id !== userId)
-      };
+      // discarding obvious users (owner and requester user)
+      let filtered = results.filter(ref => {
+        let isOwner = ref.created_at.split('|').pop() === 'owner';
+        let isRequester = ref.user_id === userId;
+
+        return !isOwner && !isRequester;
+      });
+
+      return { user_ids: filtered.map(ref => ref.id) };
     });
 }
