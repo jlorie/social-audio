@@ -23,6 +23,6 @@ export function resolveSharedWith(elementId, userId) {
         return !isOwner && !isRequester;
       });
 
-      return { user_ids: filtered.map(ref => ref.id) };
+      return { user_ids: filtered.map(ref => ref.user_id) };
     });
 }
