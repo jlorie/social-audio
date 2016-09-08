@@ -70,10 +70,11 @@ function createElementReferences(element, recipientIds) {
       let filteredRecipients = _.difference(recipientIds, userIds);
 
       let newReferences = filteredRecipients.map(userId => {
+        let created = [new Date().toISOString(), element.uploaded_at, 'visitor'].join('|');
         let reference = {
           id: element.id,
           user_id: userId,
-          created_at: new Date().toISOString() + '|visitor',
+          created_at: created,
           thumbnail_url: element.thumbnail_url,
           audios: (element.audios || []).filter(a => a.public).length,
           favorite: false,
