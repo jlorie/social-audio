@@ -9,13 +9,13 @@ export default (event, context) => {
   let input = event;
   console.info('Input: ', JSON.stringify(input, null, 2));
 
-  return authenticate(input.username, input.password)
+  return authenticate(input.username, input.password, input.timezone_offset)
     .then(result => {
-      console.error('==> Success: ', JSON.stringify(result, null, 2));
+      console.info('==> Success: ', JSON.stringify(result, null, 2));
       context.succeed(result);
     })
     .catch(err => {
-      console.error('==> An error occurred. ', err.stack);
+      console.info('==> An error occurred. ', err.stack);
 
       let error = {
         status: 'ERROR',

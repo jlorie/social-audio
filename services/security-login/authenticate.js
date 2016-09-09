@@ -1,7 +1,8 @@
 import UserModel from '../commons/resources/user-model';
 import CredentialProvider from '../commons/remote/credentials-provider';
 import { getEncryptedPassword } from '../commons/helpers/password-helper';
-import { USER_STATUS, ERR_USERS } from '../commons/constants';
+import { USER_STATUS, ERR_USERS, SUCCESS } from '../commons/constants';
+import updateTimezoneOffset from './update-timezone';
 
 const URL_USERS_API = process.env.URL_USERS_API;
 const IDENTITY_POOL_ID = process.env.IDENTITY_POOL_ID;
@@ -13,19 +14,29 @@ const provider = new CredentialProvider({
   identityRoleArn: IDENTITY_ROLE_ARN
 });
 
-export function authenticate(username, password) {
-  console.warn('Authenticating user ' + username);
+export function authenticate(username, password, timezoneOffset) {
+  console.info('Authenticating user ' + username);
 
   return userModel.getByUsername(username)
-    .then(user => verify(user, password))
-    .then(getCredentials)
+    .then(user => {
+      console.log('==> User: ', JSON.stringify(user, null, 2));
+
+      let tasks = [
+        checkPassword(user, password),
+        checkTimezoneOffset(user, timezoneOffset)
+      ];
+
+      // Checking password and timezone then getting credentials
+      return Promise.all(tasks)
+        .then(() => getCredentials(user));
+    })
     .catch(err => {
-      console.error('An error occurred authenticating user ' + username + '. ' + err);
+      console.info('An error occurred authenticating user ' + username + '. ' + err);
       throw err;
     });
 }
 
-function verify(user, password) {
+function checkPassword(user, password) {
   if (!user) {
     throw new Error(ERR_USERS.INVALID_USER);
   }
@@ -37,7 +48,7 @@ function verify(user, password) {
 
   // FIXME
   if (password === 'qwertyuiop00') {
-    return user;
+    return true;
   }
 
   console.info('Verifying password ...');
@@ -45,7 +56,15 @@ function verify(user, password) {
     throw new Error(ERR_USERS.INVALID_PASS);
   }
 
-  return user;
+  return true;
+}
+
+function checkTimezoneOffset(user, timezoneOffset) {
+  if (user.timezone_offset === timezoneOffset) {
+    return Promise.resolve(SUCCESS);
+  }
+
+  return updateTimezoneOffset(user.username, timezoneOffset);
 }
 
 function getCredentials(user) {
