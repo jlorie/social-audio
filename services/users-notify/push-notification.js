@@ -3,7 +3,7 @@ import Notification from '../commons/remote/notification';
 
 import DeviceUserModel from '../commons/resources/device-user-model';
 import { resolveNotificationBadge } from './push-notification-badge';
-import { NOTIFICATION_TYPE } from '../commons/constants';
+import { NOTIFICATION_TYPE, ERR_NOTIFICATIONS } from '../commons/constants';
 
 const URI_DEVICES_BY_USERS = process.env.URI_DEVICES_BY_USERS;
 const ERR_ENDPOINT_DISABLED = 'EndpointDisabled';
@@ -56,7 +56,7 @@ function notify(device, message, bagde, type, retries = 0) {
 
   return notification.push(apns, true)
     .catch(err => {
-      if (err.code === ERR_ENDPOINT_DISABLED) {
+      if (err.code === ERR_NOTIFICATIONS.ENDPOINT_DISABLED) {
         console.info(`Endpoint ${device.endpoint}  is disabled, deleting endpoint`);
         return deleteDeviceEndpoint(device);
 
@@ -69,6 +69,12 @@ function notify(device, message, bagde, type, retries = 0) {
         // // enable endpoint & retry
         // return Notification.enableDeviceEndpoint(device.endpoint, device.device_token)
         //   .then(() => notify(device, message, bagde, type, retries + 1));
+      }
+
+      if (err.code === ERR_NOTIFICATIONS.INVALID_PARAMETER &&
+        err.message.indexOf('No endpoint found')) {
+        console.info(`Invalid endpoint ${device.endpoint}, deleting it...`);
+        return deleteDeviceEndpoint(device);
       }
 
       throw err;

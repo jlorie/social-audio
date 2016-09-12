@@ -42,7 +42,9 @@ export const ERR_ELEMENTS = {
 };
 
 export const ERR_NOTIFICATIONS = {
-  INVALID_NOTIFICATION: 'InvalidNotificationId'
+  INVALID_NOTIFICATION: 'InvalidNotificationId',
+  INVALID_PARAMETER: 'InvalidParameter',
+  ENDPOINT_DISABLED: 'EndpointDisabled'
 };
 
 export const ERR_SECURITY = {
