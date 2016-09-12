@@ -194,6 +194,9 @@
           "WriteCapacityUnits": "${db-wcu}"
         },
         "TableName": "${stage}-elements-by-users",
+        "StreamSpecification": {
+          "StreamViewType": "NEW_AND_OLD_IMAGES"
+        },
         "GlobalSecondaryIndexes": [{
           "IndexName": "index-id",
           "KeySchema": [{
@@ -394,16 +397,10 @@
         "AttributeDefinitions": [{
           "AttributeName": "email",
           "AttributeType": "S"
-        }, {
-          "AttributeName": "created_at",
-          "AttributeType": "S"
         }],
         "KeySchema": [{
           "AttributeName": "email",
           "KeyType": "HASH"
-        }, {
-          "AttributeName": "created_at",
-          "KeyType": "RANGE"
         }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
@@ -453,6 +450,12 @@
       "Properties": {
         "TopicName": "${stage}-attachment-uploaded"
       }
+    },
+    "DeletedUserTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "${stage}-deleted-user"
+      }
     }
   },
   "Outputs": {
@@ -494,6 +497,14 @@
     "ElementsByUsersTableName": {
       "Value": {
         "Ref": "ElementsByUsersDynamoTable"
+      }
+    },
+    "ElementsByUserStreamArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ElementsByUsersDynamoTable",
+          "StreamArn"
+        ]
       }
     },
     "DevicesByUsersTableName": {
@@ -554,6 +565,11 @@
     "DeletedElementTopicArn": {
       "Value": {
         "Ref": "DeletedElementTopic"
+      }
+    },
+    "DeletedUserTopicArn": {
+      "Value": {
+        "Ref": "DeletedUserTopic"
       }
     },
     "AttachmentUploadedTopicArn": {

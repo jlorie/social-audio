@@ -1,20 +1,62 @@
 {
   "Records": [{
-    "EventSource": "aws:sns",
-    "EventVersion": "1.0",
-    "EventSubscriptionArn": "arn:aws:sns:us-east-1:141310850160:dev-registered-user:eee0ca16-9a37-452b-a443-584ac2e7096c",
-    "Sns": {
-      "Type": "Notification",
-      "MessageId": "f22b3b1e-ea77-5ffa-9a75-6b5d5c823131",
-      "TopicArn": "arn:aws:sns:us-east-1:141310850160:dev-registered-user",
-      "Subject": null,
-      "Message": "{\n  \"fullname\": \"Prueba\",\n  \"genre\": \"F\",\n  \"birthdate\": \"2001-10-04T00:00:00.000Z\",\n  \"password\": \"e9e538027c0811a19ff8726596ded90e\",\n  \"email_status\": \"suscribed\",\n  \"user_status\": \"disabled\",\n  \"space_used\": 0,\n  \"account_type\": \"basic\",\n  \"notifications_enabled\": true,\n  \"username\": \"pruebaLog@bbluue.com\",\n  \"created_at\": \"2016-09-02T17:19:49.086Z\",\n  \"id\": \"fb1d7f47-3000-4983-bee0-8a531ba6a286\",\n  \"identity_id\": \"us-east-1:fb1d7f47-3000-4983-bee0-8a531ba6a286\"\n}",
-      "Timestamp": "2016-09-02T17:19:49.947Z",
-      "SignatureVersion": "1",
-      "Signature": "lO8UqAbFrW9airUrtYB4B1Ny2CtondtwYnZ2sRpCve5t1D9NThRI8heMwRsv3iqahxKH0Bs7WmyapmNhKw/zISwGUV38BrgfDJ1IuB8neSYqzvr4yw9bBik9SfITaxXdOst3kYtq0MNhgb2tWz+oNyaIXSQ2ryfJJvnuvw3R9L4Igd8ljJL8CcQWFs0J0yalqUEjjnjL0ikc5lTxhhvuCYA4cBc5LCqFWGkBnJh8vf0z3WSoOc0rXThWy0KuFFkWWjk6LMxsibvlihWPmhOanBntZv1qodvXVI0r4xSZdwULiAGxUqev49fVx0ew22kcps9fN/lw6vqdrOYMPfFeaw==",
-      "SigningCertUrl": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-b95095beb82e8f6a046b3aafc7f4149a.pem",
-      "UnsubscribeUrl": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:141310850160:dev-registered-user:eee0ca16-9a37-452b-a443-584ac2e7096c",
-      "MessageAttributes": {}
-    }
+    "eventID": "ba295df5f82ff7c571a3c9f42f24130f",
+    "eventName": "REMOVE",
+    "eventVersion": "1.1",
+    "eventSource": "aws:dynamodb",
+    "awsRegion": "us-east-1",
+    "dynamodb": {
+      "ApproximateCreationDateTime": 1473345540,
+      "Keys": {
+        "username": {
+          "S": "pruebaLog@bbluue.com"
+        }
+      },
+      "OldImage": {
+        "user_status": {
+          "S": "disabled"
+        },
+        "account_type": {
+          "S": "basic"
+        },
+        "space_used": {
+          "N": "0"
+        },
+        "birthdate": {
+          "S": "2001-10-04T00:00:00.000Z"
+        },
+        "identity_id": {
+          "S": "us-east-1:52ab9925-b3eb-412d-9380-e63048ebdf40"
+        },
+        "created_at": {
+          "S": "2016-09-08T14:32:10.467Z"
+        },
+        "notifications_enabled": {
+          "BOOL": true
+        },
+        "email_status": {
+          "S": "suscribed"
+        },
+        "password": {
+          "S": "e9e538027c0811a19ff8726596ded90e"
+        },
+        "genre": {
+          "S": "F"
+        },
+        "fullname": {
+          "S": "Prueba"
+        },
+        "id": {
+          "S": "52ab9925-b3eb-412d-9380-e63048ebdf40"
+        },
+        "username": {
+          "S": "pruebaLog@bbluue.com"
+        }
+      },
+      "SequenceNumber": "487758900000000011263840767",
+      "SizeBytes": 368,
+      "StreamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-users/stream/2016-06-20T20:01:12.908"
   }]
 }

@@ -1,42 +1,38 @@
-import UserLogModel from '../commons/resources/user-log-model';
+import { SUCCESS, ERR_ACTION } from '../commons/constants';
 
-const DELETED_USER_TOPIC = process.env.DELETED_USER_TOPIC;
-const REGISTERED_USER_TOPIC = process.env.REGISTERED_USER_TOPIC;
-const REGISTERED_ELEMENT_TOPIC = process.env.REGISTERED_ELEMENT_TOPIC;
-const DELETED_ELEMENT_TOPIC = process.env.DELETED_ELEMENT_TOPIC;
-const URL_USERS_LOG_API = process.env.URL_USERS_LOG_API;
-const userLogModel = new UserLogModel(URL_USERS_LOG_API);
+const INSERT = 'INSERT';
+const MODIFY = 'MODIFY';
+const REMOVE = 'REMOVE';
+const STAGE = process.env.SERVERLESS_STAGE;
 
-export function createLog(dataLog) {
-  console.info('Entra en el createLog' + JSON.stringify(dataLog, null, 2));
-  let logData = {
-    userId: dataLog.userId
-  };
-  switch (dataLog.topicArn) {
-    case REGISTERED_USER_TOPIC:
+export function processEvent(record) {
+  let result;
+  console.info("=== STAGE ===>" + STAGE);
+  switch (record.eventName) {
+    case INSERT:
       {
-        logData.userAction = 'registered_user';
+        console.info('=== Action ===> INSERT ');
+        result = Promise.resolve(SUCCESS);
         break;
       }
-    case DELETED_USER_TOPIC:
+    case MODIFY:
       {
-        logData.userAction = 'deleted_user';
+        console.info('=== Action ===> MODIFY');
+        result = Promise.resolve(SUCCESS);
         break;
       }
-    case REGISTERED_ELEMENT_TOPIC:
+    case REMOVE:
       {
-        logData.userAction = 'registered_element';
-        break;
-      }
-    case DELETED_ELEMENT_TOPIC:
-      {
-        logData.userAction = 'deleted_element';
+        console.info('=== Action ===> REMOVE');
+        result = Promise.resolve(SUCCESS);
         break;
       }
     default:
       {
-        break;
+        console.info('=== Unfined Action ===');
+        return Promise.resolve(ERR_ACTION.UNDEFINED);
       }
   }
-  return userLogModel.log({ userId: logData.userId, userAction: logData.userAction });
-};
+
+  return result;
+}
