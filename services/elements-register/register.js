@@ -1,5 +1,6 @@
 import Storage from '../commons/remote/storage';
 import ElementModel from '../commons/resources/element-model';
+import { ERR_ELEMENTS } from '../commons/constants';
 
 import { generateUrlFromArgs } from '../commons/helpers/utils';
 import { attach } from './attach';
@@ -56,19 +57,26 @@ function extractMetadata(fileInfo) {
 function createElement(elementInfo) {
   if (elementInfo.attached_to) {
     if (elementInfo.type !== 'audio') {
-      return Promise.resolve('InvalidAttachmentFormat');
+      return Promise.resolve(ERR_ELEMENTS.InvalidAttachmentFormat);
     }
 
     return attach(elementInfo);
   }
 
   if (elementInfo.type !== 'image') {
-    return Promise.resolve('InvalidElementFormat');
+    return Promise.resolve(ERR_ELEMENTS.InvalidElementFormat);
   }
 
   console.info('Registering new element ...');
   let element = formatElement(elementInfo);
-  return optimizeImage(element.source_url, element.id)
+  return exists(element.id)
+    .then((elementExists) => {
+      if (elementExists) {
+        throw new Error(ERR_ELEMENTS.ALREADY_EXISTS);
+      }
+
+      return optimizeImage(element.source_url, element.id);
+    })
     .then(images => {
       element.source_url = images.sourceUrl;
       element.thumbnail_url = images.thumbnailUrl;
@@ -108,4 +116,15 @@ function formatElement(info) {
   }
 
   return element;
+}
+
+function exists(id) {
+  return elementModel.getById(id)
+    .then(element => {
+      if (element) {
+        return true;
+      }
+
+      return false;
+    });
 }
