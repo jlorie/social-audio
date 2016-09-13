@@ -1,8 +1,11 @@
 import { list } from './list-notifications';
 import { remove } from './remove-notifications';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
   const input = event;
+  input.stage = STAGE;
   console.info('=> Input: ', JSON.stringify(input, null, 2));
 
   return handleRequest(input)

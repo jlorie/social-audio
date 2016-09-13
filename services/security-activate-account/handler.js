@@ -4,9 +4,11 @@ import { validate } from './validate-request';
 
 const ACTION_VALIDATE = 'validate';
 const ACTION_REQUEST = 'request';
+const STAGE = process.env.SERVERLESS_STAGE;
 
 export default (event, context) => {
   let input = getInput(event);
+  input.stage = STAGE;
   console.info('Input: ', JSON.stringify(input, null, 2));
 
   // determining which function call

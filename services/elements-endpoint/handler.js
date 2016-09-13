@@ -11,8 +11,10 @@ import { updateAudioPrivacies } from './update-privacy';
 import { filterByFriend } from './filter-by-friend';
 
 const YES = 'yes';
+const STAGE = process.env.SERVERLESS_STAGE;
 
 export default (event, context) => {
+  event.stage = STAGE;
   console.info('=> Input: ', JSON.stringify(event, null, 2));
 
   return handleRequest(event)

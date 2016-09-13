@@ -2,8 +2,11 @@ import { change } from './change-password';
 import { reset } from './reset-password';
 import { requestReset } from './request-reset-password';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
   let input = event;
+  input.stage = STAGE;
   console.info('=> Input: ', JSON.stringify(input, null, 2));
   return handleRequest(input)
     .then(result => {

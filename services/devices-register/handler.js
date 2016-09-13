@@ -1,7 +1,10 @@
 import { registerDevice } from './register-device';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
   let input = event;
+  input.stage = STAGE;
   console.info('==> Input: ', JSON.stringify(input, null, 2));
   let userId = input.identity_id.split(':').pop();
 

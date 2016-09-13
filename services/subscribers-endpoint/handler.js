@@ -1,7 +1,10 @@
 import { register } from './register-subscriber';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
   const input = event;
+  inut.stage = STAGE;
   console.info('=> Input: ', JSON.stringify(input, null, 2));
 
   return register(input.email, input.text)

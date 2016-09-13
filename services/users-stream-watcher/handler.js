@@ -1,6 +1,9 @@
 import { processEvent } from './process-event';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
+  event.stage = STAGE;
   console.info('=> Input: ', JSON.stringify(event, null, 2));
 
   Promise.all(event.Records.map(processEvent))
