@@ -5,7 +5,9 @@ export const EMAIL_STATUS = {
 
 export const NOTIFICATION_TYPE = {
   AUDIO_REQUEST: 'audio_request',
-  NEW_AUDIO: 'new_audio'
+  NEW_AUDIO: 'new_audio',
+  PENDING_AUDIO: 'pending_audio',
+  ELEMENT_EXPIRED: 'element_expired'
 };
 
 export const USER_STATUS = {

@@ -1,5 +1,5 @@
-import ResourceModel from './resource-model';
 import _ from 'lodash';
+import ResourceModel from './resource-model';
 
 const ID_INDEX_NAME = 'index-id';
 
@@ -125,6 +125,29 @@ class ElementUserModel extends ResourceModel {
       });
   }
 
+  getOldestPendingElements(userId) {
+    let params = {
+      TableName: this.tableName,
+      KeyConditionExpression: 'user_id = :user_id',
+      FilterExpression: 'ref_status = :pending',
+      ExpressionAttributeValues: {
+        ':user_id': userId,
+        ':pending': 'pending'
+      }
+    };
+
+    const func = (resolve, reject) => {
+      this.dynamo.query(params, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(result.Items);
+      });
+    };
+
+    return new Promise(func);
+  }
 
 }
 
