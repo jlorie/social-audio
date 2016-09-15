@@ -13,10 +13,10 @@
   },
   "endpoints": [],
   "events": [{
-    "name": "mySchedule",
+    "name": "elements-timer-event",
     "type": "schedule",
     "config": {
-      "schedule": "rate(5 minutes)"
+      "schedule": "rate(1 hour)"
     }
   }],
   "environment": {
