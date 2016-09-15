@@ -82,7 +82,7 @@ function notify(device, message, bagde, type, retries = 0) {
 }
 
 function resolveMessage(emitter, type) {
-  console.info('Resolving notification message ' + type + ' for user ' + emitter.id);
+  console.info('Resolving notification message with ' + type);
 
   let message;
   switch (type) {
@@ -97,6 +97,17 @@ function resolveMessage(emitter, type) {
         message = `${emitter.fullname} added a new audiography`;
         break;
       }
+    case NOTIFICATION_TYPE.PENDING_AUDIO:
+      {
+        message = 'This photo will expire soon. Add an audiography to keep it in your memories';
+        break;
+      }
+    case NOTIFICATION_TYPE.ELEMENT_EXPIRED:
+      {
+        message = 'This photo has expired';
+        break;
+      }
+
     default:
       {
         throw new Error('InvalidType');

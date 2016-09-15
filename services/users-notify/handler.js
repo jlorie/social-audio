@@ -8,12 +8,6 @@ export default (event, context) => {
 
   let { emitterId, type, elementId, details, recipientIds } = event;
 
-  if (type === NOTIFICATION_TYPE.PENDING_AUDIO ||
-    type === NOTIFICATION_TYPE.ELEMENT_EXPIRED) {
-    console.info(' ===> Simulating notification for ', JSON.stringify(event));
-    return context.succeed({ status: 'OK' });
-  }
-
   return log({ emitterId, type, elementId, details, recipientIds }) // logging
     .then(() => notify({ emitterId, type, elementId, recipientIds })) // notifying
     // results

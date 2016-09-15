@@ -3,10 +3,9 @@
     "c6db8888-cfc5-4e4a-b130-80409469d21a"
   ],
   "type": "pending_audio",
-  "emitterId": "d9d77ea5-4d11-4610-a359-14dfd5e4b7f7",
-  "elementId": "b89e1d8dd34dad5e441e06f5abbdcdba",
+  "emitterId": "system",
+  "elementId": "724886048676f3b50d5547ac3d04a61b",
   "details": {
-    "thumbnail_url": "https://s3.amazonaws.com/dev-bbluue-files/images/200p-b89e1d8dd34dad5e441e06f5abbdcdba.jpg",
-    "emitter_name": "Cesar Alvarez C"
+    "thumbnail_url": "https://s3.amazonaws.com/dev-bbluue-files/images/480p-724886048676f3b50d5547ac3d04a61b.jpg"
   }
 }
