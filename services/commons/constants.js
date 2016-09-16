@@ -7,7 +7,9 @@ export const NOTIFICATION_TYPE = {
   AUDIO_REQUEST: 'audio_request',
   NEW_AUDIO: 'new_audio',
   PENDING_AUDIO: 'pending_audio',
-  ELEMENT_EXPIRED: 'element_expired'
+  INACTIVE_ELEMENT: 'inactive_element',
+  PENDING_ELEMENT_EXPIRED: 'pending_element_expired',
+  INACTIVE_ELEMENT_EXPIRED: 'inactive_element_expired'
 };
 
 export const USER_STATUS = {
@@ -20,7 +22,8 @@ export const USER_STATUS = {
 export const REF_STATUS = {
   RESOLVED: 'resolved',
   PENDING: 'pending',
-  HIDDEN: 'hidden'
+  HIDDEN: 'hidden',
+  EXPIRED: 'expired'
 };
 
 export const ACCOUNT_TYPE = {
@@ -46,7 +49,8 @@ export const ERR_ELEMENTS = {
 export const ERR_NOTIFICATIONS = {
   INVALID_NOTIFICATION: 'InvalidNotificationId',
   INVALID_PARAMETER: 'InvalidParameter',
-  ENDPOINT_DISABLED: 'EndpointDisabled'
+  ENDPOINT_DISABLED: 'EndpointDisabled',
+  INVALID_TYPE: 'InvalidNotificationType'
 };
 
 export const ERR_SECURITY = {

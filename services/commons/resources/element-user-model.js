@@ -125,7 +125,7 @@ class ElementUserModel extends ResourceModel {
       });
   }
 
-  getOldestPendingElements(userId) {
+  getOldestPendingElements(userId, asOwner = false) {
     let params = {
       TableName: this.tableName,
       KeyConditionExpression: 'user_id = :user_id',
@@ -142,7 +142,8 @@ class ElementUserModel extends ResourceModel {
           return reject(err);
         }
 
-        resolve(result.Items);
+        let end = (asOwner ? 'owner' : 'visitor');
+        resolve(result.Items.filter(i => i.created_at.endsWith(end)));
       });
     };
 

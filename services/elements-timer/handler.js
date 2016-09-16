@@ -1,8 +1,6 @@
 import moment from 'moment';
 import GeneralConfig from '../commons/resources/general-config';
-import selectUsers from './select-users';
-import getOldestPendingElements from './oldest-pending-element';
-import notifyPendingElement from './notify';
+import processConfig from './process-remider';
 
 const config = new GeneralConfig(REGION, STAGE);
 
@@ -10,22 +8,12 @@ const STAGE = process.env.SERVERLESS_STAGE;
 const REGION = process.env.SERVERLESS_REGION;
 
 export default (event, context) => {
-  // get utc time
-  const currentHour = moment.utc().hour();
   console.info('==> Input: ', JSON.stringify({
     stage: STAGE,
-    currentHour
+    currentHour: moment.utc().hour()
   }));
 
-  // get reminders configurations
-  return getReminderConfig()
-    .then(configs => {
-      // calculate timezone offset for user && get users for every offset
-      return Promise.all(configs.map(reminderConfig => {
-        let timezoneOffset = calculateOffset(reminderConfig.hour);
-        return notifyUsers(timezoneOffset, reminderConfig.notification_type);
-      }));
-    })
+  return resolveReminders()
     .then(result => {
       console.info('==> Success: ', JSON.stringify(result, null, 2));
       context.succeed(result);
@@ -38,9 +26,15 @@ export default (event, context) => {
       };
       context.fail(JSON.stringify(error));
     });
-
-  // return getOldestPendingElements('07484310-0a1a-48e0-b9c7-28257150f04a');
 };
+
+function resolveReminders() {
+  // get and process every reminder in general config table
+  return getReminderConfig().then(configs => {
+    let tasks = configs.map(conf => processConfig(conf.hour, conf.notification_type));
+    return Promise.all(tasks);
+  });
+}
 
 let cachedConfig = null;
 
@@ -55,31 +49,4 @@ function getReminderConfig() {
       cachedConfig = result;
       return result;
     });
-}
-
-function notifyUsers(timezoneOffset, notifType) {
-  console.info('Notifying users with timezone offset: ' + timezoneOffset);
-
-  return selectUsers(timezoneOffset)
-    .then(users => Promise.all(users.map(user => {
-      return getOldestPendingElements(user.id)
-        .then(pending => ({ user, pending }));
-    })))
-    .then(results => {
-      return Promise.all(results.map(r => notifyPendingElement(r.user, r.pending, notifType)));
-    });
-}
-
-function calculateOffset(desiredHour) {
-  const currentHour = moment.utc().hour();
-  let result = -1;
-
-  for (let offset = -11; offset <= 12; offset++) {
-    if (desiredHour === currentHour + offset) {
-      result = offset;
-      break;
-    }
-  }
-
-  return result;
 }

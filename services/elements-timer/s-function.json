@@ -16,6 +16,7 @@
     "name": "elements-timer-event",
     "type": "schedule",
     "config": {
+      "enabled": true,
       "schedule": "rate(1 hour)"
     }
   }],
