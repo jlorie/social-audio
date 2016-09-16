@@ -60,7 +60,7 @@ function checkPassword(user, password) {
 }
 
 function checkTimezoneOffset(user, timezoneOffset) {
-  if (user.timezone_offset === timezoneOffset) {
+  if (!timezoneOffset || user.timezone_offset === timezoneOffset) {
     return Promise.resolve(SUCCESS);
   }
 
