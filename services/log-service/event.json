@@ -1,38 +1,35 @@
 {
   "Records": [{
-    "eventID": "0587c7d2e854d09e4c88196f12537cb3",
-    "eventName": "INSERT",
+    "eventID": "ba295df5f82ff7c571a3c9f42f24130f",
+    "eventName": "REMOVE",
     "eventVersion": "1.1",
     "eventSource": "aws:dynamodb",
     "awsRegion": "us-east-1",
     "dynamodb": {
-      "ApproximateCreationDateTime": 1469843880,
+      "ApproximateCreationDateTime": 1473345540,
       "Keys": {
         "username": {
-          "S": "jlorie@bbluue.com"
+          "S": "pruebaLog@bbluue.com"
         }
       },
-      "NewImage": {
+      "OldImage": {
         "user_status": {
           "S": "disabled"
-        },
-        "owner_id": {
-          "S": "07484310-0a1a-48e0-b9c7-28257150f04a"
         },
         "account_type": {
           "S": "basic"
         },
         "space_used": {
-          "N": "104857600"
+          "N": "0"
         },
         "birthdate": {
           "S": "2001-10-04T00:00:00.000Z"
         },
         "identity_id": {
-          "S": "us-east-1:6a2d5539-4770-4823-908e-18300e340b60"
+          "S": "us-east-1:52ab9925-b3eb-412d-9380-e63048ebdf40"
         },
         "created_at": {
-          "S": "2016-07-30T01:58:30.115Z"
+          "S": "2016-09-08T14:32:10.467Z"
         },
         "notifications_enabled": {
           "BOOL": true
@@ -47,17 +44,17 @@
           "S": "F"
         },
         "fullname": {
-          "S": "Ana Belen"
+          "S": "Prueba"
         },
         "id": {
-          "S": "6a2d5539-4770-4823-908e-18300e340b60"
+          "S": "52ab9925-b3eb-412d-9380-e63048ebdf40"
         },
         "username": {
-          "S": "jlorie@bbluue.com"
+          "S": "pruebaLog@bbluue.com"
         }
       },
-      "SequenceNumber": "295079600000000010080526760",
-      "SizeBytes": 383,
+      "SequenceNumber": "487758900000000011263840767",
+      "SizeBytes": 368,
       "StreamViewType": "NEW_AND_OLD_IMAGES"
     },
     "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-users/stream/2016-06-20T20:01:12.908"

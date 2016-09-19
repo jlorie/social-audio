@@ -1,6 +1,10 @@
 import { invite } from './invite';
+
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
   let { identity_id, emails } = event;
+  event.stage = STAGE;
   console.info('==> Input: ', JSON.stringify(event, null, 2));
 
   let hostId = identity_id.split(':').pop();

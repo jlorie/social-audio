@@ -1,8 +1,11 @@
 import { removeExpiredUsers } from './remove-expired-users';
 import { disableInactiveUsers } from './disable-inactive-users';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event) => {
   let input = event;
+  input.stage = STAGE;
   console.info('Input: ', JSON.stringify(input, null, 2));
 
   let tasks = [

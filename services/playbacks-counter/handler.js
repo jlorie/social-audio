@@ -3,9 +3,10 @@ import { EMPTY } from '../commons/constants';
 
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
 const audioModel = new AudioModel(URI_ELEMENTS);
-
+const STAGE = process.env.SERVERLESS_STAGE;
 
 export default (event) => {
+  event.stage = STAGE;
   console.info('==> Event: ', JSON.stringify(event, null, 2));
   return updatePlaybaks(event);
 };

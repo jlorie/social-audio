@@ -2,8 +2,11 @@ import { register, registerPending } from './register';
 import { notify, sendWellcomeMail } from './notify-registered-user';
 import { ERR_ACTION } from '../commons/constants';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
   const input = event;
+  input.stage = STAGE;
   console.info('Input: ' + JSON.stringify(input, null, 2));
 
   return handleRequest(input)

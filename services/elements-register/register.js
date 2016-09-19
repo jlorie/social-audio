@@ -75,7 +75,7 @@ function createElement(elementInfo) {
         throw new Error(ERR_ELEMENTS.ALREADY_EXISTS);
       }
 
-      return optimizeImage(element.source_url, element.id)
+      return optimizeImage(element.source_url, element.id);
     })
     .then(images => {
       element.source_url = images.sourceUrl;

@@ -1,7 +1,10 @@
 import { shareElement, shareMultipleElements } from './share';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
   let { element_id, element_ids, usernames, identity_id } = event;
+  event.stage = STAGE;
   console.info('=> Input: ', JSON.stringify(event, null, 2));
 
   let sharePromise;

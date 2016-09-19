@@ -4,9 +4,11 @@ import { register } from './register';
 
 const URI_USERS = process.env.URI_USERS;
 const userModel = new UserModel(URI_USERS);
+const STAGE = process.env.SERVERLESS_STAGE;
 
 export default (event, context) => {
   const { username, bucket, key } = extractObjectFromS3Message(event);
+  event.stage = STAGE;
   console.info('==> Input: ', JSON.stringify(event, null, 2));
 
   return resolveUserId(username)

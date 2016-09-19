@@ -5,8 +5,11 @@ import { checkEmails } from './check-emails';
 import { deleteFriend } from './delete-friend';
 import { activateFriend } from './activate-friend';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
   let input = event;
+  input.stage = STAGE;
   console.info('=> Input: ', JSON.stringify(input, null, 2));
 
   return handleRequest(input)
