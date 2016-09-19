@@ -3,7 +3,10 @@ import { detailProfile, updateProfile } from './detail-profile';
 import { checkEmails } from './check-emails';
 import { deleteUser } from './delete-user';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
+  event.stage = STAGE;
   console.info('=> Input: ', JSON.stringify(event, null, 2));
 
   return handleRequest(event)

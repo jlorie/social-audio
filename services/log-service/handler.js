@@ -1,20 +1,12 @@
-import { resizeImage } from './resize-image';
-
-const STAGE = process.env.SERVERLESS_STAGE;
+import { processEvent } from './log';
 
 export default (event, context) => {
-  event.stage = STAGE;
-  console.info('=> Input: ', JSON.stringify(event, null, 2));
-
-  let { sourceUrl, destUrl, resolution } = event;
-
-  return resizeImage({ sourceUrl, destUrl, resolution })
-    .then(() => ({ destUrl }))
+  let input = event;
+  Promise.all(event.Records.map(processEvent))
     .then(result => {
       console.info('==> Success: ', JSON.stringify(result, null, 2));
       context.succeed(result);
-    })
-    .catch(err => {
+    }).catch(err => {
       console.info('==> An error occurred. ', err.stack);
 
       let error = {

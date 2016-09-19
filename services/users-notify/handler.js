@@ -1,9 +1,11 @@
 import { notify } from './notification';
 import { log } from './log-notification';
-
 import { NOTIFICATION_TYPE } from '../commons/constants';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
+  event.stage = STAGE;
   console.info('==> Input: ', JSON.stringify(event, null, 2));
 
   let { emitterId, type, elementId, details, recipientIds } = event;

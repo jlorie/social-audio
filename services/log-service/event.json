@@ -1,0 +1,62 @@
+{
+  "Records": [{
+    "eventID": "ba295df5f82ff7c571a3c9f42f24130f",
+    "eventName": "REMOVE",
+    "eventVersion": "1.1",
+    "eventSource": "aws:dynamodb",
+    "awsRegion": "us-east-1",
+    "dynamodb": {
+      "ApproximateCreationDateTime": 1473345540,
+      "Keys": {
+        "username": {
+          "S": "pruebaLog@bbluue.com"
+        }
+      },
+      "OldImage": {
+        "user_status": {
+          "S": "disabled"
+        },
+        "account_type": {
+          "S": "basic"
+        },
+        "space_used": {
+          "N": "0"
+        },
+        "birthdate": {
+          "S": "2001-10-04T00:00:00.000Z"
+        },
+        "identity_id": {
+          "S": "us-east-1:52ab9925-b3eb-412d-9380-e63048ebdf40"
+        },
+        "created_at": {
+          "S": "2016-09-08T14:32:10.467Z"
+        },
+        "notifications_enabled": {
+          "BOOL": true
+        },
+        "email_status": {
+          "S": "suscribed"
+        },
+        "password": {
+          "S": "e9e538027c0811a19ff8726596ded90e"
+        },
+        "genre": {
+          "S": "F"
+        },
+        "fullname": {
+          "S": "Prueba"
+        },
+        "id": {
+          "S": "52ab9925-b3eb-412d-9380-e63048ebdf40"
+        },
+        "username": {
+          "S": "pruebaLog@bbluue.com"
+        }
+      },
+      "SequenceNumber": "487758900000000011263840767",
+      "SizeBytes": 368,
+      "StreamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-users/stream/2016-06-20T20:01:12.908"
+  }]
+}

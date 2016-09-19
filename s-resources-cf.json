@@ -29,88 +29,81 @@
         "PolicyDocument": {
           "Version": "2012-10-17",
           "Statement": [{
-              "Effect": "Allow",
-              "Action": [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents"
-              ],
-              "Resource": "arn:aws:logs:${region}:*:*"
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "dynamodb:BatchGetItem",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:DeleteItem",
-                "dynamodb:GetItem",
-                "dynamodb:PutItem",
-                "dynamodb:Query",
-                "dynamodb:Scan",
-                "dynamodb:UpdateItem",
-                "dynamodb:GetRecords",
-                "dynamodb:GetShardIterator",
-                "dynamodb:DescribeStream",
-                "dynamodb:ListStreams"
-              ],
-              "Resource": [
-                "*"
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "sns:Publish",
-                "sns:CreatePlatformEndpoint",
-                "sns:DeleteEndpoint",
-                "sns:SetEndpointAttributes"
-              ],
-              "Resource": [
-                "*"
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "s3:DeleteObject",
-                "s3:GetObject",
-                "s3:PutObject"
-              ],
-              "Resource": [
-                "*"
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "sqs:DeleteMessage",
-                "sqs:ReceiveMessage",
-                "sqs:SendMessage"
-              ],
-              "Resource": [
-                "*"
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "lambda:InvokeFunction"
-              ],
-              "Resource": [
-                "*"
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "ses:SendEmail",
-                "ses:SendRawEmail"
-              ],
-              "Resource": [
-                "*"
-              ]
-            }
-          ]
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogGroup",
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:${region}:*:*"
+          }, {
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:BatchGetItem",
+              "dynamodb:BatchWriteItem",
+              "dynamodb:DeleteItem",
+              "dynamodb:GetItem",
+              "dynamodb:PutItem",
+              "dynamodb:Query",
+              "dynamodb:Scan",
+              "dynamodb:UpdateItem",
+              "dynamodb:GetRecords",
+              "dynamodb:GetShardIterator",
+              "dynamodb:DescribeStream",
+              "dynamodb:ListStreams"
+            ],
+            "Resource": [
+              "*"
+            ]
+          }, {
+            "Effect": "Allow",
+            "Action": [
+              "sns:Publish",
+              "sns:CreatePlatformEndpoint",
+              "sns:DeleteEndpoint",
+              "sns:SetEndpointAttributes"
+            ],
+            "Resource": [
+              "*"
+            ]
+          }, {
+            "Effect": "Allow",
+            "Action": [
+              "s3:DeleteObject",
+              "s3:GetObject",
+              "s3:PutObject"
+            ],
+            "Resource": [
+              "*"
+            ]
+          }, {
+            "Effect": "Allow",
+            "Action": [
+              "sqs:DeleteMessage",
+              "sqs:ReceiveMessage",
+              "sqs:SendMessage"
+            ],
+            "Resource": [
+              "*"
+            ]
+          }, {
+            "Effect": "Allow",
+            "Action": [
+              "lambda:InvokeFunction"
+            ],
+            "Resource": [
+              "*"
+            ]
+          }, {
+            "Effect": "Allow",
+            "Action": [
+              "ses:SendEmail",
+              "ses:SendRawEmail"
+            ],
+            "Resource": [
+              "*"
+            ]
+          }]
         },
         "Roles": [{
           "Ref": "IamRoleLambda"
@@ -121,14 +114,12 @@
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "AttributeDefinitions": [{
-            "AttributeName": "id",
-            "AttributeType": "S"
-          },
-          {
-            "AttributeName": "username",
-            "AttributeType": "S"
-          }
-        ],
+          "AttributeName": "id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "username",
+          "AttributeType": "S"
+        }],
         "KeySchema": [{
           "AttributeName": "username",
           "KeyType": "HASH"
@@ -182,43 +173,39 @@
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "AttributeDefinitions": [{
-            "AttributeName": "user_id",
-            "AttributeType": "S"
-          },
-          {
-            "AttributeName": "created_at",
-            "AttributeType": "S"
-          },
-          {
-            "AttributeName": "id",
-            "AttributeType": "S"
-          }
-        ],
+          "AttributeName": "user_id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "created_at",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "id",
+          "AttributeType": "S"
+        }],
         "KeySchema": [{
-            "AttributeName": "user_id",
-            "KeyType": "HASH"
-          },
-          {
-            "AttributeName": "created_at",
-            "KeyType": "RANGE"
-          }
-        ],
+          "AttributeName": "user_id",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "created_at",
+          "KeyType": "RANGE"
+        }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
         "TableName": "${stage}-elements-by-users",
+        "StreamSpecification": {
+          "StreamViewType": "NEW_AND_OLD_IMAGES"
+        },
         "GlobalSecondaryIndexes": [{
           "IndexName": "index-id",
           "KeySchema": [{
-              "AttributeName": "id",
-              "KeyType": "HASH"
-            },
-            {
-              "AttributeName": "user_id",
-              "KeyType": "RANGE"
-            }
-          ],
+            "AttributeName": "id",
+            "KeyType": "HASH"
+          }, {
+            "AttributeName": "user_id",
+            "KeyType": "RANGE"
+          }],
           "Projection": {
             "ProjectionType": "ALL"
           },
@@ -233,23 +220,19 @@
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "AttributeDefinitions": [{
-            "AttributeName": "user_id",
-            "AttributeType": "S"
-          },
-          {
-            "AttributeName": "device_token",
-            "AttributeType": "S"
-          }
-        ],
+          "AttributeName": "user_id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "device_token",
+          "AttributeType": "S"
+        }],
         "KeySchema": [{
-            "AttributeName": "user_id",
-            "KeyType": "HASH"
-          },
-          {
-            "AttributeName": "device_token",
-            "KeyType": "RANGE"
-          }
-        ],
+          "AttributeName": "user_id",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "device_token",
+          "KeyType": "RANGE"
+        }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
@@ -264,27 +247,22 @@
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "AttributeDefinitions": [{
-            "AttributeName": "user_id",
-            "AttributeType": "S"
-          },
-          {
-            "AttributeName": "created_at",
-            "AttributeType": "S"
-          },
-          {
-            "AttributeName": "element_id",
-            "AttributeType": "S"
-          }
-        ],
+          "AttributeName": "user_id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "created_at",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "element_id",
+          "AttributeType": "S"
+        }],
         "KeySchema": [{
-            "AttributeName": "user_id",
-            "KeyType": "HASH"
-          },
-          {
-            "AttributeName": "created_at",
-            "KeyType": "RANGE"
-          }
-        ],
+          "AttributeName": "user_id",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "created_at",
+          "KeyType": "RANGE"
+        }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
@@ -293,14 +271,12 @@
         "GlobalSecondaryIndexes": [{
           "IndexName": "index-id",
           "KeySchema": [{
-              "AttributeName": "element_id",
-              "KeyType": "HASH"
-            },
-            {
-              "AttributeName": "created_at",
-              "KeyType": "RANGE"
-            }
-          ],
+            "AttributeName": "element_id",
+            "KeyType": "HASH"
+          }, {
+            "AttributeName": "created_at",
+            "KeyType": "RANGE"
+          }],
           "Projection": {
             "ProjectionType": "ALL"
           },
@@ -333,23 +309,19 @@
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "AttributeDefinitions": [{
-            "AttributeName": "user_id",
-            "AttributeType": "S"
-          },
-          {
-            "AttributeName": "created_at",
-            "AttributeType": "S"
-          }
-        ],
+          "AttributeName": "user_id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "created_at",
+          "AttributeType": "S"
+        }],
         "KeySchema": [{
-            "AttributeName": "user_id",
-            "KeyType": "HASH"
-          },
-          {
-            "AttributeName": "created_at",
-            "KeyType": "RANGE"
-          }
-        ],
+          "AttributeName": "user_id",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "created_at",
+          "KeyType": "RANGE"
+        }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
@@ -361,23 +333,19 @@
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "AttributeDefinitions": [{
-            "AttributeName": "user_id",
-            "AttributeType": "S"
-          },
-          {
-            "AttributeName": "created_at",
-            "AttributeType": "S"
-          }
-        ],
+          "AttributeName": "user_id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "created_at",
+          "AttributeType": "S"
+        }],
         "KeySchema": [{
-            "AttributeName": "user_id",
-            "KeyType": "HASH"
-          },
-          {
-            "AttributeName": "created_at",
-            "KeyType": "RANGE"
-          }
-        ],
+          "AttributeName": "user_id",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "created_at",
+          "KeyType": "RANGE"
+        }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
@@ -389,23 +357,19 @@
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "AttributeDefinitions": [{
-            "AttributeName": "user_id",
-            "AttributeType": "S"
-          },
-          {
-            "AttributeName": "friend_id",
-            "AttributeType": "S"
-          }
-        ],
+          "AttributeName": "user_id",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "friend_id",
+          "AttributeType": "S"
+        }],
         "KeySchema": [{
-            "AttributeName": "user_id",
-            "KeyType": "HASH"
-          },
-          {
-            "AttributeName": "friend_id",
-            "KeyType": "RANGE"
-          }
-        ],
+          "AttributeName": "user_id",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "friend_id",
+          "KeyType": "RANGE"
+        }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
@@ -431,23 +395,19 @@
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "AttributeDefinitions": [{
-            "AttributeName": "email",
-            "AttributeType": "S"
-          },
-          {
-            "AttributeName": "created_at",
-            "AttributeType": "S"
-          }
-        ],
+          "AttributeName": "email",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "created_at",
+          "AttributeType": "S"
+        }],
         "KeySchema": [{
-            "AttributeName": "email",
-            "KeyType": "HASH"
-          },
-          {
-            "AttributeName": "created_at",
-            "KeyType": "RANGE"
-          }
-        ],
+          "AttributeName": "email",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "created_at",
+          "KeyType": "RANGE"
+        }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
@@ -537,6 +497,14 @@
     "ElementsByUsersTableName": {
       "Value": {
         "Ref": "ElementsByUsersDynamoTable"
+      }
+    },
+    "ElementsByUserStreamArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ElementsByUsersDynamoTable",
+          "StreamArn"
+        ]
       }
     },
     "DevicesByUsersTableName": {

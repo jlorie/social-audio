@@ -12,8 +12,10 @@ import { filterByFriend } from './filter-by-friend';
 import checkElements from './check-elements';
 
 const YES = 'yes';
+const STAGE = process.env.SERVERLESS_STAGE;
 
 export default (event, context) => {
+  event.stage = STAGE;
   console.info('=> Input: ', JSON.stringify(event, null, 2));
 
   return handleRequest(event)

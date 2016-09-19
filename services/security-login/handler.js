@@ -1,5 +1,7 @@
 import { authenticate } from './authenticate';
 
+const STAGE = process.env.SERVERLESS_STAGE;
+
 export default (event, context) => {
   if (event.keepalive) {
     console.info('keepalive');
@@ -7,6 +9,7 @@ export default (event, context) => {
   }
 
   let input = event;
+  input.stage = STAGE;
   console.info('Input: ', JSON.stringify(input, null, 2));
 
   return authenticate(input.username, input.password, input.timezone_offset)
