@@ -14,7 +14,7 @@ export function bind(element) {
     created_at: [element.created_at, element.uploaded_at, 'owner'].join('|'),
     thumbnail_url: element.thumbnail_url,
     favorite: false,
-    ref_status: REF_STATUS.RESOLVED,
+    ref_status: REF_STATUS.PENDING
   };
 
   return elementsByUserModel.create(reference);
@@ -50,7 +50,6 @@ export function update(oldData, newData) {
 }
 
 export function remove(elementId) {
-  // TODO notify element deleted
   return elementsByUserModel.getById(elementId)
     .then(references => {
       let noRelationships = references.length === 0;
