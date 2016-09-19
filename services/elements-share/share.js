@@ -4,6 +4,7 @@ import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
 import { ERR_ELEMENTS, SUCCESS, REF_STATUS } from '../commons/constants';
 
+import markElementAsResolved from './mark-as-resolved';
 import { notifySharedElement } from './notify';
 import { registerPendingUsers } from './pending-users';
 
@@ -44,6 +45,7 @@ export function shareElement(elementId, usernames, userId) {
           return createElementReferences(element, recipientIds)
             .then(() => notifySharedElement(element, userId, recipientIds));
         })
+        .then(() => markElementAsResolved(element))
         .then(() => SUCCESS);
     });
 }
