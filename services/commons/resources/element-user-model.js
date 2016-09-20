@@ -79,6 +79,32 @@ class ElementUserModel extends ResourceModel {
     return new Promise(func);
   }
 
+  list(userId) {
+    let params = {
+      TableName: this.tableName,
+      KeyConditionExpression: 'user_id = :user_id',
+      FilterExpression: 'ref_status = :resolved or ref_status = :idle',
+      ExpressionAttributeValues: {
+        ':user_id': userId,
+        ':resolved': 'resolved',
+        ':idle': 'idle'
+      },
+      ScanIndexForward: false
+    };
+
+    const func = (resolve, reject) => {
+      this.dynamo.query(params, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(result.Items);
+      });
+    };
+
+    return new Promise(func);
+  }
+
   get({ userId, filters, attributes }) {
     let params = {
       TableName: this.tableName,
@@ -129,16 +155,19 @@ class ElementUserModel extends ResourceModel {
       });
   }
 
-  getOldestPendingElements(userId, asOwner = false) {
+  getOldestElements(userId, status) {
     let params = {
       TableName: this.tableName,
       KeyConditionExpression: 'user_id = :user_id',
-      FilterExpression: 'ref_status = :pending',
       ExpressionAttributeValues: {
         ':user_id': userId,
-        ':pending': 'pending'
       }
     };
+
+    if (status) {
+      params.FilterExpression = 'ref_status = :status';
+      params.ExpressionAttributeValues[':status'] = status;
+    }
 
     const func = (resolve, reject) => {
       this.dynamo.query(params, (err, result) => {
@@ -146,8 +175,7 @@ class ElementUserModel extends ResourceModel {
           return reject(err);
         }
 
-        let end = (asOwner ? 'owner' : 'visitor');
-        resolve(result.Items.filter(i => i.created_at.endsWith(end)));
+        resolve(result.Items);
       });
     };
 

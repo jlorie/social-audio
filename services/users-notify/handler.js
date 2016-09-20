@@ -1,6 +1,5 @@
 import { notify } from './notification';
 import { log } from './log-notification';
-import { NOTIFICATION_TYPE } from '../commons/constants';
 
 const STAGE = process.env.SERVERLESS_STAGE;
 

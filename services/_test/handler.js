@@ -1,20 +1,5 @@
-import moment from 'moment';
+import mark from './mark-lonely-elements';
 
 export default () => {
-  return Promise.resolve(calculateOffset(9));
+  return mark();
 };
-
-
-function calculateOffset(desiredHour) {
-  const currentHour = moment.utc().hour();
-
-  let result;
-  for (let offset = -11; offset <= 12; offset++) {
-    if (desiredHour === (currentHour + offset) % 24) {
-      result = offset;
-      break;
-    }
-  }
-
-  return result;
-}

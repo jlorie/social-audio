@@ -1,6 +1,6 @@
 import ResourceModel from '../commons/resources/resource-model';
 
-const PENDING_STATUS = 'pending';
+const IDLE_STATUS = 'idle';
 const STAGE = 'dev';
 const TABLENAME = `${STAGE}-elements-by-users`;
 const resourceModel = new ResourceModel(TABLENAME);
@@ -10,13 +10,13 @@ export default () => {
     .then(mapElements)
     .then(filterElements)
     .then(results => {
-      console.log(`Marking ${results.length} references as pending`);
+      console.info(`Marking ${results.length} references as idle`);
       return Promise.all(results.map(ref => markRefAsPending(ref.user_id, ref.created_at)));
     });
 };
 
 function mapElements(elements) {
-  console.log(`Mapping ${elements.length} elements`);
+  console.info(`Mapping ${elements.length} elements`);
   let elementsMap = new Map();
 
   for (let element of elements) {
@@ -45,7 +45,7 @@ function mapElements(elements) {
 function filterElements(map) {
   let results = [];
   for (let [elementId, data] of map) {
-    if (data.count === 1 && data.hasOwner && data.ref_status !== PENDING_STATUS) {
+    if (data.count === 1 && data.hasOwner && data.ref_status !== IDLE_STATUS) {
       data.id = elementId;
       results.push(data);
     }
@@ -60,6 +60,6 @@ function markRefAsPending(userId, createdAt) {
     created_at: createdAt
   };
 
-  console.log('==> Updating reference: ', JSON.stringify(key, null, 2));
-  return resourceModel.update(key, { ref_status: PENDING_STATUS });
+  console.info('==> Updating reference: ', JSON.stringify(key, null, 2));
+  return resourceModel.update(key, { ref_status: IDLE_STATUS });
 }

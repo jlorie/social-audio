@@ -20,6 +20,7 @@ export const USER_STATUS = {
 };
 
 export const REF_STATUS = {
+  IDLE: 'idle',
   RESOLVED: 'resolved',
   PENDING: 'pending',
   HIDDEN: 'hidden',
