@@ -26,7 +26,8 @@
     "SERVERLESS_REGION": "${region}",
     "URI_USERS": "${usersTableName}",
     "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
-    "URI_NOTIFY_ENDPOINT": "${notifyEnpointFunctionName}"
+    "URI_NOTIFY_ENDPOINT": "${notifyEnpointFunctionName}",
+    "URI_ELEMENTS": "${elementsTableName}"
   },
   "vpc": {
     "securityGroupIds": [],

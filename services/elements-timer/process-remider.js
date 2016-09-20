@@ -1,29 +1,38 @@
 import moment from 'moment';
-import selectUsers from './select-users';
-import { nextPendingElementFor, nextInactiveElementFor } from './pending-references';
-import notifyUser from './notify';
-import markRefAsExpired from './mark-references';
 
-import { NOTIFICATION_TYPE, ERR_NOTIFICATIONS, SUCCESS } from '../commons/constants';
+import notify from './notify';
+import selectUsers from './select-users';
+import markRefAsExpired from './mark-references';
+import resolveNotificationDetails from './notification-details';
+
+import { nextPendingElementFor, nextInactiveElementFor } from './pending-references';
+import { NOTIFICATION_TYPE, ERR_NOTIFICATIONS, SUCCESS, EMPTY } from '../commons/constants';
 
 export default (hour, notificationType) => {
   // calculate timezone offset for user
   let offset = calculateOffset(hour);
-  console.info(`Processing reminder config ${notificationType} with offset ${offset}`);
 
   return selectUsers(offset).then(users => {
     // getting pending reference and notifying correspondant user
     let taskMap = users.map(user => {
       return resolvePendingRef(user.id, notificationType)
-        .then(ref => notifyUser(user, ref, notificationType).then(() => ref))
         .then(ref => {
-          // trying to mark reference as expired
-          if (notificationType === NOTIFICATION_TYPE.PENDING_ELEMENT_EXPIRED ||
-            notificationType === NOTIFICATION_TYPE.INACTIVE_ELEMENT_EXPIRED) {
-            return markRefAsExpired(ref).then(SUCCESS);
+          if (!ref) {
+            return Promise.resolve(EMPTY);
           }
 
-          return SUCCESS;
+          console.info(`Processing reminder config ${notificationType} with offset ${offset}`);
+          return resolveNotificationDetails(notificationType, ref)
+            .then(details => notify(user.id, ref.id, details, notificationType))
+            .then(() => {
+              // trying to mark reference as expired
+              if (notificationType === NOTIFICATION_TYPE.PENDING_ELEMENT_EXPIRED ||
+                notificationType === NOTIFICATION_TYPE.INACTIVE_ELEMENT_EXPIRED) {
+                return markRefAsExpired(ref).then(SUCCESS);
+              }
+
+              return SUCCESS;
+            });
         });
     });
 
