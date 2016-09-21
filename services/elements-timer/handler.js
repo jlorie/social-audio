@@ -1,11 +1,9 @@
 import moment from 'moment';
-import GeneralConfig from '../commons/resources/general-config';
+import config from './config';
 import processConfig from './process-remider';
-
-const config = new GeneralConfig(REGION, STAGE);
+import { CONFIG, SUCCESS } from '../commons/constants';
 
 const STAGE = process.env.SERVERLESS_STAGE;
-const REGION = process.env.SERVERLESS_REGION;
 
 export default (event, context) => {
   console.info('==> Input: ', JSON.stringify({
@@ -30,23 +28,10 @@ export default (event, context) => {
 
 function resolveReminders() {
   // get and process every reminder in general config table
-  return getReminderConfig().then(configs => {
-    let tasks = configs.map(conf => processConfig(conf.hour, conf.notification_type));
-    return Promise.all(tasks);
-  });
-}
-
-let cachedConfig = null;
-
-function getReminderConfig() {
-  if (cachedConfig) {
-    return Promise.resolve(cachedConfig);
-  }
-
-  const ELEMENT_REMINDER_CONFIG = 'elements_reminder';
-  return config.get(ELEMENT_REMINDER_CONFIG)
-    .then(result => {
-      cachedConfig = result;
-      return result;
-    });
+  return config(CONFIG.ELEMENT_REMINDER)
+    .then(configs => {
+      let tasks = configs.map(conf => processConfig(conf));
+      return Promise.all(tasks);
+    })
+    .then(() => SUCCESS);
 }
