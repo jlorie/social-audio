@@ -10,7 +10,7 @@ export default (event, context) => {
   let { emitterId, type, elementId, details, recipientIds } = event;
 
   return log({ emitterId, type, elementId, details, recipientIds }) // logging
-    .then(() => notify({ emitterId, type, elementId, recipientIds })) // notifying
+    .then(() => notify({ emitterId, type, elementId, details, recipientIds })) // notifying
     // results
     .then((result) => {
       console.info('==> Success: ', result);

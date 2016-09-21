@@ -11,7 +11,7 @@ const MAX_RETRIES = 3;
 
 const deviceByUserModel = new DeviceUserModel(URI_DEVICES_BY_USERS);
 
-export function push(recipients, type, elementId, emitter) {
+export function push(recipients, type, elementId, emitter, details) {
   let isEmpty = recipients.length === 0;
   if (isEmpty) {
     return Promise.resolve('OK');
@@ -29,7 +29,7 @@ export function push(recipients, type, elementId, emitter) {
   return Promise.all(tasks)
     .then(tasksResult => {
       const badgeMap = tasksResult[0];
-      const message = resolveMessage(emitter, type);
+      const message = resolveMessage(emitter, type, details);
       const devices = tasksResult[1];
 
       return Promise.all(devices.map(device => {
@@ -85,7 +85,7 @@ function notify(device, message, bagde, type, idReference, retries = 0) {
     });
 }
 
-function resolveMessage(emitter, type) {
+function resolveMessage(emitter, type, details) {
   console.info('Resolving notification message with ' + type);
 
   let message;
@@ -103,21 +103,37 @@ function resolveMessage(emitter, type) {
       }
     case NOTIFICATION_TYPE.PENDING_AUDIO:
       {
-        message = 'This photo will expire soon. Add an audiography to keep it in your memories';
+        message = 'It has been some time since ' + details.element_owner_name + ' ' +
+        'has sent you a request to add an Audiography yoy like to do it now ?';
         break;
       }
-    case NOTIFICATION_TYPE.ELEMENT_EXPIRED:
+    case NOTIFICATION_TYPE.PENDING_ELEMENT_EXPIRED:
       {
-        message = 'This photo has expired';
+        message = details.element_owner_name + ' audiography request has expired';
+        break;
+      }
+    case NOTIFICATION_TYPE.INACTIVE_ELEMENT:
+      {
+        message = 'In order to save only the moments you really care, ' +
+        'bbluue will remove photos without any audiography. Do you want to ask ' +
+        'a friend for an audiography now ?';
+        break;
+      }
+    case NOTIFICATION_TYPE.INACTIVE_ELEMENT_EXPIRED:
+      {
+        message = 'In order to save only the moments you really care, ' +
+        'bbluue will remove photos without any audiography. Do you want to ' +
+        'download to your device now ?';
         break;
       }
 
     default:
       {
-        throw new Error('InvalidType');
+        message = 'Unknown notification type';
       }
   }
 
+  console.info('Message: ', message);
   return message;
 }
 
