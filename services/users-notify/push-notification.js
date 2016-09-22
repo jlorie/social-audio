@@ -104,7 +104,7 @@ function resolveMessage(emitter, type, details) {
     case NOTIFICATION_TYPE.PENDING_AUDIO:
       {
         message = 'It has been some time since ' + details.element_owner_name + ' ' +
-        'has sent you a request to add an Audiography yoy like to do it now ?';
+        'has sent you a request to add an Audiography you like to do it now ?';
         break;
       }
     case NOTIFICATION_TYPE.PENDING_ELEMENT_EXPIRED:
