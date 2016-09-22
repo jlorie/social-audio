@@ -1,10 +1,8 @@
-import ElementUserModel from '../commons/resources/element-user-model';
+import NotificationModel from '../commons/resources/notification-model';
 
-const elementsByUsers = new ElementUserModel('dev-elements-by-users');
-
+const notificationModel = new NotificationModel('dev-notifications');
 export default () => {
-  const userId = '07484310-0a1a-48e0-b9c7-28257150f04a';
-  const elementId = '724886048676f3b50d5547ac3d04a61b';
-
-  return elementsByUsers.update(elementId, userId, { ref_status: 'pending' });
+  let types = ['pending_audio', 'audio_request'];
+  let userId = '07484310-0a1a-48e0-b9c7-28257150f04a';
+  return notificationModel.getByUserId({ userId, types, limit: 1200 });
 };

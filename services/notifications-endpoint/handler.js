@@ -29,7 +29,8 @@ function handleRequest(input) {
   switch (input.action) {
     case 'list':
       {
-        result = list(userId);
+        let types = (input.types ? input.types.split(',') : undefined);
+        result = list(userId, types);
         break;
       }
     case 'delete':

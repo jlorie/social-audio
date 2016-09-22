@@ -30,7 +30,7 @@ class NotificationModel extends ResourceModel {
     return new Promise(func);
   }
 
-  getByUserId({ userId, id, limit }) {
+  getByUserId({ userId, id, limit, types }) {
     let params = {
       TableName: this.tableName,
       KeyConditionExpression: 'user_id = :user_id',
@@ -45,6 +45,11 @@ class NotificationModel extends ResourceModel {
       params.FilterExpression = 'id = :id';
       params.ExpressionAttributeValues[':id'] = id;
     }
+    // else if (types) {
+    //   params.FilterExpression = `#type in (${types.join(',')})`;
+    //   // params.ExpressionAttributeValues[':types'] = `${types.join(',')}`;
+    //   params.ExpressionAttributeNames = { '#type': 'type' };
+    // }
 
     const func = (resolve, reject) => {
       this.dynamo.query(params, (err, result) => {
@@ -52,7 +57,13 @@ class NotificationModel extends ResourceModel {
           return reject(err);
         }
 
-        resolve(result.Items);
+        // FIXME us In operator from dynamodb
+        let items = result.Items;
+        if (types) {
+          items = items.filter(i => types.indexOf(i.type) >= 0);
+        }
+
+        resolve(items);
       });
     };
 
@@ -74,7 +85,6 @@ class NotificationModel extends ResourceModel {
       params.ExpressionAttributeValues[':user_id'] = userId;
     }
 
-    console.log('=> params: ', JSON.stringify(params, null, 2));
     const func = (resolve, reject) => {
       this.dynamo.query(params, (err, result) => {
         if (err) {
