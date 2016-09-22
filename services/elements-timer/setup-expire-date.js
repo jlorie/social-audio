@@ -16,7 +16,7 @@ export default (ref) => {
         throw new Error('InvalidExpireTimeConfig');
       }
 
-      let expireDate = moment().utc().add(expireTime, 'hour').format();
+      let expireDate = moment().utc().add(expireTime, 'hour').toISOString();
       return elementsByUsers.update(ref.id, ref.user_id, { expire_at: expireDate });
     });
 };

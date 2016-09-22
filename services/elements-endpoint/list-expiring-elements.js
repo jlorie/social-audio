@@ -17,7 +17,8 @@ export default (userId) => {
         status: result.ref_status,
         thumbnail_url: result.thumbnail_url,
         owner: isOwner,
-        uploaded_at: (createdData.length === 3 ? createdData[1] : 'unknown')
+        uploaded_at: (createdData.length === 3 ? createdData[1] : 'unknown'),
+        expire_at: new Date(result.expire_at).toISOString()
       };
 
       return item;
