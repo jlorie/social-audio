@@ -131,6 +131,17 @@
       "requestParameters": {},
       "requestTemplates": "$${checkElementsRequest}",
       "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "elements/expiring",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${listExpiringRequest}",
+      "responses": "$${responsesForGet}"
     }
   ],
   "events": [],
