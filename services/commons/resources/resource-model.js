@@ -105,7 +105,7 @@ class ResourceModel {
     return new Promise(func);
   }
 
-  update(key, data) {
+  update(key, data, attrToRemove) {
     const { expressions, attrValues } = this._resolveUpdateExpression(data);
 
     let params = {
@@ -115,6 +115,10 @@ class ResourceModel {
       ExpressionAttributeValues: attrValues,
       ReturnValues: 'ALL_NEW'
     };
+
+    if (attrToRemove) {
+      params.UpdateExpression += ` remove ${attrToRemove.join(',')}`;
+    }
 
     const func = (resolve, reject) => {
       this.dynamo.update(params, (err, data) => {

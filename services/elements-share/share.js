@@ -27,6 +27,7 @@ export function shareElement(elementId, usernames, userId) {
       }
 
       // check permissions
+      // TODO check if reference is expired
       if (element.owner_id !== userId) {
         throw new Error(ERR_ELEMENTS.INVALID_TO_SHARE);
       }

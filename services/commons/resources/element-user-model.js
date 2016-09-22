@@ -12,11 +12,11 @@ class ElementUserModel extends ResourceModel {
     return super.create(items);
   }
 
-  rawUpdate(key, data) {
-    return super.update(key, data);
+  rawUpdate(key, data, attrToRemove) {
+    return super.update(key, data, attrToRemove);
   }
 
-  update(elementId, userId, data) {
+  update(elementId, userId, data, attrToRemove) {
     return this.getById(elementId, userId)
       .then(references => {
         let reference = references[0];
@@ -29,7 +29,7 @@ class ElementUserModel extends ResourceModel {
           created_at: reference.created_at
         };
 
-        return super.update(key, data);
+        return super.update(key, data, attrToRemove);
       });
   }
 
