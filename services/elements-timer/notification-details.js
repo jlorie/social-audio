@@ -1,7 +1,7 @@
 import ElementModel from '../commons/resources/element-model';
 import UserModel from '../commons/resources/user-model';
 
-import { ERR_ELEMENTS, ERR_USERS } from '../commons/constants';
+import { ERR_ELEMENTS, ERR_USERS, NOTIFICATION_TYPE } from '../commons/constants';
 
 const URI_USERS = process.env.URI_USERS;
 const URI_ELEMENTS = process.env.URI_ELEMENTS;
@@ -32,8 +32,12 @@ export default (notificationType, ref) => {
         element_owner_id: user.id,
         element_owner_name: user.fullname,
         expire_at: ref.expire_at,
-        shared_at: ref.created_at.split('|')[0]
       };
+
+      if (notificationType === NOTIFICATION_TYPE.PENDING_AUDIO ||
+        notificationType === NOTIFICATION_TYPE.PENDING_ELEMENT_EXPIRED) {
+        details.shared_at = ref.created_at.split('|')[0];
+      }
 
       return details;
     });
