@@ -21,8 +21,7 @@ export function notifySharedElement(element, ownerId, recipientIds) {
         elementId: element.id,
         details: {
           thumbnail_url: element.thumbnail_url,
-          emitter_name: emitter.fullname,
-          pending: true
+          emitter_name: emitter.fullname
         }
       });
 
