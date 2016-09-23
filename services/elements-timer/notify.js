@@ -13,7 +13,8 @@ export default (userId, elementId, details, notificationType) => {
     type: notificationType,
     emitterId: SYSTEM_EMITTER,
     elementId,
-    details
+    details,
+    pending: true
   });
 
   return invoker.invoke({ body: notificationInfo, type: INVOKE_TYPE.Event });

@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import notify from './notify';
 import selectUsers from './select-users';
 import markRefAsExpired from './mark-references';
@@ -9,13 +7,16 @@ import setupExpireDate from './setup-expire-date';
 import { nextPendingElementFor, nextInactiveElementFor } from './pending-references';
 import { NOTIFICATION_TYPE, ERR_NOTIFICATIONS, SUCCESS, EMPTY } from '../commons/constants';
 
-export default (config) => {
-  let hour = config.hour;
+export default (config, currentHour) => {
+  let desiredHour = config.hour;
   let notificationType = config.notification_type;
   let action = config.action;
 
   // calculate timezone offset for user
-  let offset = calculateOffset(hour);
+  let offset = calculateOffset(currentHour, desiredHour);
+  if (!offset) {
+    return Promise.resolve(EMPTY);
+  }
 
   return selectUsers(offset).then(users => {
     // When action is 'start' then the system fix a expire date
@@ -77,12 +78,11 @@ function resolvePendingRef(userId, notificationType, withExpireTime) {
   return func(userId, withExpireTime);
 }
 
-function calculateOffset(desiredHour) {
-  const currentHour = moment.utc().hour();
-
+function calculateOffset(currentHour, desiredHour) {
   let result;
   for (let offset = -11; offset <= 12; offset++) {
-    if (desiredHour === (currentHour + offset) % 24) {
+    let tmpHour = currentHour + offset;
+    if (desiredHour === (tmpHour < 0 ? 24 + tmpHour : tmpHour % 24)) {
       result = offset;
       break;
     }
