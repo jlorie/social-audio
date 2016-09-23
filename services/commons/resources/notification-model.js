@@ -8,7 +8,7 @@ class NotificationModel extends ResourceModel {
     super(uri, region);
   }
 
-  updateMarkNotification(key, data) {
+  updateMarkNotification(key) {
     let params = {
       TableName: this.tableName,
       Key: key,
@@ -126,7 +126,7 @@ class NotificationModel extends ResourceModel {
     return new Promise(func);
   }
 
-  getPendingNotifications({ userId, elementId, limit }) {
+  getPendingNotifications({ userId, elementId, limit = MAX_NOTIFICATIONS_RESULTS }) {
     let params = {
       TableName: this.tableName,
       KeyConditionExpression: 'user_id = :user_id',
@@ -136,7 +136,7 @@ class NotificationModel extends ResourceModel {
         ':viewed': false
       },
       ScanIndexForward: false,
-      Limit: limit || 0
+      Limit: limit
     };
 
     if (elementId) {
