@@ -44,7 +44,7 @@ export function notifyNewAudio(attachment) {
             elementId,
             details,
             recipientIds,
-            pending: true
+            pending: false
           });
 
           return invoker.invoke({ body, type: INVOKE_TYPE.Event });
