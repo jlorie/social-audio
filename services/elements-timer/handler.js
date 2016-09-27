@@ -1,3 +1,4 @@
+import moment from 'moment';
 import config from './config';
 import processConfig from './process-remider';
 import { CONFIG, SUCCESS } from '../commons/constants';

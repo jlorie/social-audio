@@ -32,6 +32,7 @@ export default (notificationType, ref) => {
         element_owner_id: user.id,
         element_owner_name: user.fullname,
         expire_at: ref.expire_at,
+        pending: true
       };
 
       if (notificationType === NOTIFICATION_TYPE.PENDING_AUDIO ||

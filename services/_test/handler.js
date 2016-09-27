@@ -1,9 +1,10 @@
-import NotificationModel from '../commons/resources/notification-model';
-
-const notificationModel = new NotificationModel('dev-notifications');
+import mark from '../elements-share/mark-as-resolved';
 
 export default () => {
-  let userId = '07484310-0a1a-48e0-b9c7-28257150f04a';
-  let elementId = 'ea2e32a705b097e7935d6165b35eb908';
-  return notificationModel.getPendingNotifications({ userId, elementId });
+  let element = {
+    id: '7fc76ef255b39704a5a5b61c69198726',
+    owner_id: '7879fd52-3956-422f-b356-71c4264e80a4',
+    created_at: '2016-06-10T16:25:35.000Z'
+  };
+  return mark(element);
 };

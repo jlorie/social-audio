@@ -126,23 +126,32 @@ class NotificationModel extends ResourceModel {
     return new Promise(func);
   }
 
-  getPendingNotifications({ userId, elementId, limit = MAX_NOTIFICATIONS_RESULTS }) {
+  getPendingNotifications({ userId, elementId, viewed, limit }) {
     let params = {
       TableName: this.tableName,
       KeyConditionExpression: 'user_id = :user_id',
-      FilterExpression: 'viewed = :viewed',
       ExpressionAttributeValues: {
-        ':user_id': userId,
-        ':viewed': false
+        ':user_id': userId
       },
-      ScanIndexForward: false,
-      Limit: limit
+      ScanIndexForward: false
     };
 
+    if (limit) {
+      params.Limit = limit;
+    }
+
+    let expressions = [];
+    if (viewed) {
+      expressions.push('viewed = :viewed');
+      params.ExpressionAttributeValues[':viewed'] = viewed;
+    }
+
     if (elementId) {
-      params.FilterExpression += ' AND element_id = :element_id';
+      expressions.push('element_id = :element_id');
       params.ExpressionAttributeValues[':element_id'] = elementId;
     }
+
+    params.FilterExpression = expressions.join(' AND ');
 
     const func = (resolve, reject) => {
       this.dynamo.query(params, (err, result) => {

@@ -6,7 +6,7 @@ const notificationModel = new NotificationModel(URI_NOTIFICATIONS);
 
 export function markElementAsViewed(elementId, userId) {
   console.info('Marking element ' + elementId + ' as viewed for user ' + userId);
-  return notificationModel.getPendingNotifications({ userId, elementId, limit: MAX_NOTIFICATIONS })
+  return notificationModel.getPendingNotifications({ userId, elementId, viewed: false, limit: MAX_NOTIFICATIONS })
     .then(notifications => Promise.all(notifications.map(updateNotification)));
 }
 

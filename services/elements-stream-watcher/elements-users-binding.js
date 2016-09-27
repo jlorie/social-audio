@@ -14,7 +14,7 @@ export function bind(element) {
     created_at: [element.created_at, element.uploaded_at, 'owner'].join('|'),
     thumbnail_url: element.thumbnail_url,
     favorite: false,
-    ref_status: REF_STATUS.PENDING
+    ref_status: REF_STATUS.IDLE
   };
 
   return elementsByUserModel.create(reference);
