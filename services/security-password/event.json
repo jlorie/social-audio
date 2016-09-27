@@ -1,6 +1,4 @@
 {
-  "action": "reset",
-  "email": "jlorie@bbluue.com",
-  "password": "password00",
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impsb3JpZUBiYmx1dWUuY29tIiwiaWF0IjoxNDY1ODQyNDA2LCJleHAiOjE0NjU5Mjg4MDZ9.tIdxkFUpmgtKbn4i67Iuk_1ZB2QmU6-x_XO7IUqCKHc"
+  "action": "request-reset",
+  "email": "jlorie87@gmail.com"
 }
