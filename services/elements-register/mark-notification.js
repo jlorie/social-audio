@@ -5,12 +5,12 @@ const notificationModel = new NotificationModel(URI_NOTIFICATIONS);
 
 export function markRequestAsResolved(userId, elementId) {
   console.info('Marking audio request for element ' + elementId + ' as resolved');
-  return notificationModel.getPendingRequest({ userId, elementId })
+  return notificationModel.getPendingNotifications({ userId, elementId })
     .then(notifications => Promise.all(notifications.map(updateNotification)));
 }
 
 function updateNotification(notification) {
-  console.log(' Updating notification : ', JSON.stringify(notification, null, 2));
+  console.info(' Updating notification : ', JSON.stringify(notification, null, 2));
   let key = {
     user_id: notification.user_id,
     created_at: notification.created_at

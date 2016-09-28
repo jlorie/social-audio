@@ -25,6 +25,7 @@
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
     "URI_USERS": "${usersTableName}",
+    "URI_NOTIFICATIONS": "${notificationsTableName}",
     "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
     "URI_NOTIFY_ENDPOINT": "${notifyEnpointFunctionName}",
     "URI_ELEMENTS": "${elementsTableName}"
