@@ -1,11 +1,6 @@
-import markRequestAsResolved from '../elements-timer/mark-references';
+import { nextPendingElementFor } from '../elements-timer/pending-references';
 
 export default () => {
-  let ref = {
-    user_id: 'b56ddf27-3ebf-421b-a8c4-9edfa713c9a0',
-    id: '834e12220d5e5321b8a47554e612fa35'
-  };
-
-
-  return markRequestAsResolved(ref);
+  let userId = 'd9d77ea5-4d11-4610-a359-14dfd5e4b7f7';
+  return nextPendingElementFor(userId);
 };

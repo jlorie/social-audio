@@ -25,15 +25,19 @@ export default (config, currentHour) => {
     // getting pending reference and notifying correspondant user
     let taskMap = users.map(user => {
       return resolvePendingRef(user.id, notificationType, !isStartAction)
-        .then(ref => {
-          if (!ref) {
+        .then(references => {
+          if (!references.length) {
             return Promise.resolve(EMPTY);
           }
 
-          console.info(`Processing reminder config ${notificationType} with offset ${offset}`);
-          return updateReference(ref, notificationType, isStartAction)
-            .then(newRef => resolveNotificationDetails(notificationType, newRef))
-            .then(details => notify(user.id, ref.id, details, notificationType));
+          let updateRef = (ref) => {
+            console.info(`Processing reminder config ${notificationType} with element ${ref.id}`);
+            return updateReference(ref, notificationType, isStartAction)
+              .then(newRef => resolveNotificationDetails(notificationType, newRef))
+              .then(details => notify(user.id, ref.id, details, notificationType));
+          }
+
+          return Promise.all(references.map(updateRef));
         });
     });
 
