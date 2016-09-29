@@ -35,13 +35,13 @@ export function push(recipients, type, elementId, emitter, details) {
       return Promise.all(devices.map(device => {
         let badge = badgeMap.get(device.user_id);
         // Si no funciona borrar elementId
-        return notify(device, message, badge, type, elementId);
+        return notify(device, message, badge, type, elementId, details);
       }));
     });
 }
 
 // Si no funciona borrar idReference
-function notify(device, message, bagde, type, idReference, retries = 0) {
+function notify(device, message, bagde, type, idReference, details, retries = 0) {
   console.info('Notifying device with endpoint ' + device.endpoint);
   const notification = new Notification(device.endpoint);
 
@@ -50,10 +50,11 @@ function notify(device, message, bagde, type, idReference, retries = 0) {
     APNS: JSON.stringify({
       aps: {
         alert: message,
-        sound: 'default',
+        sound: 'notificationSound.wav',
         reference: idReference,
         badge: bagde,
-        type
+        type,
+        details
       }
     })
   });
