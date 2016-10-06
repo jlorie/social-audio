@@ -4,6 +4,7 @@ import ElementModel from '../commons/resources/element-model';
 import ElementUserModel from '../commons/resources/element-user-model';
 import { ERR_ELEMENTS, SUCCESS, REF_STATUS } from '../commons/constants';
 
+import markElementAsResolved from './mark-as-resolved';
 import { notifySharedElement } from './notify';
 import { registerPendingUsers } from './pending-users';
 
@@ -26,6 +27,7 @@ export function shareElement(elementId, usernames, userId) {
       }
 
       // check permissions
+      // TODO check if reference is expired
       if (element.owner_id !== userId) {
         throw new Error(ERR_ELEMENTS.INVALID_TO_SHARE);
       }
@@ -44,6 +46,7 @@ export function shareElement(elementId, usernames, userId) {
           return createElementReferences(element, recipientIds)
             .then(() => notifySharedElement(element, userId, recipientIds));
         })
+        .then(() => markElementAsResolved(element))
         .then(() => SUCCESS);
     });
 }
@@ -70,10 +73,11 @@ function createElementReferences(element, recipientIds) {
       let filteredRecipients = _.difference(recipientIds, userIds);
 
       let newReferences = filteredRecipients.map(userId => {
+        let created = [new Date().toISOString(), element.uploaded_at, 'visitor'].join('|');
         let reference = {
           id: element.id,
           user_id: userId,
-          created_at: new Date().toISOString() + '|visitor',
+          created_at: created,
           thumbnail_url: element.thumbnail_url,
           audios: (element.audios || []).filter(a => a.public).length,
           favorite: false,

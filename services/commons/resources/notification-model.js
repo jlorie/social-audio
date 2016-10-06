@@ -8,7 +8,7 @@ class NotificationModel extends ResourceModel {
     super(uri, region);
   }
 
-  updateMarkNotification(key, data) {
+  updateMarkNotification(key) {
     let params = {
       TableName: this.tableName,
       Key: key,
@@ -30,7 +30,7 @@ class NotificationModel extends ResourceModel {
     return new Promise(func);
   }
 
-  getByUserId({ userId, id, limit }) {
+  getByUserId({ userId, id, limit, types }) {
     let params = {
       TableName: this.tableName,
       KeyConditionExpression: 'user_id = :user_id',
@@ -45,6 +45,11 @@ class NotificationModel extends ResourceModel {
       params.FilterExpression = 'id = :id';
       params.ExpressionAttributeValues[':id'] = id;
     }
+    // else if (types) {
+    //   params.FilterExpression = `#type in (${types.join(',')})`;
+    //   // params.ExpressionAttributeValues[':types'] = `${types.join(',')}`;
+    //   params.ExpressionAttributeNames = { '#type': 'type' };
+    // }
 
     const func = (resolve, reject) => {
       this.dynamo.query(params, (err, result) => {
@@ -52,7 +57,13 @@ class NotificationModel extends ResourceModel {
           return reject(err);
         }
 
-        resolve(result.Items);
+        // FIXME us In operator from dynamodb
+        let items = result.Items;
+        if (types) {
+          items = items.filter(i => types.indexOf(i.type) >= 0);
+        }
+
+        resolve(items);
       });
     };
 
@@ -74,7 +85,6 @@ class NotificationModel extends ResourceModel {
       params.ExpressionAttributeValues[':user_id'] = userId;
     }
 
-    console.log('=> params: ', JSON.stringify(params, null, 2));
     const func = (resolve, reject) => {
       this.dynamo.query(params, (err, result) => {
         if (err) {
@@ -116,23 +126,32 @@ class NotificationModel extends ResourceModel {
     return new Promise(func);
   }
 
-  getPendingNotifications({ userId, elementId, limit }) {
+  getPendingNotifications({ userId, elementId, viewed, limit }) {
     let params = {
       TableName: this.tableName,
       KeyConditionExpression: 'user_id = :user_id',
-      FilterExpression: 'viewed = :viewed',
       ExpressionAttributeValues: {
-        ':user_id': userId,
-        ':viewed': false
+        ':user_id': userId
       },
-      ScanIndexForward: false,
-      Limit: limit || 0
+      ScanIndexForward: false
     };
 
+    if (limit) {
+      params.Limit = limit;
+    }
+
+    let expressions = [];
+    if (viewed) {
+      expressions.push('viewed = :viewed');
+      params.ExpressionAttributeValues[':viewed'] = viewed;
+    }
+
     if (elementId) {
-      params.FilterExpression += ' AND element_id = :element_id';
+      expressions.push('element_id = :element_id');
       params.ExpressionAttributeValues[':element_id'] = elementId;
     }
+
+    params.FilterExpression = expressions.join(' AND ');
 
     const func = (resolve, reject) => {
       this.dynamo.query(params, (err, result) => {

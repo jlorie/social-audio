@@ -43,7 +43,8 @@ export function notifyNewAudio(attachment) {
             type: NEW_AUDIO_TYPE,
             elementId,
             details,
-            recipientIds
+            recipientIds,
+            pending: false
           });
 
           return invoker.invoke({ body, type: INVOKE_TYPE.Event });

@@ -20,6 +20,7 @@ export function deleteElement(id, userId) {
       }
 
       return elementModel.remove(id)
+        .then(() => cleanElementsNotifications([id], userId, true))
         .then(() => SUCCESS);
     });
 }

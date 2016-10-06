@@ -15,6 +15,7 @@ export default (event, context) => {
       context.succeed(result);
     })
     .catch(err => {
+      console.info('==> Error: ', JSON.stringify(err, null, 2));
       let error = {
         status: 'ERROR',
         message: err.message

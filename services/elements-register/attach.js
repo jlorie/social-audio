@@ -63,5 +63,5 @@ function bindElement(userId, elementId) {
   };
 
   // bind user with element
-  return elementsByUserModel.update(elementId, userId, data);
+  return elementsByUserModel.update(elementId, userId, data, ['expire_at']);
 }

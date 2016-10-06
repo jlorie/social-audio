@@ -3,7 +3,7 @@ import Notification from '../commons/remote/notification';
 
 import DeviceUserModel from '../commons/resources/device-user-model';
 import { resolveNotificationBadge } from './push-notification-badge';
-import { NOTIFICATION_TYPE } from '../commons/constants';
+import { NOTIFICATION_TYPE, ERR_NOTIFICATIONS } from '../commons/constants';
 
 const URI_DEVICES_BY_USERS = process.env.URI_DEVICES_BY_USERS;
 const ERR_ENDPOINT_DISABLED = 'EndpointDisabled';
@@ -11,7 +11,7 @@ const MAX_RETRIES = 3;
 
 const deviceByUserModel = new DeviceUserModel(URI_DEVICES_BY_USERS);
 
-export function push(recipients, type, elementId, emitter) {
+export function push(recipients, type, elementId, emitter, details) {
   let isEmpty = recipients.length === 0;
   if (isEmpty) {
     return Promise.resolve('OK');
@@ -29,19 +29,19 @@ export function push(recipients, type, elementId, emitter) {
   return Promise.all(tasks)
     .then(tasksResult => {
       const badgeMap = tasksResult[0];
-      const message = resolveMessage(emitter, type);
+      const message = resolveMessage(emitter, type, details);
       const devices = tasksResult[1];
 
       return Promise.all(devices.map(device => {
         let badge = badgeMap.get(device.user_id);
         // Si no funciona borrar elementId
-        return notify(device, message, badge, type, elementId);
+        return notify(device, message, badge, type, elementId, details);
       }));
     });
 }
 
 // Si no funciona borrar idReference
-function notify(device, message, bagde, type, idReference, retries = 0) {
+function notify(device, message, bagde, type, idReference, details, retries = 0) {
   console.info('Notifying device with endpoint ' + device.endpoint);
   const notification = new Notification(device.endpoint);
 
@@ -50,17 +50,18 @@ function notify(device, message, bagde, type, idReference, retries = 0) {
     APNS: JSON.stringify({
       aps: {
         alert: message,
-        sound: 'default',
+        sound: 'notificationSound.wav',
         reference: idReference,
         badge: bagde,
-        type
+        type,
+        details
       }
     })
   });
 
   return notification.push(apns, true)
     .catch(err => {
-      if (err.code === ERR_ENDPOINT_DISABLED) {
+      if (err.code === ERR_NOTIFICATIONS.ENDPOINT_DISABLED) {
         console.info(`Endpoint ${device.endpoint}  is disabled, deleting endpoint`);
         return deleteDeviceEndpoint(device);
 
@@ -75,12 +76,18 @@ function notify(device, message, bagde, type, idReference, retries = 0) {
         //   .then(() => notify(device, message, bagde, type, retries + 1));
       }
 
+      if (err.code === ERR_NOTIFICATIONS.INVALID_PARAMETER &&
+        err.message.indexOf('No endpoint found')) {
+        console.info(`Invalid endpoint ${device.endpoint}, deleting it...`);
+        return deleteDeviceEndpoint(device);
+      }
+
       throw err;
     });
 }
 
-function resolveMessage(emitter, type) {
-  console.info('Resolving notification message ' + type + ' for user ' + emitter.id);
+function resolveMessage(emitter, type, details) {
+  console.info('Resolving notification message with ' + type);
 
   let message;
   switch (type) {
@@ -95,12 +102,39 @@ function resolveMessage(emitter, type) {
         message = `${emitter.fullname} added a new audiography`;
         break;
       }
+    case NOTIFICATION_TYPE.PENDING_AUDIO:
+      {
+        message = 'It has been some time since ' + details.element_owner_name + ' ' +
+        'has sent you a request to add an Audiography you like to do it now ?';
+        break;
+      }
+    case NOTIFICATION_TYPE.PENDING_ELEMENT_EXPIRED:
+      {
+        message = details.element_owner_name + ' audiography request has expired';
+        break;
+      }
+    case NOTIFICATION_TYPE.INACTIVE_ELEMENT:
+      {
+        message = 'In order to save only the moments you really care, ' +
+        'bbluue will remove photos without any audiography. Do you want to ask ' +
+        'a friend for an audiography now ?';
+        break;
+      }
+    case NOTIFICATION_TYPE.INACTIVE_ELEMENT_EXPIRED:
+      {
+        message = 'In order to save only the moments you really care, ' +
+        'bbluue will remove photos without any audiography. Do you want to ' +
+        'download to your device now ?';
+        break;
+      }
+
     default:
       {
-        throw new Error('InvalidType');
+        message = 'Unknown notification type';
       }
   }
 
+  console.info('Message: ', message);
   return message;
 }
 

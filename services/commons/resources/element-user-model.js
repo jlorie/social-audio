@@ -1,5 +1,5 @@
-import ResourceModel from './resource-model';
 import _ from 'lodash';
+import ResourceModel from './resource-model';
 
 const ID_INDEX_NAME = 'index-id';
 
@@ -12,7 +12,11 @@ class ElementUserModel extends ResourceModel {
     return super.create(items);
   }
 
-  update(elementId, userId, data) {
+  rawUpdate(key, data, attrToRemove) {
+    return super.update(key, data, attrToRemove);
+  }
+
+  update(elementId, userId, data, attrToRemove) {
     return this.getById(elementId, userId)
       .then(references => {
         let reference = references[0];
@@ -25,7 +29,7 @@ class ElementUserModel extends ResourceModel {
           created_at: reference.created_at
         };
 
-        return super.update(key, data);
+        return super.update(key, data, attrToRemove);
       });
   }
 
@@ -61,6 +65,56 @@ class ElementUserModel extends ResourceModel {
       params.KeyConditionExpression += ' AND user_id = :user_id';
       params.ExpressionAttributeValues[':user_id'] = userId;
     }
+
+    const func = (resolve, reject) => {
+      this.dynamo.query(params, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(result.Items);
+      });
+    };
+
+    return new Promise(func);
+  }
+
+  list(userId) {
+    let params = {
+      TableName: this.tableName,
+      KeyConditionExpression: 'user_id = :user_id',
+      FilterExpression: 'ref_status = :resolved or ref_status = :idle',
+      ExpressionAttributeValues: {
+        ':user_id': userId,
+        ':resolved': 'resolved',
+        ':idle': 'idle'
+      },
+      ScanIndexForward: false
+    };
+
+    const func = (resolve, reject) => {
+      this.dynamo.query(params, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(result.Items);
+      });
+    };
+
+    return new Promise(func);
+  }
+
+  listExpiring(userId) {
+    let params = {
+      TableName: this.tableName,
+      KeyConditionExpression: 'user_id = :user_id',
+      FilterExpression: 'attribute_exists(expire_at)',
+      ExpressionAttributeValues: {
+        ':user_id': userId,
+      },
+      ScanIndexForward: false
+    };
 
     const func = (resolve, reject) => {
       this.dynamo.query(params, (err, result) => {
@@ -125,6 +179,32 @@ class ElementUserModel extends ResourceModel {
       });
   }
 
+  getOldestElements(userId, status) {
+    let params = {
+      TableName: this.tableName,
+      KeyConditionExpression: 'user_id = :user_id',
+      ExpressionAttributeValues: {
+        ':user_id': userId,
+      }
+    };
+
+    if (status) {
+      params.FilterExpression = 'ref_status = :status';
+      params.ExpressionAttributeValues[':status'] = status;
+    }
+
+    const func = (resolve, reject) => {
+      this.dynamo.query(params, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(result.Items);
+      });
+    };
+
+    return new Promise(func);
+  }
 
 }
 

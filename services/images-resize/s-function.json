@@ -12,15 +12,7 @@
     "excludePatterns": []
   },
   "endpoints": [],
-  "events": [
-    {
-      "name": "new-image-event",
-      "type": "sns",
-      "config": {
-        "topicName": "${registeredElementTopicArn}"
-      }
-    }
-  ],
+  "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",

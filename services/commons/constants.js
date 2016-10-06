@@ -5,7 +5,11 @@ export const EMAIL_STATUS = {
 
 export const NOTIFICATION_TYPE = {
   AUDIO_REQUEST: 'audio_request',
-  NEW_AUDIO: 'new_audio'
+  NEW_AUDIO: 'new_audio',
+  PENDING_AUDIO: 'pending_audio',
+  INACTIVE_ELEMENT: 'inactive_element',
+  PENDING_ELEMENT_EXPIRED: 'pending_element_expired',
+  INACTIVE_ELEMENT_EXPIRED: 'inactive_element_expired'
 };
 
 export const USER_STATUS = {
@@ -16,9 +20,11 @@ export const USER_STATUS = {
 };
 
 export const REF_STATUS = {
+  IDLE: 'idle',
   RESOLVED: 'resolved',
   PENDING: 'pending',
-  HIDDEN: 'hidden'
+  HIDDEN: 'hidden',
+  EXPIRED: 'expired'
 };
 
 export const ACCOUNT_TYPE = {
@@ -28,7 +34,8 @@ export const ACCOUNT_TYPE = {
 export const ERR_USERS = {
   INVALID_USER: 'InvalidUser',
   INVALID_PASS: 'InvalidPassword',
-  INVALID_STATUS: 'InvalidStatus'
+  INVALID_STATUS: 'InvalidStatus',
+  INVALID_EMAIL: 'InvalidEmail'
 };
 
 export const ERR_ELEMENTS = {
@@ -42,7 +49,10 @@ export const ERR_ELEMENTS = {
 };
 
 export const ERR_NOTIFICATIONS = {
-  INVALID_NOTIFICATION: 'InvalidNotificationId'
+  INVALID_NOTIFICATION: 'InvalidNotificationId',
+  INVALID_PARAMETER: 'InvalidParameter',
+  ENDPOINT_DISABLED: 'EndpointDisabled',
+  INVALID_TYPE: 'InvalidNotificationType'
 };
 
 export const ERR_SECURITY = {
@@ -68,6 +78,11 @@ export const ERR_ACTION = {
 
 export const ERR_AWS = {
   INVALID_PARAMS: 'InvalidParameter'
+};
+
+export const CONFIG = {
+  ELEMENT_REMINDER: 'elements_reminder',
+  EXPIRE_TIME: 'expire_time'
 };
 
 export const NOTHING_TO_DO = 'NothingToDo';

@@ -12,8 +12,7 @@
     "excludePatterns": []
   },
   "endpoints": [],
-  "events": [
-    {
+  "events": [{
       "name": "elements-stream-events",
       "type": "dynamodbstream",
       "config": {
@@ -23,7 +22,7 @@
       }
     },
     {
-      "name": "keep-alive-elem-stream",
+      "name": "keeplive-elem-str",
       "type": "schedule",
       "config": {
         "schedule": "rate(5 minutes)",

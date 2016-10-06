@@ -138,6 +138,18 @@ class UserModel extends ResourceModel {
     return this._scan(params);
   }
 
+  getByTimezoneOffset(timezoneOffset) {
+    let params = {
+      TableName: this.tableName,
+      FilterExpression: 'user_status = :user_status and timezone_offset = :offset',
+      ExpressionAttributeValues: {
+        ':user_status': 'enabled',
+        ':offset': timezoneOffset
+      }
+    };
+
+    return this._scan(params);
+  }
 }
 
 export default UserModel;

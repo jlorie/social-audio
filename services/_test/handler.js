@@ -1,17 +1,6 @@
-import FunctionInvoker from '../commons/remote/function-invoker';
-
-const functionName = 'bbluue-audios-test';
-const stage = 'beta';
-
-const invoker = new FunctionInvoker(functionName, stage);
+import mark from './mark-lonely-elements';
 
 export default () => {
-  return invoker.invoke({})
-    .then(response => {
-      console.log('==> Success: ', JSON.stringify(response));
-      return response;
-    })
-    .catch(err => {
-      console.log('==> Error: ', JSON.stringify(err));
-    });
+  console.log('Migrating data to beta');
+  return mark();
 };

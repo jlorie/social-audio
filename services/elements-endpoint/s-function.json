@@ -11,8 +11,7 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [
-    {
+  "endpoints": [{
       "path": "elements",
       "method": "GET",
       "type": "AWS",
@@ -120,6 +119,28 @@
       "apiKeyRequired": false,
       "requestParameters": {},
       "requestTemplates": "$${filterByFriendRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "elements/check",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${checkElementsRequest}",
+      "responses": "$${responsesForPost}"
+    },
+    {
+      "path": "elements/expiring",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${listExpiringRequest}",
       "responses": "$${responsesForGet}"
     }
   ],

@@ -1,10 +1,10 @@
 {
-  "name": "test",
+  "name": "elements-timer",
   "runtime": "babel",
   "description": "Serverless Lambda function for project: bbluue-audios",
   "customName": false,
   "customRole": false,
-  "handler": "handler.default",
+  "handler": "elements-timer/handler.default",
   "timeout": 6,
   "memorySize": 1024,
   "authorizer": {},
@@ -12,13 +12,23 @@
     "excludePatterns": []
   },
   "endpoints": [],
-  "events": [],
+  "events": [{
+    "name": "elements-timer-event",
+    "type": "schedule",
+    "config": {
+      "enabled": true,
+      "schedule": "rate(1 hour)"
+    }
+  }],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
+    "URI_USERS": "${usersTableName}",
+    "URI_NOTIFICATIONS": "${notificationsTableName}",
     "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
-    "URI_NOTIFICATIONS": "${notificationsTableName}"
+    "URI_NOTIFY_ENDPOINT": "${notifyEnpointFunctionName}",
+    "URI_ELEMENTS": "${elementsTableName}"
   },
   "vpc": {
     "securityGroupIds": [],

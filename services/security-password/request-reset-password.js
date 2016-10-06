@@ -3,24 +3,35 @@ import jwt from 'jsonwebtoken';
 
 import config from './config';
 import EmailService from '../commons/remote/email-service';
-import { SUCCESS } from '../commons/constants';
+import UserModel from '../commons/resources/user-model';
 
+import { SUCCESS, ERR_USERS } from '../commons/constants';
 
+const URI_USERS = process.env.URI_USERS;
 const DIRNAME = (process.env.LAMBDA_TASK_ROOT ? process.env.LAMBDA_TASK_ROOT +
   '/security-password' : __dirname);
 
 const emailService = new EmailService();
+const userModel = new UserModel(URI_USERS);
 
 export function requestReset({ email }) {
+  console.log('Requesting reset password for user with email ' + email);
 
-  return sendmail(email)
-    .then(() => SUCCESS)
-    .catch(err => {
-      console.info('An error occurred sending reset password mail to ' + email);
-      return {
-        status: 'ERROR',
-        message: err.message
-      };
+  return userModel.getByUsername(email)
+    .then(user => {
+      if (!user) {
+        throw new Error(ERR_USERS.INVALID_EMAIL);
+      }
+
+      return sendmail(email)
+        .then(() => SUCCESS)
+        .catch(err => {
+          console.info('An error occurred sending reset password mail to ' + email);
+          return {
+            status: 'ERROR',
+            message: err.message
+          };
+        });
     });
 }
 

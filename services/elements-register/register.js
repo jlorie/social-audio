@@ -72,6 +72,7 @@ function createElement(elementInfo) {
   return exists(element.id)
     .then((elementExists) => {
       if (elementExists) {
+        console.info(`Element with id ${element.id} already exists`);
         throw new Error(ERR_ELEMENTS.ALREADY_EXISTS);
       }
 
@@ -105,6 +106,7 @@ function formatElement(info) {
     created_at: info.created_at,
     id: info.id,
     location_info: info.location_info,
+    uploaded_at: new Date().toISOString(),
     modified_at: new Date().toISOString(),
     owner_id: info.owner_id,
     source_url: info.source_url,

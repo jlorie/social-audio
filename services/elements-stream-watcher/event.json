@@ -1,65 +1,60 @@
 {
   "Records": [{
-    "eventID": "0587c7d2e854d09e4c88196f12537cb3",
+    "eventID": "52344ab40c3d57e52f77d5fc42c083cc",
     "eventName": "INSERT",
     "eventVersion": "1.1",
     "eventSource": "aws:dynamodb",
     "awsRegion": "us-east-1",
     "dynamodb": {
-      "ApproximateCreationDateTime": 1469843880,
+      "ApproximateCreationDateTime": 1472762700,
       "Keys": {
-        "username": {
-          "S": "jlorie@bbluue.com"
+        "id": {
+          "S": "60ad4a775293e5468781a2f06c3ad181"
         }
       },
       "NewImage": {
-        "user_status": {
-          "S": "disabled"
+        "uploaded_at": {
+          "S": "2016-09-01T20:45:37.952Z"
         },
         "owner_id": {
-          "S": "07484310-0a1a-48e0-b9c7-28257150f04a"
-        },
-        "account_type": {
-          "S": "basic"
-        },
-        "space_used": {
-          "N": "104857600"
-        },
-        "birthdate": {
-          "S": "2001-10-04T00:00:00.000Z"
-        },
-        "identity_id": {
-          "S": "us-east-1:6a2d5539-4770-4823-908e-18300e340b60"
+          "S": "c6db8888-cfc5-4e4a-b130-80409469d21a"
         },
         "created_at": {
-          "S": "2016-07-30T01:58:30.115Z"
-        },
-        "notifications_enabled": {
-          "BOOL": true
-        },
-        "email_status": {
-          "S": "suscribed"
-        },
-        "password": {
-          "S": "e9e538027c0811a19ff8726596ded90e"
-        },
-        "genre": {
-          "S": "F"
-        },
-        "fullname": {
-          "S": "Ana Belen"
+          "S": "2016-07-18T19:37:53.228Z"
         },
         "id": {
-          "S": "6a2d5539-4770-4823-908e-18300e340b60"
+          "S": "60ad4a775293e5468781a2f06c3ad181"
         },
-        "username": {
-          "S": "jlorie@bbluue.com"
+        "modified_at": {
+          "S": "2016-09-01T20:45:37.952Z"
+        },
+        "thumbnail_url": {
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/480p-60ad4a775293e5468781a2f06c3ad181.jpg"
+        },
+        "type": {
+          "S": "image"
+        },
+        "location_info": {
+          "M": {
+            "coordinates": {
+              "L": [{
+                  "S": "-0.197645"
+                },
+                {
+                  "S": "-78.444375"
+                }
+              ]
+            }
+          }
+        },
+        "source_url": {
+          "S": "https://s3.amazonaws.com/dev-bbluue-files/images/1080p-60ad4a775293e5468781a2f06c3ad181.jpg"
         }
       },
-      "SequenceNumber": "295079600000000010080526760",
-      "SizeBytes": 383,
+      "SequenceNumber": "434017400000000010974864512",
+      "SizeBytes": 481,
       "StreamViewType": "NEW_AND_OLD_IMAGES"
     },
-    "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-users/stream/2016-06-20T20:01:12.908"
+    "eventSourceARN": "arn:aws:dynamodb:us-east-1:141310850160:table/dev-elements/stream/2016-06-02T15:35:26.339"
   }]
 }

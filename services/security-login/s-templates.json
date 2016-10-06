@@ -79,6 +79,6 @@
     "method.response.header.location": "integration.response.body.links.self"
   },
   "requestTemplate": {
-    "application/json": "{ \"username\": $input.json('$.username'), \"password\": $input.json('$.password') }"
+    "application/json": "{ \"username\": $input.json('$.username'), \"password\": $input.json('$.password'), \"timezone_offset\": $input.json('$.timezone_offset') }"
   }
 }

@@ -9,6 +9,8 @@ const SERVERLESS_STAGE = process.env.SERVERLESS_STAGE;
 const invoker = new FunctionInvoker(URI_IMAGES_RESIZE, SERVERLESS_STAGE);
 
 export function optimizeImage(sourceUrl, originalMd5) {
+  console.info('Optimizing image from ' + sourceUrl);
+
   return Promise.all(RESOLUTIONS.map(resolution => resizeImage(sourceUrl, originalMd5, resolution)))
     .then(results => ({
       thumbnailUrl: results[0],

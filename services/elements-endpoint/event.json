@@ -1,5 +1,5 @@
 {
-  "action": "filter_friend",
-  "identity_id": "us-east-1:d9d77ea5-4d11-4610-a359-14dfd5e4b7f7",
-  "friend_id": "7879fd52-3956-422f-b356-71c4264e80a4"
+  "action": "delete",
+  "identity_id": "us-east-1:07484310-0a1a-48e0-b9c7-28257150f04a",
+  "element_id": "71d344dd0c711d3effc1edc43ae739c5"
 }
