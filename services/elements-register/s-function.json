@@ -13,19 +13,31 @@
   },
   "endpoints": [],
   "events": [{
-    "name": "s3",
-    "type": "s3",
-    "config": {
-      "bucket": "${uploadBucketName}",
-      "bucketEvents": [
-        "s3:ObjectCreated:*"
-      ],
-      "filterRules": [{
-        "name": "prefix",
-        "value": "elements/"
-      }]
+      "name": "s3",
+      "type": "s3",
+      "config": {
+        "bucket": "${uploadBucketName}",
+        "bucketEvents": [
+          "s3:ObjectCreated:*"
+        ],
+        "filterRules": [{
+          "name": "prefix",
+          "value": "elements/"
+        }]
+      }
+    },
+    {
+      "name": "keeplive-elem-regstr",
+      "type": "schedule",
+      "config": {
+        "schedule": "rate(5 minutes)",
+        "enabled": true,
+        "input": {
+          "keepalive": true
+        }
+      }
     }
-  }],
+  ],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",

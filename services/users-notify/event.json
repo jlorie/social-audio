@@ -9,7 +9,7 @@
     "thumbnail_url": "https://s3.amazonaws.com/dev-bbluue-files/images/480p-a84da85d6d1ac1cd32573dcd03b4a8e4.jpg",
     "element_owner_id": "07484310-0a1a-48e0-b9c7-28257150f04a",
     "element_owner_name": "Javier Lorie",
-    "expire_at": "2016-09-21T11:52:29Z",
+    "expire_at": "2016-09-21T11:52:29.000Z",
     "shared_at": "2016-05-16T16:54:38.000Z"
   },
   "stage": "dev"
