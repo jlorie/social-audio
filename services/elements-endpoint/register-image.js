@@ -35,6 +35,19 @@ export default (userId, data) => {
       };
 
       // insert
-      return elementModel.create(element);
+      return elementModel.create(element)
+        .then(format);
     });
 };
+
+function format(data) {
+  let result = {
+    id: data.id,
+    created_at: data.created_at,
+    owner: true,
+    thumbnail_url: data.thumbnail_url,
+    favorite: false
+  };
+
+  return result;
+}
