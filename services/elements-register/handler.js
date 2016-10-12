@@ -7,6 +7,11 @@ const userModel = new UserModel(URI_USERS);
 const STAGE = process.env.SERVERLESS_STAGE;
 
 export default (event, context) => {
+  if (event.keepalive) {
+    console.info('keepalive');
+    return context.succeed('keepalive');
+  }
+
   const { username, bucket, key } = extractObjectFromS3Message(event);
   event.stage = STAGE;
   console.info('==> Input: ', JSON.stringify(event, null, 2));

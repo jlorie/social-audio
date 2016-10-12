@@ -8,10 +8,12 @@ const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
 export function bind(element) {
   console.info('Indexing new element with id ' + element.id + ' for user ' + element.owner_id);
+  let createdArr = [element.created_at, element.uploaded_at, 'owner'];
+
   let reference = {
     id: element.id,
     user_id: element.owner_id,
-    created_at: [element.created_at, element.uploaded_at, 'owner'].join('|'),
+    created_at: createdArr.filter(i => i).join('|'),
     thumbnail_url: element.thumbnail_url,
     favorite: false,
     ref_status: REF_STATUS.IDLE
