@@ -13,6 +13,16 @@
   },
   "endpoints": [{
       "path": "elements",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${registerImageRequest}",
+      "responses": "$${responsesForGet}"
+    }, {
+      "path": "elements",
       "method": "GET",
       "type": "AWS",
       "authorizationType": "AWS_IAM",
@@ -53,6 +63,17 @@
       "apiKeyRequired": false,
       "requestParameters": {},
       "requestTemplates": "$${deleteRequest}",
+      "responses": "$${responsesForGet}"
+    },
+    {
+      "path": "elements/{id}/attach",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "AWS_IAM",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${attachRequest}",
       "responses": "$${responsesForGet}"
     },
     {
@@ -154,7 +175,10 @@
     "URI_USERS": "${usersTableName}",
     "URI_DEVICES_BY_USERS": "${devicesByUsersTableName}",
     "URI_NOTIFICATIONS": "${notificationsTableName}",
-    "URI_CLEAN_NOTIFICATIONS": "${cleanNotificationsFunctionName}"
+    "URI_CLEAN_NOTIFICATIONS": "${cleanNotificationsFunctionName}",
+    "BUCKET_ELEMENT_FILES": "${elementsBucketName}",
+    "BUCKET_ELEMENT_UPLOAD": "${uploadBucketName}",
+    "URI_IMAGES_RESIZE": "${imagesResizeEndpointFunctionName}"
   },
   "vpc": {
     "securityGroupIds": [],
