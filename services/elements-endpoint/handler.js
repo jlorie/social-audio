@@ -84,7 +84,7 @@ function handleRequest(req) {
         }
       case 'attach-audio':
         {
-          result = attachAudio(userId, req.element_id, req.data);
+          result = attachAudio(userId, req.element_id, req.data, req.element_id, req.data);
           break;
         }
 

@@ -6,19 +6,18 @@ import ElementUserModel from '../commons/resources/element-user-model';
 const NEW_AUDIO_TYPE = 'new_audio';
 
 const URI_USERS = process.env.URI_USERS;
-const URI_ELEMENTS_RESOURCE = process.env.URI_ELEMENTS_RESOURCE;
+const URI_ELEMENTS = process.env.URI_ELEMENTS;
 const URI_NOTIFY_ENDPOINT = process.env.URI_NOTIFY_ENDPOINT;
 const URI_ELEMENTS_BY_USERS = process.env.URI_ELEMENTS_BY_USERS;
 const SERVERLESS_STAGE = process.env.SERVERLESS_STAGE;
 
 const userModel = new UserModel(URI_USERS);
-const elementModel = new ElementModel(URI_ELEMENTS_RESOURCE);
+const elementModel = new ElementModel(URI_ELEMENTS);
 const invoker = new FunctionInvoker(URI_NOTIFY_ENDPOINT, SERVERLESS_STAGE);
 const elementsByUserModel = new ElementUserModel(URI_ELEMENTS_BY_USERS);
 
-export function notifyNewAudio(attachment) {
-  let ownerId = attachment.owner_id;
-  let elementId = attachment.attached_to;
+export function notifyNewAudio(attachment, elementId) {
+  let userId = attachment.user_id;
   let audioId = attachment.id;
   let isPublic = attachment.public;
 
@@ -31,15 +30,15 @@ export function notifyNewAudio(attachment) {
       let recipientIds = references.filter(ref => {
           // if the attachment is private then only the owner receive the notification
           let hasPermissions = (isPublic ? true : ref.created_at.endsWith('owner'));
-          return ref.user_id !== ownerId && hasPermissions;
+          return ref.user_id !== userId && hasPermissions;
         })
         .map(e => e.user_id);
 
       // get details
-      return getNotificationDetails(elementId, ownerId, audioId)
+      return getNotificationDetails(elementId, userId, audioId)
         .then(details => {
           let body = JSON.stringify({
-            emitterId: ownerId,
+            emitterId: userId,
             type: NEW_AUDIO_TYPE,
             elementId,
             details,
