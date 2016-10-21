@@ -1,5 +1,6 @@
 import uuid from 'node-uuid';
 import optimizeImage from './optimize-image';
+import share from './share-element';
 import ElementModel from '../commons/resources/element-model';
 
 import { generateUrlFromArgs } from '../commons/helpers/utils';
@@ -36,7 +37,10 @@ export default (userId, data) => {
 
       // insert
       return elementModel.create(element)
-        .then(format);
+        .then(newElement => {
+          return share(newElement.owner_id, newElement.id, data.shared_with)
+            .then(() => format(newElement));
+        });
     });
 };
 

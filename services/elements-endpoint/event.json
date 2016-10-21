@@ -1,10 +1,10 @@
 {
-  "action": "attach-audio",
+  "action": "register-image",
   "identity_id": "us-east-1:07484310-0a1a-48e0-b9c7-28257150f04a",
-  "element_id": "d5d3ea1899a313e9a430bc4359871c64",
   "data": {
     "created_at": "2016-10-11T13:04:06.000Z",
-    "path": "files/60815B22-2E3A-4D61-BAF9-B18ADFF91769-741-0000099AA71163C9.caf",
-    "public": true
+    "path": "files/056C0D65-97B0-4C89-81EB-5395B203A0CF-1308-000001B2B7A0879B.jpg",
+    "created_at": "2016-07-07T17:43:52.600Z",
+    "shared_with": ["ajimenez@bbluue.com"]
   }
 }

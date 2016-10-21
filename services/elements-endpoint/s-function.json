@@ -179,7 +179,8 @@
     "BUCKET_ELEMENT_FILES": "${elementsBucketName}",
     "BUCKET_ELEMENT_UPLOAD": "${uploadBucketName}",
     "URI_IMAGES_RESIZE": "${imagesResizeEndpointFunctionName}",
-    "URI_NOTIFY_ENDPOINT": "${notifyEnpointFunctionName}"
+    "URI_NOTIFY_ENDPOINT": "${notifyEnpointFunctionName}",
+    "URI_SHARE_ENDPOINT": "${shareEnpointFunctionName}"
   },
   "vpc": {
     "securityGroupIds": [],
