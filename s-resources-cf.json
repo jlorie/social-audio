@@ -190,7 +190,7 @@
           "KeyType": "RANGE"
         }],
         "ProvisionedThroughput": {
-          "ReadCapacityUnits": "${db-rcu}",
+          "ReadCapacityUnits": "${elements-users-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
         "TableName": "${stage}-elements-by-users",
@@ -264,7 +264,7 @@
           "KeyType": "RANGE"
         }],
         "ProvisionedThroughput": {
-          "ReadCapacityUnits": "${db-rcu}",
+          "ReadCapacityUnits": "${notifications-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
         "TableName": "${stage}-notifications",

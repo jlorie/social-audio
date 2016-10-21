@@ -1,6 +1,9 @@
-import mark from './mark-lonely-elements';
+import { nextInactiveElementFor } from '../elements-timer/pending-references';
 
 export default () => {
-  console.log('Migrating data to beta');
-  return mark();
+  let userId = '12312312312';
+  console.info(`Processing reminder with element \
+for user ${userId}`);
+
+  return 'OK';
 };
