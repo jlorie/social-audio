@@ -17,11 +17,12 @@ const provider = new CredentialProvider({
 
 const userModel = new UserModel(URL_USERS_API);
 
-export function register({ username, password, fullname, genre, birthdate }) {
+export function register({ username, password, fullname, genre, birthdate, country }) {
   console.info('Getting user identity');
   let userData = {
     fullname,
     genre,
+    country,
     birthdate: new Date(birthdate).toISOString(),
     password: getEncryptedPassword(password),
     email_status: EMAIL_STATUS.SUSCRIBED,
