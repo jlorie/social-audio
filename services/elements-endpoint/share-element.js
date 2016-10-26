@@ -7,7 +7,7 @@ const SERVERLESS_STAGE = process.env.SERVERLESS_STAGE;
 const functionInvoker = new FunctionInvoker(URI_SHARE_ENDPOINT, SERVERLESS_STAGE);
 
 export default (userId, elementId, usernames) => {
-  if (usernames.length === 0) {
+  if (!usernames || usernames.length === 0) {
     return Promise.resolve(NOTHING_TO_DO);
   }
 

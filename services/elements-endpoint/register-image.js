@@ -33,6 +33,7 @@ export default (userId, data) => {
         type: 'image',
         source_url: optimized.sourceUrl,
         thumbnail_url: optimized.thumbnailUrl,
+        uploaded_from: data.uploaded_from // 'camera-roll|instant-photo'
       };
 
       // insert

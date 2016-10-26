@@ -1,9 +1,7 @@
 import { nextInactiveElementFor } from '../elements-timer/pending-references';
 
 export default () => {
-  let userId = '12312312312';
-  console.info(`Processing reminder with element \
-for user ${userId}`);
+  let userId = '07484310-0a1a-48e0-b9c7-28257150f04a';
 
-  return 'OK';
+  return nextInactiveElementFor(userId);
 };
