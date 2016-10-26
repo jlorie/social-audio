@@ -8,20 +8,25 @@ const IOS_PLATFORM_TYPE = 'ios';
 
 const deviceByUserModel = new DeviceUserModel(URI_DEVICES_BY_USERS);
 
-export function registerDevice(userId, deviceToken, platform) {
-  if (!deviceToken) {
+export function registerDevice(userId, deviceData) {
+  let { device_token, platform, language, os_version, device } = deviceData;
+
+  if (!device_token) {
     throw new Error('InvalidDeviceToken');
   }
 
-  console.info(`Registering device ${deviceToken} for user ${userId}`);
+  console.info(`Registering device ${device_token} for user ${userId}`);
 
-  return Notification.createDeviceEndpoint(userId, deviceToken, resolvePlatformId(platform))
+  return Notification.createDeviceEndpoint(userId, device_token, resolvePlatformId(platform))
     .then(endpoint => {
       let deviceData = {
         user_id: userId,
-        device_token: deviceToken,
+        device_token,
         platform,
         endpoint,
+        language,
+        os_version,
+        device,
         accessed_at: new Date().toISOString()
       };
 
@@ -32,9 +37,9 @@ export function registerDevice(userId, deviceToken, platform) {
       if (err.code === ERR_AWS.INVALID_PARAMS) {
         console.info('Overwriting endpoint for user ' + userId);
         // deleteEndoint
-        return deleteEndoint(deviceToken)
+        return deleteEndoint(device_token)
           // re-registerDevice
-          .then(() => registerDevice(userId, deviceToken, platform));
+          .then(() => registerDevice(userId, device_token, platform));
       }
 
       throw err;
