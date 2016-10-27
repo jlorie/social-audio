@@ -82,6 +82,6 @@
     "application/json": "{\"email\": $input.json('$.email')}"
   },
   "registerRequest": {
-    "application/json": "{ \"action\": \"register\", \"username\": $input.json('$.username'), \"fullname\": $input.json('$.fullname'), \"genre\": $input.json('$.genre'), \"birthdate\": $input.json('$.birthdate'),\"password\": $input.json('$.password')}"
+    "application/json": "{ \"action\": \"register\", \"username\": $input.json('$.username'), \"fullname\": $input.json('$.fullname'), \"genre\": $input.json('$.genre'), \"birthdate\": $input.json('$.birthdate'),\"password\": $input.json('$.password'), \"country\": $input.json('$.country')}"
   }
 }
