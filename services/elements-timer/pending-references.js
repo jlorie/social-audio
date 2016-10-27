@@ -43,21 +43,15 @@ export function nextPendingElementFor(userId, withExpireTime = false) {
     .then(results => {
       // discard non-elegible references
       let references = results.filter(ref => {
-          const dates = ref.created_at.split('|');
-          const uploadedDate = new Date(dates.length > 2 ? dates[1] : dates[0]);
+        const sharedDate = ref.created_at.split('|')[0];
 
-          // setting up uploaded_at field for sorting purpose
-          ref.uploaded_at = uploadedDate;
+        // an element become elegible for expiration when is 5 days old
+        let diff = moment.duration(moment().utc().diff(moment(sharedDate))).days();
+        let elegible = diff >= daysToBecomeElegible;
+        let matchExpireParam = _.has(ref, 'expire_at') === withExpireTime;
 
-          // an element become elegible for expiration when is 5 days old
-          let diff = moment.duration(moment().utc().diff(moment(uploadedDate))).days();
-          let elegible = diff >= daysToBecomeElegible;
-          let matchExpireParam = _.has(ref, 'expire_at') === withExpireTime;
-
-          return elegible && matchExpireParam;
-        })
-        // sorting by uploaded_at field
-        .sort((a, b) => a.uploaded_at > b.uploaded_at);
+        return elegible && matchExpireParam;
+      });
 
       return config('pending_audio_max_expire')
         .then(maxReferences => references.slice(0, maxReferences));
