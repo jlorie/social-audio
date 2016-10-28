@@ -14,7 +14,11 @@ export default (event, context) => {
   return resolveValue(event.param)
     .then(result => {
       console.info('==> Success: ', JSON.stringify(result, null, 2));
-      context.succeed(result);
+      let output = {
+        value: result
+      };
+
+      context.succeed(output);
     })
     .catch(err => {
       console.info('==> An error occurred. ', err.stack);
