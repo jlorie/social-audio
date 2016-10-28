@@ -14,11 +14,7 @@ export default (event, context) => {
   return resolveValue(event.param)
     .then(result => {
       console.info('==> Success: ', JSON.stringify(result, null, 2));
-      let output = {
-        value: result
-      };
-
-      context.succeed(output);
+      context.succeed(result);
     })
     .catch(err => {
       console.info('==> An error occurred. ', err.stack);
@@ -34,16 +30,32 @@ export default (event, context) => {
 const CLIENT_PARAMS_KEY = 'client_params';
 
 function resolveValue(key) {
+  return resolveParams()
+    .then(params => {
+      if (!key) {
+        return params;
+      }
+
+      let output = {
+        value: params[key]
+      };
+
+      return output;
+    });
+}
+
+function resolveParams() {
   let cachedValue = cache.get(CLIENT_PARAMS_KEY);
   if (cachedValue) {
-    return Promise.resolve(cachedValue[key]);
+    return Promise.resolve(cachedValue);
   }
 
-  return config.get(CLIENT_PARAMS_KEY).then(value => {
-    if (value) {
-      cache.set(key, value);
-    }
+  return config.get(CLIENT_PARAMS_KEY)
+    .then(value => {
+      if (value) {
+        cache.set(CLIENT_PARAMS_KEY, value);
+      }
 
-    return value[key];
-  });
+      return value;
+    });
 }
