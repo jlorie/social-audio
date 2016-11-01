@@ -1,7 +1,8 @@
-import { nextPendingElementFor } from '../elements-timer/pending-references';
+import migrate from './migrations/migrate';
 
 export default () => {
-  let userId = '07484310-0a1a-48e0-b9c7-28257150f04a';
-
-  return nextPendingElementFor(userId);
+  return migrate()
+    .catch(err => {
+      console.info('==> Error: ', err);
+    });
 };
