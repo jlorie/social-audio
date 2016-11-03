@@ -1,16 +1,13 @@
-import moment from 'moment';
 import ResourceModel from '../commons/resources/resource-model';
 
-const userAnalytics = new ResourceModel(process.env.USER_ANALYTICS_URI);
+const analyticsModel = new ResourceModel(process.env.ANALYTICS_URI);
 
 export default (data) => {
-  let dateTime = moment();
-
-  const output = data.total;
-  output.date = dateTime.format('YYYY-MM-DD');
-  output.timestamp = dateTime.format('hh:mm:ss');
+  let output = data.total;
+  output.resource = 'user';
+  output.created_at = new Date().toISOString();
   output.type = 'total';
 
-  console.info('Persisting analytics for ', dateTime.format());
-  return userAnalytics.create(output);
+  console.info('Persisting analytics for ', output.created_at);
+  return analyticsModel.create(output);
 };

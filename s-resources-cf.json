@@ -433,28 +433,28 @@
         "TableName": "${stage}-invitations"
       }
     },
-    "UserAnalyticsDynamoTable": {
+    "AnalyticsDynamoTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "AttributeDefinitions": [{
-          "AttributeName": "date",
+          "AttributeName": "resource",
           "AttributeType": "S"
         }, {
-          "AttributeName": "timestamp",
+          "AttributeName": "created_at",
           "AttributeType": "S"
         }],
         "KeySchema": [{
-          "AttributeName": "date",
+          "AttributeName": "resource",
           "KeyType": "HASH"
         }, {
-          "AttributeName": "timestamp",
+          "AttributeName": "created_at",
           "KeyType": "RANGE"
         }],
         "ProvisionedThroughput": {
           "ReadCapacityUnits": "${db-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
-        "TableName": "${stage}-analytics-user"
+        "TableName": "${stage}-analytics"
       }
     },
 
@@ -590,9 +590,9 @@
         "Ref": "InvitationsDynamoTable"
       }
     },
-    "UserAnalyticsTableName": {
+    "AnalyticsTableName": {
       "Value": {
-        "Ref": "UserAnalyticsDynamoTable"
+        "Ref": "AnalyticsDynamoTable"
       }
     },
     "ElementsBucketName": {

@@ -1,10 +1,10 @@
 {
-  "name": "user-analytics",
+  "name": "analytics-endpoint",
   "runtime": "babel",
   "description": "Serverless Lambda function for project: bbluue-audios",
   "customName": false,
   "customRole": false,
-  "handler": "user-analytics/handler.default",
+  "handler": "analytics-endpoint/handler.default",
   "timeout": 6,
   "memorySize": 1024,
   "authorizer": {},
@@ -26,7 +26,9 @@
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
-    "SERVERLESS_REGION": "${region}"
+    "SERVERLESS_REGION": "${region}",
+
+    "ANALYTICS_URI": "${analyticsTableName}"
   },
   "vpc": {
     "securityGroupIds": [],

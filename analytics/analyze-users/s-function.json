@@ -19,7 +19,7 @@
     "SERVERLESS_REGION": "${region}",
 
     "URI_USERS": "${usersTableName}",
-    "USER_ANALYTICS_URI": "${userAnalyticsTableName}"
+    "ANALYTICS_URI": "${analyticsTableName}"
   },
   "vpc": {
     "securityGroupIds": [],
