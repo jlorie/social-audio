@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const URL_AWS_S3 = 'https://s3.amazonaws.com';
 
 export function extractArgsFromUrl(url) {
@@ -10,7 +12,7 @@ export function extractArgsFromUrl(url) {
 }
 
 export function generateUrlFromArgs(bucket, key) {
-  return [URL_AWS_S3, bucket, key].join('/');
+  return [URL_AWS_S3, _.trim(bucket, '/'), _.trim(key, '/')].join('/');
 }
 
 

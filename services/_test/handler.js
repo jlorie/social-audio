@@ -1,6 +1,8 @@
-import mark from './mark-lonely-elements';
+import migrate from './migrations/migrate';
 
 export default () => {
-  console.log('Migrating data to beta');
-  return mark();
+  return migrate()
+    .catch(err => {
+      console.info('==> Error: ', err);
+    });
 };

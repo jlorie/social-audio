@@ -11,6 +11,8 @@ import { updateAudioPrivacies } from './update-privacy';
 import { filterByFriend } from './filter-by-friend';
 import checkElements from './check-elements';
 import listExpiring from './list-expiring-elements';
+import registerImage from './register-image';
+import attachAudio from './attach-audio';
 
 const YES = 'yes';
 const STAGE = process.env.SERVERLESS_STAGE;
@@ -46,6 +48,11 @@ function handleRequest(req) {
 
   try {
     switch (req.action) {
+      case 'register-image':
+        {
+          result = registerImage(userId, req.data);
+          break;
+        }
       case 'list':
         {
           result = listElements(userId);
@@ -75,6 +82,12 @@ function handleRequest(req) {
           result = deleteMultipleElements(req.element_ids, userId);
           break;
         }
+      case 'attach-audio':
+        {
+          result = attachAudio(userId, req.element_id, req.data, req.element_id, req.data);
+          break;
+        }
+
       case 'detach_audio':
         {
           result = detachAudio(req.element_id, req.attachment_id, userId);

@@ -31,11 +31,13 @@ export default (config, currentHour) => {
           }
 
           let updateRef = (ref) => {
-            console.info(`Processing reminder config ${notificationType} with element ${ref.id}`);
+            console.info(`Processing reminder ${notificationType} with element \
+${ref.id} for user ${user.id}`);
+
             return updateReference(ref, notificationType, isStartAction)
               .then(newRef => resolveNotificationDetails(notificationType, newRef))
               .then(details => notify(user.id, ref.id, details, notificationType));
-          }
+          };
 
           return Promise.all(references.map(updateRef));
         });

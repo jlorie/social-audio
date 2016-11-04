@@ -18,3 +18,25 @@ function updateNotification(notification) {
 
   return notificationModel.update(key, { viewed: true });
 }
+
+
+export function markRequestAsResolved(userId, elementId) {
+  console.info('Marking audio request for element ' + elementId + ' as resolved');
+  return notificationModel.getPendingNotifications({ userId, elementId })
+    .then(notifications => Promise.all(notifications.map(markNotification)));
+}
+
+function markNotification(notification) {
+  let key = {
+    user_id: notification.user_id,
+    created_at: notification.created_at
+  };
+
+  let data = {
+    details: {
+      pending: false
+    }
+  };
+
+  return notificationModel.updateMarkNotification(key, data);
+}

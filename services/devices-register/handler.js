@@ -9,7 +9,7 @@ export default (event, context) => {
   let userId = input.identity_id.split(':').pop();
 
   try {
-    return registerDevice(userId, input.device_token, input.platform)
+    return registerDevice(userId, input.device_data)
       .then(result => {
         console.info('==> Success: ', JSON.stringify(result, null, 2));
         context.succeed(result);

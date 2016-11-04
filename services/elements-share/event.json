@@ -1,10 +1,9 @@
 {
-  "action": "batch_share",
+  "action": "share",
+  "element_id": "d5d3ea1899a313e9a430bc4359871c64",
   "identity_id": "us-east-1:07484310-0a1a-48e0-b9c7-28257150f04a",
-  "element_ids": [
-    "ea2e32a705b097e7935d6165b35eb908"
-  ],
   "usernames": [
     "ajimenez@bbluue.com"
-  ]
+  ],
+  "stage": "dev"
 }

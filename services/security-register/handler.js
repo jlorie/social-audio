@@ -36,6 +36,7 @@ function handleRequest(request) {
           genre: request.genre,
           birthdate: request.birthdate,
           password: request.password,
+          country: request.country,
           created_at: new Date().toISOString(),
           modified_at: new Date().toISOString()
         };

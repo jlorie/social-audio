@@ -1,0 +1,5 @@
+{
+  "requestTemplate": {
+    "application/json": "{\"param\":  \"$input.params('param')\"}"
+  }
+}

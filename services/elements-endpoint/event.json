@@ -1,5 +1,9 @@
 {
-  "action": "delete",
+  "action": "register-image",
   "identity_id": "us-east-1:07484310-0a1a-48e0-b9c7-28257150f04a",
-  "element_id": "71d344dd0c711d3effc1edc43ae739c5"
+  "data": {
+    "created_at": "2016-10-11T13:04:06.000Z",
+    "path": "/files/972B507B-BD9F-4C3C-AD60-2B069C445C74-6267-00000ACF6AB24E53.jpg"
+  },
+  "stage": "dev"
 }

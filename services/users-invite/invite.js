@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import EmailService from '../commons/remote/email-service';
 import UserModel from '../commons/resources/user-model';
-import { SUCCESS } from '../commons/constants'
+import { SUCCESS } from '../commons/constants';
 
 const URI_USERS = process.env.URI_USERS;
 const EMAIL_SUPPORT = process.env.EMAIL_SUPPORT;
