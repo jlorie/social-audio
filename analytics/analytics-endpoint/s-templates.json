@@ -1,5 +1,5 @@
 {
   "requestTemplate": {
-    "application/json": "{\"from\":  \"$input.params('from')\", \"to\":  \"$input.params('to')\"}"
+    "application/json": "{\"from\": \"$input.params('from')\", \"to\": \"$input.params('to')\"}"
   }
 }
