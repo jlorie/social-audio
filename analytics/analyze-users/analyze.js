@@ -1,4 +1,6 @@
 import moment from 'moment';
+import ResourceModel from '../commons/resources/resource-model';
+import ReferenceModel from '../commons/resources/reference-model';
 
 export default (users) => {
   let total = {
@@ -12,7 +14,7 @@ export default (users) => {
     },
     registration_type: {
       organic: 0,
-      invitated: 0
+      invited: 0
     },
     countries: {
       unknown: 0
@@ -24,6 +26,7 @@ export default (users) => {
     ages: {}
   };
 
+  let confirmedUsers = [];
   for (let user of users) {
     // statuses
     if (user.user_status === 'pending') {
@@ -31,7 +34,7 @@ export default (users) => {
       continue;
     }
 
-    total.confirmed++;
+    confirmedUsers.push(user);
     // countries
     if (user.country) {
       total.countries[user.country] = (total.countries[user.country] || 0) + 1;
@@ -51,6 +54,54 @@ export default (users) => {
     total.ages[age] = (total.ages[age] || 0) + 1;
   }
 
-  let output = { total };
-  return Promise.resolve(output);
+  total.confirmed = confirmedUsers.length;
+
+  let tasks = [
+    resolveInvitedUsers(confirmedUsers.map(u => u.username)),
+    resolveActiveUsers()
+  ];
+
+  return Promise.all(tasks)
+    .then(results => {
+      let [invitedCount, activeUsers] = results;
+
+      // setting up registration type count
+      total.registration_type = {
+        organic: total.confirmed - invitedCount,
+        invited: invitedCount
+      };
+
+      // setting up users status
+      total.statuses = {
+        active: activeUsers.length,
+        pasive: total.confirmed - activeUsers.length,
+        inactive: '-'
+      };
+
+      let output = { total };
+      return Promise.resolve(output);
+    });
 };
+
+
+function resolveInvitedUsers(emails) {
+  console.info('Calculating invited users...');
+
+  const invitationModel = new ResourceModel(process.env.INVITATIONS_URI);
+  return invitationModel.batchGet(emails.map(email => ({ email })))
+    .then(results => results.length);
+}
+
+function resolveActiveUsers() {
+  const referenceModel = new ReferenceModel(process.env.REFERENCES_URI);
+  return referenceModel.findByDay(moment().format('YYYY-MM-DD'))
+    .then(references => {
+      let activeUsers = new Set();
+
+      for (let ref of references) {
+        activeUsers.add(ref.user_id);
+      }
+
+      return Array.from(activeUsers);
+    });
+}

@@ -1,10 +1,10 @@
 {
-  "name": "analyze-users",
+  "name": "migrations",
   "runtime": "babel",
   "description": "Serverless Lambda function for project: bbluue-audios",
   "customName": false,
   "customRole": false,
-  "handler": "analyze-users/handler.default",
+  "handler": "handler.default",
   "timeout": 6,
   "memorySize": 1024,
   "authorizer": {},
@@ -12,24 +12,14 @@
     "excludePatterns": []
   },
   "endpoints": [],
-  "events": [{
-    "name": "analyzer-scheduler",
-    "type": "schedule",
-    "config": {
-      "schedule": "rate(6 hours)",
-      "enabled": true,
-      "input": {}
-    }
-  }],
+  "events": [],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-
-    "URI_USERS": "${usersTableName}",
-    "ANALYTICS_URI": "${analyticsTableName}",
-    "INVITATIONS_URI": "${invitationsTableName}",
-    "REFERENCES_URI": "${elementsByUsersTableName}"
+    "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
+    "URI_NOTIFICATIONS": "${notificationsTableName}",
+    "URI_INVITATIONS": "${invitationsTableName}"
   },
   "vpc": {
     "securityGroupIds": [],

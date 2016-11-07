@@ -246,7 +246,7 @@ class ResourceModel {
 
         let failedSomeWrites = _.values(data.UnprocessedItems).length > 0;
         if (failedSomeWrites) {
-          return reject(new Error('BatchWriteFailed'));
+          return reject(new Error('BatchGetFailed'));
         }
 
         resolve(data.Responses[this.tableName]);

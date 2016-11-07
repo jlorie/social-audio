@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "dummy",
   "runtime": "babel",
   "description": "Serverless Lambda function for project: bbluue-audios",
   "customName": false,
@@ -17,9 +17,7 @@
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-    "URI_ELEMENTS_BY_USERS": "${elementsByUsersTableName}",
-    "URI_NOTIFICATIONS": "${notificationsTableName}",
-    "URI_INVITATIONS": "${invitationsTableName}"
+    "REFERENCES_URI": "${elementsByUsersTableName}"
   },
   "vpc": {
     "securityGroupIds": [],
