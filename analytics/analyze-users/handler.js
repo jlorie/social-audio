@@ -4,6 +4,6 @@ import save from './save';
 
 export default (event, context) => {
   return fecth()
-    .then(analyze);
-  // FIXME .then(save);
+    .then(analyze)
+    .then(save);
 };
