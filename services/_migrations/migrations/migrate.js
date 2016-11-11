@@ -1,8 +1,10 @@
 import migrateInvitations from './invitations';
+import fixPendingStatus from './fix-pending-status';
 
 export default () => {
   let tasks = [
-    migrateInvitations()
+    // migrateInvitations(),
+    fixPendingStatus()
   ];
 
   return Promise.all(tasks)

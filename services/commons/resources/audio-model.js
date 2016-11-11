@@ -63,17 +63,18 @@ class AudioModel extends ResourceModel {
     let expressions = [];
     let attrValues = {};
     let conditions = [];
-    for (let playInfo of audioPlaybacks) {
+    for (let i = 0; i < audioPlaybacks.length; i++) {
+      let playInfo = audioPlaybacks[i];
       let index = elementAudios.findIndex(audio => audio.id === playInfo.id);
 
       if (index >= 0) {
         // increment statement
-        const playsAttrName = ':' + playInfo.id + '_playbacks';
+        const playsAttrName = `:playbacks_${i}`;
         attrValues[playsAttrName] = playInfo.playbacks;
         expressions.push(`audios[${index}].playbacks ${playsAttrName}`);
 
         // condition audio id most be equal to audioPlayback id
-        const idAttrName = ':' + playInfo.id + '_id';
+        const idAttrName = `:audio_id_${i}`;
         attrValues[idAttrName] = playInfo.id;
         conditions.push(`audios[${index}].id = ${idAttrName}`);
       }
