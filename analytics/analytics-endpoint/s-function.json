@@ -15,7 +15,7 @@
     "path": "analytics/users",
     "method": "GET",
     "type": "AWS",
-    "authorizationType": "AWS_IAM",
+    "authorizationType": "none",
     "authorizerFunction": false,
     "apiKeyRequired": false,
     "requestParameters": {
