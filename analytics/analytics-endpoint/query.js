@@ -2,7 +2,12 @@ import AnalyticsModel from '../commons/resources/analytics-model';
 
 const analyticsModel = new AnalyticsModel(process.env.ANALYTICS_URI);
 
-export default (from, to) => {
+export function users(from, to) {
   console.info(`Querying user analytics from ${from} to ${to}`);
   return analyticsModel.findByDate('user', from, to);
 };
+
+export function devices(from, to) {
+  console.info(`Querying device analytics from ${from} to ${to}`);
+  return 'ok'; // FIXME
+}

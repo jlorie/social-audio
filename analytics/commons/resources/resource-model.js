@@ -209,7 +209,6 @@ class ResourceModel {
       }
     };
 
-    console.log('==> params: ', JSON.stringify(params, null, 2));
     let promise = (resolve, reject) => {
       this.dynamo.batchGet(params, (err, data) => {
         if (err) {

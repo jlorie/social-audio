@@ -27,6 +27,7 @@
     "SERVERLESS_REGION": "${region}",
 
     "URI_USERS": "${usersTableName}",
+    "URI_DEVICES": "${devicesByUsersTableName}",
     "ANALYTICS_URI": "${analyticsTableName}",
     "INVITATIONS_URI": "${invitationsTableName}",
     "REFERENCES_URI": "${elementsByUsersTableName}"
