@@ -1,5 +1,8 @@
 {
-  "requestTemplate": {
-    "application/json": "{\"from\": \"$input.params('from')\", \"to\": \"$input.params('to')\"}"
+  "queryUserTemplate": {
+    "application/json": "{\"resource\": \"user\", \"from\": \"$input.params('from')\", \"to\": \"$input.params('to')\"}"
+  },
+  "queryDeviceTemplate": {
+    "application/json": "{\"resource\": \"device\", \"from\": \"$input.params('from')\", \"to\": \"$input.params('to')\"}"
   }
 }
