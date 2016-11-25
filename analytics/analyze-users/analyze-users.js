@@ -8,8 +8,8 @@ const SERVERLESS_REGION = process.env.SERVERLESS_REGION;
 const userModel = new ResourceModel(URI_USERS, SERVERLESS_REGION);
 
 export default () => {
+  let all = 0;
   let total = {
-    all: 0,
     confirmed: 0,
     pending: 0,
     statuses: {
@@ -34,7 +34,7 @@ export default () => {
   console.info('Getting users ...');
   return userModel.get()
     .then(users => {
-      total.all = users.length;
+      all = users.length;
 
       let confirmedUsers = [];
       for (let user of users) {
@@ -88,7 +88,7 @@ export default () => {
             inactive: '-'
           };
 
-          let output = { total };
+          let output = { all, total };
           return Promise.resolve(output);
         });
     });
@@ -115,4 +115,18 @@ function resolveActiveUsers() {
 
       return Array.from(activeUsers);
     });
+}
+
+function resolvePassiveUsers(activeUsers) {
+  const deviceModel = new ResourceModel(process.env.URI_DEVICES);
+  // return deviceModel.get(moment().format('YYYY-MM-DD'))
+  //   .then(references => {
+  //     let activeUsers = new Set();
+  //
+  //     for (let ref of references) {
+  //       activeUsers.add(ref.user_id);
+  //     }
+  //
+  //     return Array.from(activeUsers);
+  //   });
 }
