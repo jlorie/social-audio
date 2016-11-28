@@ -68,12 +68,13 @@ export default () => {
 
       let tasks = [
         resolveInvitedUsers(confirmedUsers.map(u => u.username)),
-        resolveActiveUsers()
+        resolveActiveUsers(),
+        resolveFreshUsers()
       ];
 
       return Promise.all(tasks)
         .then(results => {
-          let [invitedCount, activeUsers] = results;
+          let [invitedCount, activeUsers, freshUsers] = results;
 
           // setting up registration type count
           total.registration_type = {
@@ -84,8 +85,8 @@ export default () => {
           // setting up users status
           total.statuses = {
             active: activeUsers.length,
-            pasive: total.confirmed - activeUsers.length,
-            inactive: '-'
+            passive: freshUsers.length,
+            inactive: total.confirmed - freshUsers.length
           };
 
           let output = { all, total };
@@ -117,16 +118,13 @@ function resolveActiveUsers() {
     });
 }
 
-function resolvePassiveUsers(activeUsers) {
+function resolveFreshUsers() {
   const deviceModel = new ResourceModel(process.env.URI_DEVICES);
-  // return deviceModel.get(moment().format('YYYY-MM-DD'))
-  //   .then(references => {
-  //     let activeUsers = new Set();
-  //
-  //     for (let ref of references) {
-  //       activeUsers.add(ref.user_id);
-  //     }
-  //
-  //     return Array.from(activeUsers);
-  //   });
+  const today = moment().format('YYYY-MM-DD');
+
+  return deviceModel.get()
+    .then(devices => {
+      let fresh = devices.filter(d => d.accessed_at.startsWith(today)).map(d => d.user_id);
+      return fresh;
+    });
 }
