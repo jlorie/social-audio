@@ -39,7 +39,7 @@ function logicalDelete(userId) {
 function removeElementsFor(userId) {
   console.info('Deleting elements for user ', userId);
 
-  return referenceModel.list(userId)
+  return referenceModel.getByUserId(userId)
     .then(references => {
       // filter owned elements
       let owned = [];
