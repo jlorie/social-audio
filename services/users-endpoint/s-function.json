@@ -11,8 +11,7 @@
   "custom": {
     "excludePatterns": []
   },
-  "endpoints": [
-    {
+  "endpoints": [{
       "path": "users/{id}",
       "method": "GET",
       "type": "AWS",
@@ -84,7 +83,10 @@
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-    "URI_USERS": "${usersTableName}"
+    "REFERENCES_URI": "${elementsByUsersTableName}",
+    "USERS_URI": "${usersTableName}",
+    "ELEMENTS_URI": "${elementsTableName}",
+    "FRIENDS_URI": "${friendsTableName}"
   },
   "vpc": {
     "securityGroupIds": [],

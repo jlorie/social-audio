@@ -1,8 +1,7 @@
 import UserModel from '../commons/resources/user-model';
 import { ERR_SECURITY } from '../commons/constants';
 
-const URI_USERS = process.env.URI_USERS;
-const userModel = new UserModel(URI_USERS);
+const userModel = new UserModel(process.env.USERS_URI);
 
 export function detailUser(id) {
   console.info('Resolving details for user ' + id);

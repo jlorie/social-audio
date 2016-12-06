@@ -17,7 +17,10 @@
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-    "REFERENCES_URI": "${elementsByUsersTableName}"
+    "REFERENCES_URI": "${elementsByUsersTableName}",
+    "USERS_URI": "${usersTableName}",
+    "ELEMENTS_URI": "${elementsTableName}",
+    "FRIENDS_URI": "${friendsTableName}"
   },
   "vpc": {
     "securityGroupIds": [],
