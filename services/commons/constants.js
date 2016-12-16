@@ -16,7 +16,8 @@ export const USER_STATUS = {
   PENDING: 'pending',
   IDLE: 'idle',
   ENABLED: 'enabled',
-  DISABLED: 'disabled'
+  DISABLED: 'disabled',
+  DELETED: 'deleted'
 };
 
 export const REF_STATUS = {
