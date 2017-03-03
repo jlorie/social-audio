@@ -190,7 +190,7 @@
           "KeyType": "RANGE"
         }],
         "ProvisionedThroughput": {
-          "ReadCapacityUnits": "${db-rcu}",
+          "ReadCapacityUnits": "${elements-users-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
         "TableName": "${stage}-elements-by-users",
@@ -264,7 +264,7 @@
           "KeyType": "RANGE"
         }],
         "ProvisionedThroughput": {
-          "ReadCapacityUnits": "${db-rcu}",
+          "ReadCapacityUnits": "${notifications-rcu}",
           "WriteCapacityUnits": "${db-wcu}"
         },
         "TableName": "${stage}-notifications",
@@ -409,6 +409,55 @@
         "TableName": "${stage}-subscribers"
       }
     },
+    "InvitationsDynamoTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [{
+          "AttributeName": "email",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "created_at",
+          "AttributeType": "S"
+        }],
+        "KeySchema": [{
+          "AttributeName": "email",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "created_at",
+          "KeyType": "RANGE"
+        }],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "${db-rcu}",
+          "WriteCapacityUnits": "${db-wcu}"
+        },
+        "TableName": "${stage}-invitations"
+      }
+    },
+    "AnalyticsDynamoTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [{
+          "AttributeName": "resource",
+          "AttributeType": "S"
+        }, {
+          "AttributeName": "created_at",
+          "AttributeType": "S"
+        }],
+        "KeySchema": [{
+          "AttributeName": "resource",
+          "KeyType": "HASH"
+        }, {
+          "AttributeName": "created_at",
+          "KeyType": "RANGE"
+        }],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "${db-rcu}",
+          "WriteCapacityUnits": "${db-wcu}"
+        },
+        "TableName": "${stage}-analytics"
+      }
+    },
+
     "ElementsBucket": {
       "Type": "AWS::S3::Bucket",
       "Properties": {
@@ -534,6 +583,16 @@
     "SubscribersTableName": {
       "Value": {
         "Ref": "SubscribersDynamoTable"
+      }
+    },
+    "InvitationsTableName": {
+      "Value": {
+        "Ref": "InvitationsDynamoTable"
+      }
+    },
+    "AnalyticsTableName": {
+      "Value": {
+        "Ref": "AnalyticsDynamoTable"
       }
     },
     "ElementsBucketName": {

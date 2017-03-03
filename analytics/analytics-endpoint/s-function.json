@@ -1,0 +1,40 @@
+{
+  "name": "analytics-endpoint",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: bbluue-audios",
+  "customName": false,
+  "customRole": false,
+  "handler": "analytics-endpoint/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [{
+    "path": "analytics/users",
+    "method": "GET",
+    "type": "AWS",
+    "authorizationType": "AWS_IAM",
+    "authorizerFunction": false,
+    "apiKeyRequired": false,
+    "requestParameters": {
+      "integration.request.querystring.from": "method.request.querystring.from",
+      "integration.request.querystring.to": "method.request.querystring.to"
+    },
+    "requestTemplates": "$${requestTemplate}",
+    "responses": "$${responsesForGet}"
+  }],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+
+    "ANALYTICS_URI": "${analyticsTableName}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}

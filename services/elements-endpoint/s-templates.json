@@ -81,6 +81,9 @@
   "requestTemplate": {
     "application/json": "{\"email\": $input.json('$.email')}"
   },
+  "registerImageRequest": {
+    "application/json": "{ \"action\": \"register-image\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"data\": $input.json('$') }"
+  },
   "listRequest": {
     "application/json": "{ \"action\": \"list\", \"identity_id\": \"$context.identity.cognitoIdentityId\" }"
   },
@@ -92,6 +95,9 @@
   },
   "bacthDeleteRequest": {
     "application/json": "{ \"action\": \"batch_delete\", \"identity_id\": \"$context.identity.cognitoIdentityId\", \"element_ids\": $input.json('$.element_ids') }"
+  },
+  "attachRequest": {
+    "application/json": "{ \"action\": \"attach-audio\", \"identity_id\": \"$context.identity.cognitoIdentityId\",  \"element_id\": \"$input.params('id')\", \"data\": $input.json('$') }"
   },
   "detachRequest": {
     "application/json": "{ \"action\": \"detach_audio\", \"identity_id\": \"$context.identity.cognitoIdentityId\",  \"element_id\": \"$input.params('id')\", \"attachment_id\": $input.json('$.attachment_id') }"

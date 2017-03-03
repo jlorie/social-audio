@@ -5,6 +5,7 @@
     ".*Task timed out.*": "$${response504}",
     "default": "$${response200}"
   },
+
   "responsesForPost": {
     ".*ERROR.*": "$${response400}",
     ".*422.*": "$${response422}",
@@ -12,12 +13,14 @@
     ".*Task timed out.*": "$${response504}",
     "default": "$${response202}"
   },
+
   "responsesForRedirect": {
     ".*ERROR.*": "$${response400}",
     ".*Process exited.*": "$${response500}",
     ".*Task timed out.*": "$${response504}",
     "default": "$${response302}"
   },
+
   "response200": {
     "statusCode": "200",
     "responseParameters": "$${responseParameters}",
@@ -25,6 +28,7 @@
       "application/json": ""
     }
   },
+
   "response201": {
     "statusCode": "201",
     "responseParameters": "$${responseParameters}",
@@ -32,6 +36,7 @@
       "application/json": ""
     }
   },
+
   "response202": {
     "statusCode": "202",
     "responseParameters": "$${responseParameters}",
@@ -39,6 +44,7 @@
       "application/json": ""
     }
   },
+
   "response302": {
     "statusCode": "302",
     "responseParameters": "$${responseParametersRedirect}",
@@ -46,6 +52,7 @@
       "application/json": ""
     }
   },
+
   "response400": {
     "statusCode": "400",
     "responseModels": {},
@@ -53,6 +60,7 @@
       "application/json": "#set($inputRoot = $input.path('$.errorMessage'))$inputRoot"
     }
   },
+
   "response422": {
     "statusCode": "422",
     "responseModels": {},
@@ -60,28 +68,30 @@
       "application/json": "#set($inputRoot = $input.path('$.errorMessage'))$inputRoot"
     }
   },
+
   "response500": {
     "statusCode": "500",
     "responseTemplates": {
       "application/json": "{\"error\": \"Server Error\"}"
     }
   },
+
   "response504": {
     "statusCode": "504",
     "responseTemplates": {
       "application/json": "{\"error\": \"Gateway Timeout\"}"
     }
   },
+
   "responseParametersRedirect": {
     "method.response.header.location": "integration.response.body.location"
   },
+
   "responseParameters": {
     "method.response.header.location": "integration.response.body.links.self"
   },
+
   "requestTemplate": {
     "application/json": "{\"email\": $input.json('$.email')}"
-  },
-  "registerRequest": {
-    "application/json": "{ \"action\": \"register\", \"username\": $input.json('$.username'), \"fullname\": $input.json('$.fullname'), \"genre\": $input.json('$.genre'), \"birthdate\": $input.json('$.birthdate'),\"password\": $input.json('$.password'), \"country\": $input.json('$.country')}"
   }
 }

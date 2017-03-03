@@ -1,7 +1,7 @@
 import ResourceModel from '../commons/resources/resource-model';
 
 const IDLE_STATUS = 'idle';
-const STAGE = 'dev';
+const STAGE = process.env.SERVERLESS_STAGE;
 const TABLENAME = `${STAGE}-elements-by-users`;
 const resourceModel = new ResourceModel(TABLENAME);
 

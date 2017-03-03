@@ -79,7 +79,7 @@ function createElementReferences(element, recipientIds) {
           user_id: userId,
           created_at: created,
           thumbnail_url: element.thumbnail_url,
-          audios: (element.audios || []).filter(a => a.public).length,
+          audios: countAudios(element.audios),
           favorite: false,
           ref_status: REF_STATUS.PENDING
         };
@@ -89,4 +89,13 @@ function createElementReferences(element, recipientIds) {
 
       return elementsByUserModel.batchCreate(newReferences);
     });
+}
+
+function countAudios(audioList) {
+  let audios = {};
+  for (let audio of audioList || []) {
+    audios[audio.user_id] = (audios[audio.user_id] || 0) + 1;
+  }
+
+  return audios;
 }
