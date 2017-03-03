@@ -21,9 +21,6 @@ export function register({ username, password, fullname, genre, birthdate, count
   console.info('Getting user identity');
   let userData = {
     fullname,
-    genre,
-    country,
-    birthdate: new Date(birthdate).toISOString(),
     password: getEncryptedPassword(password),
     email_status: EMAIL_STATUS.SUSCRIBED,
     user_status: USER_STATUS.DISABLED,
@@ -34,12 +31,24 @@ export function register({ username, password, fullname, genre, birthdate, count
     notifications_enabled: true
   };
 
+  // optional fields
+  if (!_.isEmpty(genre)) {
+    userData.genre = genre;
+  }
+
+  if (!_.isEmpty(country)) {
+    userData.country = country;
+  }
+
+  if (!_.isEmpty(birthdate)) {
+    userData.birthdate = new Date(birthdate).toISOString();
+  }
 
   return userModel.getByUsername(username)
     .then(user => {
       let result;
 
-      if (!user) {
+      if (!user || user.user_status === USER_STATUS.DELETED) {
         // create new uer
         userData.username = username;
         result = createNewUser(userData);

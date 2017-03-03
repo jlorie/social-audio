@@ -35,7 +35,7 @@ export default (config, currentHour) => {
 ${ref.id} for user ${user.id}`);
 
             return updateReference(ref, notificationType, isStartAction)
-              .then(newRef => resolveNotificationDetails(notificationType, newRef))
+              .then(() => resolveNotificationDetails(notificationType, ref))
               .then(details => notify(user.id, ref.id, details, notificationType));
           };
 

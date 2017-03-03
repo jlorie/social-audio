@@ -105,6 +105,28 @@ class ElementUserModel extends ResourceModel {
     return new Promise(func);
   }
 
+  getByUserId(userId) {
+    let params = {
+      TableName: this.tableName,
+      KeyConditionExpression: 'user_id = :user_id',
+      ExpressionAttributeValues: {
+        ':user_id': userId
+      }
+    };
+
+    const func = (resolve, reject) => {
+      this.dynamo.query(params, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(result.Items);
+      });
+    };
+
+    return new Promise(func);
+  }
+
   listExpiring(userId) {
     let params = {
       TableName: this.tableName,

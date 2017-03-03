@@ -1,4 +1,17 @@
 {
-  "elementId": "4e2621d530b734d4bce7314e7b490714",
-  "audioPlaybacks": []
+  "elementId": "aee6c0d0-a12c-11e6-970a-3352f692194d",
+  "audioPlaybacks": [{
+      "id": "c64ec264f7b68bf4274393bd6bf2abe3",
+      "playbacks": 1
+    },
+    {
+      "id": "40d44480-a4f3-11e6-9aa5-933589be5104",
+      "playbacks": 1
+    },
+    {
+      "id": "4a6cc7b0-a4f3-11e6-9aa5-933589be5104",
+      "playbacks": 1
+    }
+  ],
+  "stage": "beta"
 }

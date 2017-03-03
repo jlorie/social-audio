@@ -3,10 +3,8 @@ import UserModel from '../commons/resources/user-model';
 import GeneralConfig from '../commons/resources/general-config';
 import { ERR_AWS } from '../commons/constants'
 
-const URI_USERS = process.env.URI_USERS;
-
 const config = new GeneralConfig();
-const userModel = new UserModel(URI_USERS);
+const userModel = new UserModel(process.env.USERS_URI);
 
 export function detailProfile(id) {
   console.info('Resolving details for user ' + id);
@@ -34,14 +32,13 @@ export function updateProfile(userId, data) {
     .then(formatProfileOutput)
     .catch(err => {
       return {
-        "status": "ERROR",
-        "message": ERR_AWS.INVALID_PARAMS
-      }
+        status: 'ERROR',
+        message: ERR_AWS.INVALID_PARAMS
+      };
     });
 }
 
 function formatProfileOutput(user) {
-  console.log('==> user: ', JSON.stringify(user, null, 2));
   // Checking notifications configuration
   let notificationsConfig = true;
   if ('notifications_enabled' in user) {

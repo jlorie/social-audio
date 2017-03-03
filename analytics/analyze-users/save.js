@@ -2,12 +2,11 @@ import ResourceModel from '../commons/resources/resource-model';
 
 const analyticsModel = new ResourceModel(process.env.ANALYTICS_URI);
 
-export default (data) => {
-  let output = data.total;
-  output.resource = 'user';
+export default (data, resource) => {
+  let output = data;
+  output.resource = resource;
   output.created_at = new Date().toISOString();
-  output.type = 'total';
 
-  console.info('Persisting analytics for ', output.created_at);
+  console.info(`Persisting ${resource} analytics at ${output.created_at}`);
   return analyticsModel.create(output);
 };

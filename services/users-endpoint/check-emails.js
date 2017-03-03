@@ -2,8 +2,7 @@ import _ from 'lodash';
 import UserModel from '../commons/resources/user-model';
 import { USER_STATUS } from '../commons/constants';
 
-const URI_USERS = process.env.URI_USERS;
-const userModel = new UserModel(URI_USERS);
+const userModel = new UserModel(process.env.USERS_URI);
 
 export function checkEmails(emails) {
   let unique = _.uniq(emails);

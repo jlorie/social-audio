@@ -52,6 +52,18 @@ class FriendsModel extends ResourceModel {
     return new Promise(promise);
   }
 
+  whoKnows(userId) {
+    let params = {
+      TableName: this.tableName,
+      FilterExpression: 'friend_id = :user_id',
+      ExpressionAttributeValues: {
+        ':user_id': userId,
+      }
+    };
+
+    return this._scan(params);
+  }
+
 }
 
 

@@ -1,31 +1,25 @@
-import UserModel from '../commons/resources/user-model';
-import ReferenceModel from '../commons/resources/element-user-model';
-import ElementModel from '../commons/resources/element-model';
-import FriendsModel from '../commons/resources/friends-model';
-
-import { SUCCESS } from '../commons/constants';
+import UserModel from '../services/commons/resources/user-model';
+import ReferenceModel from '../services/commons/resources/element-user-model';
+import ElementModel from '../services/commons/resources/element-model';
+import FriendsModel from '../services/commons/resources/friends-model';
 
 const userModel = new UserModel(process.env.USERS_URI);
 const elementModel = new ElementModel(process.env.ELEMENTS_URI);
 const referenceModel = new ReferenceModel(process.env.REFERENCES_URI);
 const friendModel = new FriendsModel(process.env.FRIENDS_URI);
 
-export function deleteUser(userId) {
-  console.info('Deleting user with id ' + userId);
-
+const userId = '33fae558-60b2-46ef-96d9-067522670ef1';
+export default (event) => {
   let tasks = [
     logicalDelete(userId),
     removeElementsFor(userId),
     removeFriendsDeps(userId)
   ];
 
-  return Promise.all(tasks)
-    .then(() => SUCCESS);
-}
+  return Promise.all(tasks);
+};
 
 function logicalDelete(userId) {
-  console.info('Logical delete for user ', userId);
-
   return userModel.getById(userId)
     .then(user => {
       if (!user) {
@@ -39,7 +33,7 @@ function logicalDelete(userId) {
 function removeElementsFor(userId) {
   console.info('Deleting elements for user ', userId);
 
-  return referenceModel.getByUserId(userId)
+  return referenceModel.list(userId)
     .then(references => {
       // filter owned elements
       let owned = [];
@@ -61,8 +55,6 @@ function removeElementsFor(userId) {
 }
 
 function removeFriendsDeps(userId) {
-  console.info('Deleting friends dependencies for user ', userId);
-
   let tasks = [
     friendModel.whoKnows(userId),
     friendModel.getByUserId(userId)
